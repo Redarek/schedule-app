@@ -1,0 +1,27 @@
+.task {
+
+}
+
+.taskWrapper {
+    cursor: pointer;
+    width: 100%;
+}
+
+.taskTitle {
+    background-color: rgb(121, 134, 203);
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-bottom: 2%;
+    margin-left: 5%;
+}
+
+.row {
+    height: 2.2vh;
+    margin-bottom: 2%;
+    width: 100%;
+    padding-left: 12px;
+}
+
+.margin {
+    width: 100%;
+}
