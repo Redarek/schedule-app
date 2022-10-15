@@ -8,15 +8,50 @@ import {ITask} from "../../../types/ITask";
 import TaskMonth from "./TaskMonth";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {fetchTasks} from "../../../store/reducers/ActionCreators";
+import axios from "axios";
 
 
 const Month: FC = () => {
         const dispatch = useAppDispatch()
         const {tasks, isLoading, error} = useAppSelector(state => state.taskSlice)
 
+        // const [tasksFetched, setTasksFetched] = useState<ITask[]>([])
+        // const [tasks, setTasks] = useState<ITask[]>([])
+
+
+        // const func = (data:any) => {
+        //     // if (tasksFetched.length > 0) {
+        //         for (let i = 0; i < data.length; i++) {
+        //             console.log('work')
+        //             setTasks([...tasks, {
+        //                 title: data[i].title,
+        //                 // ...tasks[i],
+        //                 startTime: new Date(data[i].startTime),
+        //                 endTime: new Date(data[i].endTime)
+        //             }])
+        //         }
+        //     // }
+        // }
+        // const fetchT = async () => {
+        //     const res = await axios.get('http://localhost:5050/events')
+        //     setTasksFetched(res.data)
+        //     // console.log(typeof tasks)
+        //     func(res.data)
+        // }
+
+
+        // const da = {
+        //     startTime: new Date(2022, 9, 9, 2, 2, 1),
+        //     endTime: new Date(2022, 9, 12, 7, 8, 9),
+        //     title: '9-12'
+        // }
+        // const sendTask = async () => {
+        //     await axios.post('http://localhost:5050/events', da)
+        // }
 
         useEffect(() => {
             dispatch(fetchTasks())
+            // fetchT()
         }, [])
 
 
@@ -150,11 +185,11 @@ const Month: FC = () => {
 
 
         const counterOfTasksOnDay = (date: IDate, task: ITask) => {
-            if (date.date.getDate() === task.startTime.date
-                && date.date.getMonth() === task.startTime.month
+            if (date.date.getDate() === task.startTime.getDate()
+                && date.date.getMonth() === task.startTime.getMonth()
             ) {
                 const start = datesInTheMonth.findIndex(obj => date.date.getTime() === obj.date.getTime());
-                const numOfDays = task.endTime.date - task.startTime.date;
+                const numOfDays = task.endTime.getDate() - task.startTime.getDate();
                 for (let i = start; i <= start + numOfDays; i++) {
                     if (!datesInTheMonth[i].dayTasks.includes(task)) {
                         datesInTheMonth[i].dayTasks.push(task);
@@ -167,7 +202,7 @@ const Month: FC = () => {
         const fillingTheDayWithTasks = () => {
             for (let i = 0; i < datesInTheMonth.length; i++) {
                 for (let j = 0; j < tasks.length; j++) {
-                    if (tasks[j].startTime.month === dateNow.getMonth() && tasks[j].startTime.year === dateNow.getFullYear()) {
+                    if (tasks[j].startTime.getFullYear() === dateNow.getFullYear()) {
                         counterOfTasksOnDay(datesInTheMonth[i], tasks[j]);
                     }
                 }
@@ -189,6 +224,7 @@ const Month: FC = () => {
 
         return (
             <div className={cl.calendar}>
+                <button onClick={() => console.log(tasks)}>send</button>
                 {dateNow.toLocaleString('default', {month: 'long'})}
                 <button onClick={() => handleChangeMonth('today')}>today</button>
                 <button onClick={() => handleChangeMonth('prev')}>prev</button>
@@ -214,7 +250,7 @@ const Month: FC = () => {
                                             {index > 2
                                                 ? ''
                                                 : <div className={cl.nested}>
-                                                    {date.date.getDate() === task.startTime.date
+                                                    {date.date.getDate() === task.startTime.getDate()
                                                         ? <TaskMonth task={task} day={date}
                                                                      week={getWeek(date)}/>
                                                         : <div className={cl.nested}>
@@ -226,7 +262,7 @@ const Month: FC = () => {
                                                                     />
                                                                 </div>
                                                                 : <div className={cl.nested}>
-                                                                    {date.date.getDate() < task.endTime.date && date.date.getDate() > task.startTime.date
+                                                                    {date.date.getDate() < task.endTime.getDate() && date.date.getDate() > task.startTime.getDate()
                                                                         ? <div className={cl.nested}>
                                                                             <TaskMonth
                                                                                 task={task} day={date}
@@ -237,7 +273,7 @@ const Month: FC = () => {
                                                                         : <div className={cl.nested}>
                                                                             {date.dayTasks[date.dayTasks.length - 1]
                                                                                 ? <div className={cl.nested}>
-                                                                                    {task.startTime.date <= date.dayTasks[date.dayTasks.length - 1].startTime.date
+                                                                                    {task.startTime.getDate() <= date.dayTasks[date.dayTasks.length - 1].startTime.getDate()
                                                                                         ?
                                                                                         <TaskMonth
                                                                                             task={task} day={date}

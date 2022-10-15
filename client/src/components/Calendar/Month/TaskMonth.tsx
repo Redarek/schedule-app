@@ -21,23 +21,23 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
     let width4 = 100;
 
     const widthCalculation = () => {
-        if (task.startTime.date === date.getDate() && task.endTime.date >= weekEnd.getDate()) {
-            width3 = (7 - task.startTime.day + 1) * 100 - 8;
+        if (task.startTime.getDate() === date.getDate() && task.endTime.getDate() >= weekEnd.getDate()) {
+            width3 = (7 - task.startTime.getDate() + 1) * 100 - 8;
         }
 
-        if (task.endTime.date <= weekEnd) {
-            width2 = (task.endTime.day) * 100 - 8;
+        if (task.endTime.getDate() <= weekEnd.getDate()) {
+            width2 = (task.endTime.getDay()) * 100 - 8;
         }
 
-        if (task.startTime.day !== 1) {
-            if (task.endTime.date <= weekEnd.getDate()) {
-                width4 = (task.endTime.date - task.startTime.date + 1) * 100 - 8;
+        if (task.startTime.getDay() !== 1) {
+            if (task.endTime.getDate() <= weekEnd.getDate()) {
+                width4 = (task.endTime.getDate() - task.startTime.getDate() + 1) * 100 - 8;
             } else {
-                if (task.startTime.day === 0) {
+                if (task.startTime.getDay() === 0) {
                     width4 = 100 - 8;
                 } else {
 
-                    width4 = (7 - task.startTime.day + 1) * 100 - 8;
+                    width4 = (7 - task.startTime.getDay() + 1) * 100 - 8;
                 }
             }
         }
@@ -48,18 +48,18 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
     return (
 
         <div className={cl.taskWrapper}>
-            {task.startTime.month === date.getMonth() && task.startTime.year === date.getFullYear()
-                || task.startTime.month === date.getMonth()-1
+            {task.startTime.getMonth() === date.getMonth() && task.startTime.getFullYear() === date.getFullYear()
+                // || task.startTime.getMonth() === date.getMonth()-1
                 ? <div>
-                    {task.startTime.date === date.getDate()
+                    {task.startTime.getDate() === date.getDate()
                         ? <div>
-                            {task.startTime.day !== 1
+                            {task.startTime.getDay() !== 1
                                 ? <div className={cl.taskTitle} style={{width: `${width4}%`}}>{task.title}</div>
                                 : <div>
-                                    {task.endTime.time >= weekEnd.getTime()
+                                    {task.endTime.getTime() >= weekEnd.getTime()
                                         ? <div className={cl.taskTitle} style={{width: `${width3}%`}}>{task.title}</div>
                                         : <div className={cl.taskTitle} style={{width: `${width2}%`}}>
-                                            {task.endTime.day === 1
+                                            {task.endTime.getDay() === 1
                                                 ? ''
                                                 : task.title
                                             }
@@ -69,8 +69,8 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
                             }</div>
                         : ''
                     }
-                    {date.getDay() === 1 && date.getTime() > task.startTime.time && task.endTime.time > date.getTime()
-                        ? <div>{task.endTime.time >= date.getTime() && task.endTime >= weekEnd.getTime()
+                    {date.getDay() === 1 && date.getTime() > task.startTime.getTime() && task.endTime.getTime() > date.getTime()
+                        ? <div>{task.endTime.getTime() >= date.getTime() && task.endTime >= weekEnd.getTime()
                             ? <div className={cl.taskTitle} style={{width: `${width1}%`}}>{task.title}</div>
                             : <div className={cl.taskTitle} style={{width: `${width2}%`}}>{task.title}</div>
                         }

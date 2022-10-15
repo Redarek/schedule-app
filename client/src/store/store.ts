@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    // blacklist: ['taskSlice']
+    blacklist: ['taskSlice']
 };
 
 

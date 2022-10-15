@@ -6,7 +6,7 @@ export const fetchTasks = createAsyncThunk(
     'tasks/fetchAll',
     async (_, thunkAPI) => {
         try {
-            const response = await axios.get<ITask[]>('http://localhost:3030/tasks')
+            const response = await axios.get<ITask[]>('http://localhost:5050/events')
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось загрузить задания")
