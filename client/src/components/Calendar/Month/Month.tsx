@@ -8,52 +8,15 @@ import {ITask} from "../../../types/ITask";
 import TaskMonth from "./TaskMonth";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {fetchTasks} from "../../../store/reducers/ActionCreators";
-import axios from "axios";
 
 
 const Month: FC = () => {
         const dispatch = useAppDispatch()
         const {tasks, isLoading, error} = useAppSelector(state => state.taskSlice)
 
-        // const [tasksFetched, setTasksFetched] = useState<ITask[]>([])
-        // const [tasks, setTasks] = useState<ITask[]>([])
-
-
-        // const func = (data:any) => {
-        //     // if (tasksFetched.length > 0) {
-        //         for (let i = 0; i < data.length; i++) {
-        //             console.log('work')
-        //             setTasks([...tasks, {
-        //                 title: data[i].title,
-        //                 // ...tasks[i],
-        //                 startTime: new Date(data[i].startTime),
-        //                 endTime: new Date(data[i].endTime)
-        //             }])
-        //         }
-        //     // }
-        // }
-        // const fetchT = async () => {
-        //     const res = await axios.get('http://localhost:5050/events')
-        //     setTasksFetched(res.data)
-        //     // console.log(typeof tasks)
-        //     func(res.data)
-        // }
-
-
-        // const da = {
-        //     startTime: new Date(2022, 9, 9, 2, 2, 1),
-        //     endTime: new Date(2022, 9, 12, 7, 8, 9),
-        //     title: '9-12'
-        // }
-        // const sendTask = async () => {
-        //     await axios.post('http://localhost:5050/events', da)
-        // }
-
         useEffect(() => {
             dispatch(fetchTasks())
-            // fetchT()
         }, [])
-
 
         const [dateNow, setDateNow] = useState<Date>(new Date(initialDate));
         const lastDayOfMonth = getLastDayOfMonth(dateNow.getMonth() + 1, dateNow.getFullYear());
@@ -187,13 +150,16 @@ const Month: FC = () => {
         const counterOfTasksOnDay = (date: IDate, task: ITask) => {
             if (date.date.getDate() === task.startTime.getDate()
                 && date.date.getMonth() === task.startTime.getMonth()
+                && date.date.getMonth() === task.endTime.getMonth()
             ) {
-                const start = datesInTheMonth.findIndex(obj => date.date.getTime() === obj.date.getTime());
+                const startDay = datesInTheMonth.findIndex(obj => date.date.getTime() === obj.date.getTime());
                 const numOfDays = task.endTime.getDate() - task.startTime.getDate();
-                for (let i = start; i <= start + numOfDays; i++) {
-                    if (!datesInTheMonth[i].dayTasks.includes(task)) {
-                        datesInTheMonth[i].dayTasks.push(task);
-                    } else {
+                if (startDay !== 41) {
+                    for (let i = startDay; i <= startDay + numOfDays; i++) {
+                        if (!datesInTheMonth[i].dayTasks.includes(task)) {
+                            datesInTheMonth[i].dayTasks.push(task);
+                        } else {
+                        }
                     }
                 }
             }
@@ -224,7 +190,6 @@ const Month: FC = () => {
 
         return (
             <div className={cl.calendar}>
-                <button onClick={() => console.log(tasks)}>send</button>
                 {dateNow.toLocaleString('default', {month: 'long'})}
                 <button onClick={() => handleChangeMonth('today')}>today</button>
                 <button onClick={() => handleChangeMonth('prev')}>prev</button>

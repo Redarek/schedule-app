@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8adacb84-ae57-493e-b94a-80a67d6fa09f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/db.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/reducers/ActionCreators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/reducers/ActionCreators.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/reducers/taskSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/reducers/taskSlice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/types/ITask.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/types/ITask.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UI/ModalFullScreen/ModalFullScreen.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/ModalFullScreen/ModalFullScreen.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,17 +24,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/vladi/Desktop/schedule-app",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/vladi/Desktop/schedule-app/client/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/vladi/Desktop/schedule-app&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/vladi/Desktop/schedule-app/client/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/src/components/UI/CreateNewTask" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -46,7 +50,9 @@
       <updated>1665786341489</updated>
       <workItem from="1665786342998" duration="1228000" />
       <workItem from="1665787736488" duration="181000" />
-      <workItem from="1665835901828" duration="8348000" />
+      <workItem from="1665835901828" duration="19516000" />
+      <workItem from="1665865509309" duration="19000" />
+      <workItem from="1665993633799" duration="642000" />
     </task>
     <servers />
   </component>

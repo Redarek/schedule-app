@@ -10,7 +10,6 @@ interface TaskMonthProps {
 }
 
 const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
-
     const date = day.date;
     const weekEnd = week.endTime;
 
@@ -30,13 +29,12 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
         }
 
         if (task.startTime.getDay() !== 1) {
-            if (task.endTime.getDate() <= weekEnd.getDate()) {
+            if (task.endTime.getTime() <= weekEnd.getTime()) {
                 width4 = (task.endTime.getDate() - task.startTime.getDate() + 1) * 100 - 8;
             } else {
                 if (task.startTime.getDay() === 0) {
                     width4 = 100 - 8;
                 } else {
-
                     width4 = (7 - task.startTime.getDay() + 1) * 100 - 8;
                 }
             }
