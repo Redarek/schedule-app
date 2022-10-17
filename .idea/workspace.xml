@@ -4,9 +4,8 @@
     <list default="true" id="8adacb84-ae57-493e-b94a-80a67d6fa09f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/UI/ModalFullScreen/ModalFullScreen.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/ModalFullScreen/ModalFullScreen.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UI/CreateNewTask/CreateNewTask.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/CreateNewTask/CreateNewTask.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +51,7 @@
       <workItem from="1665787736488" duration="181000" />
       <workItem from="1665835901828" duration="19516000" />
       <workItem from="1665865509309" duration="19000" />
-      <workItem from="1665993633799" duration="642000" />
+      <workItem from="1665993633799" duration="9048000" />
     </task>
     <servers />
   </component>

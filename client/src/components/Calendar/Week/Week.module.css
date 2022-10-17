@@ -1,0 +1,146 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+
+}
+
+.calendarWrapper {
+    display: flex;
+    overflow: auto;
+    width: 100%;
+}
+
+.hours {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+}
+
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    position: relative;
+}
+
+.calendarHeader {
+    margin-left: 10%;
+    width: 90%;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 5vh;
+}
+
+
+.weekDay {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendarDays {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 70vh;
+}
+
+.calendarHeaderDay {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 1.2vh;
+}
+
+.calendarDay {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.hourDiv {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: darkgrey;
+    min-height: 50px;
+    width: 100%;
+    display: flex;
+}
+
+.hourValue {
+    padding-right: 8%;
+    padding-top: 30px;
+    text-align: right;
+    margin-left: auto;
+    font-size: 12px;
+    min-height: 50px;
+    border-width: 0 1px 1px 0px;
+    border-style: solid;
+    border-color: darkgrey;
+
+}
+
+.calendarTasks {
+    position: absolute;
+    width: 100%;
+    height: 1200px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tasksWrapper {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+}
+
+.task {
+    background-color: rgb(121, 134, 203);
+    width: 100%;
+    margin: 0 3%;
+    border-radius: 5px
+}
+
+
+
+
+.longTermWrapper {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    /*margin-left: 10%;*/
+    height: 8vh;
+    position: relative;
+
+}
+
+.longTermFirstDiv {
+    border-color: darkgrey;
+    border-style: solid;
+    width: 11.1%;
+    border-width: 0 1px 0 1px;
+}
+
+.longTerm:first-child {
+    border-width: 0 1px 1px 1px;
+}
+
+.longTerm {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: darkgrey;
+    width: calc(100% / 7);
+}
+
+.longTermTasks {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: 10%;
+    position: absolute;
+}

@@ -23,6 +23,7 @@ const CreateNewTask: FC = () => {
             <div className={cl.inputWrap}>
                 <label htmlFor="title">Заголовок: </label>
                 <input id="title"
+                       required
                        className={cl.input}
                        type="text"
                        placeholder={"Title"}

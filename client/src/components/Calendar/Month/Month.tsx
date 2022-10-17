@@ -11,11 +11,13 @@ import {fetchTasks} from "../../../store/reducers/ActionCreators";
 
 
 const Month: FC = () => {
+    //@todo Перенести получение тасков из компонента на страницу где будет расположен компонент
+    //@todo Сделать нормальные стили для месячного календаря
         const dispatch = useAppDispatch()
         const {tasks, isLoading, error} = useAppSelector(state => state.taskSlice)
 
         useEffect(() => {
-            dispatch(fetchTasks())
+            if(tasks.length === 0) dispatch(fetchTasks())
         }, [])
 
         const [dateNow, setDateNow] = useState<Date>(new Date(initialDate));
