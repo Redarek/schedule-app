@@ -1,16 +1,15 @@
 import MainPage from "../pages/MainPage";
-import AuthorizationPage from "../pages/AuthorizationPage";
-import EmployeeRegistration from "../components/EmployeeRegistration";
-import CalendarPage from "../pages/CalendarPage";
+import Month from "../components/Calendar/Month/Month";
+import LoginForm from "../pages/LoginForm";
+import RegistrationForm from "../components/RegistrationForm";
 
-
-export const publicRoutes= [
+export const publicRoutes = [
     {path: '/', element: <MainPage/>},
-    {path: '/month', element: <CalendarPage/>},
-    {path: '/login', element: <AuthorizationPage/>},
-    {path: '/reg', element: <EmployeeRegistration/>},
+    {path: '/month', element: <Month/>},
+    {path: '/login', element: <LoginForm/>},
+    {path: '/registration', element: <RegistrationForm/>},
 ];
 
 export const privateRoutes = [
     ///
-]
+];
