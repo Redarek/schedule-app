@@ -23,7 +23,7 @@ class UserController {
     async login(req, res, next) {
         try {
             const {email, password} = req.body;
-            const userData = await userService.login(email. password);
+            const userData = await userService.login(email, password);
 
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true});
             return res.json(userData);
@@ -37,7 +37,7 @@ class UserController {
             const {refreshToken} = req.cookies; // вытаскиваем рефреш-токен  из куки
             const token = await userService.logout(refreshToken); // передаем рефреш-токен в юзер сервис
             res.clearCookie('refreshToken'); // удаляем рефреш-токен из куки
-            
+            return res.json('token');
         } catch (error) {
             next(error);
         }

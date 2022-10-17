@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 
-const EmployeeRegistration: FC= () => {
+const RegistrationForm: FC= () => {
     const date = new Date(2022, 9,15,1,1,1)
     console.log(date)
     const newDAte = new Date(date)
@@ -14,4 +14,4 @@ const EmployeeRegistration: FC= () => {
     );
 };
 
-export default EmployeeRegistration;
+export default RegistrationForm;

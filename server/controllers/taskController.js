@@ -1,11 +1,13 @@
 const taskService = require('../service/taskService');
-const user = require('../models/userModel');
-const task = require('../models/taskModel');
+const User = require('../models/userModel');
+const Task = require('../models/taskModel');
+const userModel = require('../models/userModel');
 
 class TaskController {
     async createTask(req, res, next) {
         try {
-            const {creator, employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
+            const {employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
+            const task = new Task({creator: user.id, employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd})
             const taskData = await taskService.createTask(creator, employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd);
             return res.json(taskData);
         } catch (error) {
