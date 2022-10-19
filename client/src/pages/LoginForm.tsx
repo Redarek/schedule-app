@@ -3,11 +3,14 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { login, registration, logout } from '../store/reducers/ActionCreators';
 import { IUser } from '../types/IUser';
 import UserService from '../services/UserService';
+import { ITasks } from '../types/ITasks';
+import TaskService from '../services/TaskService';
 
 const LoginForm:FC= () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [users, setUsers] = useState<IUser[]>([]);
+    const [tasks, setTasks] = useState<ITasks[]>([]);
     const dispatch = useAppDispatch();
     const {isAuth, isLoading, error, user} = useAppSelector(state => state.authSlice)
     console.log(user.user);
@@ -16,6 +19,15 @@ const LoginForm:FC= () => {
         try {
           const response = await UserService.fetchUsers();
           setUsers(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+    async function getTasks() {
+        try {
+          const response = await TaskService.fetchTasks();
+          setTasks(response.data);
         } catch (error) {
           console.log(error);
         }
@@ -46,6 +58,16 @@ const LoginForm:FC= () => {
             {users.map(user =>
                 <div key={user.email}>{user.email}</div>
             )};
+
+            <button onClick={getTasks}>Получить таски</button>
+            {tasks.map(task =>
+                <div key={task.timestamp}>
+                    <div>{task.employee}</div>
+                    <div>{task.start}</div>
+                    <div>{task.firstEnd}</div>
+                    <div>{task.secondEnd}</div>
+                </div>
+            )}; 
         </div>
     );
 };

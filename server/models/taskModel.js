@@ -52,7 +52,7 @@ const taskSchema =  new Schema({
     secondEnd: {
         type: Date,
         required: true
-    },
+    }
 });
 
 module.exports = model('Task', taskSchema);

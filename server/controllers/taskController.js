@@ -41,7 +41,8 @@ class TaskController {
 
     async getTasks(req, res, next) {
         try {
-            
+            const tasks = await taskService.getAllTasks();
+            return res.json(tasks)
         } catch (error) {
             next(error);
         }

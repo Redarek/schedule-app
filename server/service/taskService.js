@@ -7,6 +7,11 @@ class TaskService {
         const task = await taskModel.create(taskData); 
         return task;
     }
+
+    async getAllTasks() {
+        const tasks = await taskModel.find();
+        return tasks;
+    }
 }
 
 module.exports = new TaskService();
