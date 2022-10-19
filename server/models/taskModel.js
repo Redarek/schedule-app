@@ -1,8 +1,8 @@
-const { Schema, model, ObjectId } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const taskSchema =  new Schema({
-    creator: {
-        type: ObjectId,
+    user: {
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     employee: {

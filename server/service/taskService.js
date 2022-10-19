@@ -2,20 +2,10 @@ const taskModel = require('../models/taskModel');
 
 class TaskService {
 
-    async createTask(creator, employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd) {
+    async createTask(taskData) {
         // сохраняем таск в БД 
-        const task = await taskModel.create({
-            creator,
-            employee,
-            spec,
-            title,
-            text,
-            firstReward,
-            secondReward,
-            penalty,
-            start,
-            firstEnd,
-            secondEnd}); 
+        const task = await taskModel.create(taskData); 
+        return task;
     }
 }
 

@@ -11,16 +11,18 @@ class TokenService {
         }
     }
 
-    async validateAccessToken(token) {
+    validateAccessToken(token) {
         try {
             const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+            console.log('access token валидирован')
+            console.log(userData);
             return userData;
         } catch (error) {
             return null;
         }
     }
 
-    async validateRefreshToken(token) {
+    validateRefreshToken(token) {
         try {
             const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
             return userData;
