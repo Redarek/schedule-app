@@ -35,7 +35,7 @@ const RegistrationForm: FC = () => {
           //   value={}
           //   onChange={}
         />
-        <button className={cx(cl.auth__button,cl.auth__button_registration)}>Зарегистрироватсья</button>
+        <button className={cx(cl.auth__button,cl.auth__button_registration)}>Зарегистрироватьcя</button>
         <p
           className={cl.auth__text}
           onClick={(e) => {
