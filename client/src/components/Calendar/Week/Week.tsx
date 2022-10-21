@@ -1,27 +1,30 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import cl from './Week.module.css';
-import {dayName, getLastDayOfMonth, getNumberOfTheDayOfTheMonth, initialDate} from "../index";
+import {
+    checkIndex,
+    dayName,
+    fillingTheDayWithTasks,
+    getIndexOfDay,
+    getLastDayOfMonth,
+    getNumberOfTheDayOfTheMonth,
+    initialDate
+} from "../index";
 import {IDate} from "../../../types/IDate";
 import {ITask} from "../../../types/ITask";
-import TaskWeek from "./TaskWeek";
-import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
-import {fetchTasks} from "../../../store/reducers/ActionCreators";
+import LongTaskWeek from "./LongTaskWeek";
+import DayTaskWeek from "./DayTaskWeek";
 
 interface IHour {
     time: number;
     timesOfADay: string
 }
 
-const Week: FC = () => {
-    const dispatch = useAppDispatch()
+interface WeekProps {
+    tasks: ITask[]
+}
+
+const Week: FC <WeekProps> = ({tasks}) => {
     const [dateNow, setDateNow] = useState(new Date(initialDate));
-
-    //@todo Перенести получение тасков из компонента на страницу
-    const {tasks, isLoading, error} = useAppSelector(state => state.taskSlice)
-
-    useEffect(() => {
-        if (tasks.length === 0) dispatch(fetchTasks())
-    }, [])
 
     const lastDayOfThePrevMonth = getLastDayOfMonth(dateNow.getMonth(), dateNow.getFullYear());
     const numberOfTheFirstDayOfTheMonth = getNumberOfTheDayOfTheMonth(dateNow.getFullYear(), dateNow.getMonth());
@@ -35,7 +38,7 @@ const Week: FC = () => {
 
     const hours: IHour[] = [];
 
-    const fillingDaysOfThePrevMonth = () => {
+    const fillingDaysPrevMonth = () => {
         for (let i = 0; i < numberOfTheFirstDayOfTheMonth - 1; i++) {
             daysOfThePrevMonth[i] = {
                 day: lastDayOfThePrevMonth - numberOfTheFirstDayOfTheMonth + i + 2,
@@ -45,7 +48,7 @@ const Week: FC = () => {
         }
     };
 
-    const fillingDaysOfTheThisWeek = () => {
+    const fillingDaysThisWeek = () => {
         for (let i = 0; i < 7; i++) {
             let c = dateNow.getDay();
 
@@ -58,7 +61,7 @@ const Week: FC = () => {
         }
     };
 
-    const fillingDaysOfTheNextMonth = () => {
+    const fillingDaysNextMonth = () => {
         for (let i = 0; i < 7; i++) {
             daysOfTheNextMonth[i] = {
                 day: i + 1,
@@ -70,7 +73,7 @@ const Week: FC = () => {
     };
 
 
-    const daysOfTheWeekFillingOption = (count = 0) => {
+    const daysWeekFillingOption = (count = 0) => {
         for (let i = 0; i < 7; i++) {
             daysOfTheThisWeek.reverse();
             if (daysOfTheThisWeek[i].day <= lastDayOfTheMonth) {
@@ -89,7 +92,7 @@ const Week: FC = () => {
     };
 
 
-    const fillingDaysOfTheWeek = () => {
+    const fillingDaysWeek = () => {
         switch (fillingOption) {
             case 1:
                 daysOfTheWeek = [...daysOfThePrevMonth, ...daysOfTheThisWeek];
@@ -100,11 +103,11 @@ const Week: FC = () => {
         }
     };
 
-    fillingDaysOfThePrevMonth();
-    fillingDaysOfTheThisWeek();
-    fillingDaysOfTheNextMonth();
-    daysOfTheWeekFillingOption();
-    fillingDaysOfTheWeek();
+    fillingDaysPrevMonth();
+    fillingDaysThisWeek();
+    fillingDaysNextMonth();
+    daysWeekFillingOption();
+    fillingDaysWeek();
 
     const handleChangeWeek = (param: string) => {
         if (param === 'next') {
@@ -135,63 +138,6 @@ const Week: FC = () => {
 
     fillingHours();
 
-    const taskPosition = (task: ITask) => {
-        let margin = task.startTime.getHours() * 50 + 50;
-        let height = -(task.startTime.getHours() - task.endTime.getHours()) * 50;
-        if (task.startTime.getMinutes() <= 15 && task.startTime.getMinutes() >= 8) {
-            margin = margin + 15
-            height = height - 15
-        }
-        if (task.startTime.getMinutes() > 15 && task.startTime.getMinutes() <= 30) {
-            margin = margin + 25
-            height = height - 25
-
-        }
-        if (task.startTime.getMinutes() > 30 && task.startTime.getMinutes() <= 45) {
-            margin = margin + 35
-            height = height - 35
-
-        }
-        if (task.startTime.getMinutes() > 45 && task.startTime.getMinutes() <= 59) {
-            margin = margin + 45
-            height = height - 45
-        }
-        if (task.endTime.getMinutes() <= 15 && task.endTime.getMinutes() >= 8) {
-            height = height + 15
-        }
-        if (task.endTime.getMinutes() > 15 && task.endTime.getMinutes() <= 30) {
-            height = height + 25
-        }
-        if (task.endTime.getMinutes() > 30 && task.endTime.getMinutes() <= 45) {
-            height = height + 35
-
-        }
-        if (task.endTime.getMinutes() > 45 && task.endTime.getMinutes() <= 59) {
-            height = height + 45
-        }
-
-        return {height: `${height}px`, marginTop: `${margin}px`};
-    };
-
-    const taskOnTheDay = (task: ITask, day: IDate) => {
-        const date = new Date(day.date);
-        if (
-            task.startTime.getDate() === date.getDate()
-            && task.endTime.getDate() === date.getDate()
-            && date.getMonth() === task.startTime.getMonth()
-            && date.getFullYear() === task.startTime.getFullYear()
-        ) {
-            return <div
-                key={task.title}
-                className={cl.task}
-                style={taskPosition(task)}
-            >
-                {task.title}
-            </div>;
-
-        }
-    };
-
     const currentDayStyle = (day: IDate) => {
         let date = new Date(day.date);
         if (date.getFullYear() === initialDate.getFullYear()
@@ -212,44 +158,17 @@ const Week: FC = () => {
         }
     };
 
-
-    const counterOfTasksOnDay = (date: IDate, task: ITask) => {
-        if (task.startTime.getDate() !== task.endTime.getDate()
-            && date.date.getMonth()  === task.startTime.getMonth()
-        ) {
-            if (task.startTime.getTime() >= date.date.getDate()) {
-                // console.log(task.startTime.getDate() <= date.date.getDate() )
-                // console.log(date.date.getDate())
-                // console.log(tasks[11].startTime.getDate())
-                const startDay = daysOfTheWeek.findIndex(obj => date.date.getTime() === obj.date.getTime());
-                const numOfDays = task.endTime.getDate() - task.startTime.getDate();
-                for (let i = startDay; i <= 6; i++) {
-                    if (!daysOfTheWeek[i].dayTasks.includes(task)) {
-                        daysOfTheWeek[i].dayTasks.push(task);
-                    } else {
-                    }
-                }
-            }
-        }
-    };
-
-    const fillingTheDayWithTasks = () => {
-        for (let i = 0; i < daysOfTheWeek.length; i++) {
-            for (let j = 0; j < tasks.length; j++) {
-                if (tasks[j].startTime.getFullYear() === dateNow.getFullYear()) {
-                    console.log(j + '' + tasks[j])
-                    counterOfTasksOnDay(daysOfTheWeek[i], tasks[j]);
-                }
-            }
-        }
-    };
-
     if (tasks) {
-        fillingTheDayWithTasks();
-        // if (daysOfTheWeek[1].dayTasks[1]) console.log(daysOfTheWeek[1].dayTasks[1].startTime.getHours())
+        daysOfTheWeek = fillingTheDayWithTasks(daysOfTheWeek, tasks, dateNow, 'week');
     }
 
-    console.log(daysOfTheWeek)
+    const checkTask = (task: ITask, date: Date, index: number) => {
+        if (task.startTime.getDate() === date.getDate()
+            && task.endTime.getDate() === date.getDate()
+        ) {
+            return <DayTaskWeek task={task} date={date} key={index}/>
+        }
+    }
 
     return (
         <div className="calendarWeek">
@@ -270,15 +189,40 @@ const Week: FC = () => {
                     )}
                 </div>
                 <div className={cl.longTermWrapper}>
-                    <div className={cl.longTermFirstDiv}>
-                        <wbr/>
-                    </div>
+                    <div className={cl.longTerm}></div>
                     {daysOfTheWeek.map(day =>
                         <div className={cl.longTerm} key={day.day}>
-                            {/*<wbr/>*/}
-                            {tasks.map(task =>
-                                <TaskWeek days={daysOfTheWeek} task={task} date={day}/>
+                            {day.dayTasks.map((task, index) =>
+                                <div key={index}>
+                                    {checkIndex(index)
+                                        ? <div>
+                                            <LongTaskWeek days={daysOfTheWeek} task={task} date={day}/>
+                                            {task.startTime.getDate() !== day.date.getDate() && day.date.getDay() !== 1
+                                            && day.date.getTime() <= task.endTime.getTime()
+                                                ? <div className={cl.emptyDiv}></div>
+                                                : ''
+                                            }
+                                        </div>
+                                        : ''
+                                    }
+                                </div>
                             )}
+                            <div className={cl.dayTaskCountWrapper}>
+                                {getIndexOfDay(day)
+                                    ? <div className={cl.dayTaskCount}
+                                           onClick={() => console.log(day.dayTasks)}>
+                                        {day.dayTasks.length - 3 === -1
+                                            ? <div className={cl.nested}>Ещё: 2</div>
+                                            : <div className={cl.nested}>{
+                                                day.dayTasks.length > 3
+                                                    ? ''
+                                                    : <div className={cl.nested}>Ещё: {day.dayTasks.length}</div>
+                                            }</div>
+                                        }
+                                    </div>
+                                    : ''
+                                }
+                            </div>
                         </div>
                     )}
                 </div>
@@ -301,8 +245,8 @@ const Week: FC = () => {
                         <div className={cl.calendarTasks}>
                             {daysOfTheWeek.map(day =>
                                 <div className={cl.tasksWrapper} key={day.day}>
-                                    {tasks.map(task =>
-                                        taskOnTheDay(task, day)
+                                    {day.dayTasks.map((task, index) =>
+                                        checkTask(task, day.date, index)
                                     )}
                                 </div>
                             )}

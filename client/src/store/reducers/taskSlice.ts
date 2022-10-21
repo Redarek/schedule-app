@@ -32,50 +32,7 @@ const taskSlice = createSlice({
                     endTime: new Date(date[i].endTime)
                 }]
             }
-            // state.tasks.sort((a:ITask,b:ITask) => {
-            //     // console.log(a)
-            //     // console.log(a.startTime.getTime())
-            //     // console.log(b)
-            //     // console.log(b.startTime.getTime())
-            //     // console.log('___________________')
-            //     // console.log(a)
-            //     // console.log(b)
-            //     if (b.startTime.getTime() <= a.startTime.getTime()) {
-            //         return 1
-            //     }
-            //     // if (b.endTime.getDate() === a.startTime.getDate()+1) {
-            //     //     console.log('2')
-            //     //     return 1
-            //     // }
-            //     // if (a.endTime.getDate()+1 === b.startTime.getDate() && a.startTime >= b.startTime && a.endTime >= b.startTime)
-            //     //     return 1
-            //     // if (a.endTime.getDate() >= b.startTime.getDate()) {
-            //     //     console.log('second')
-            //     //     return 1
-            //     // }
-            //     else return -1
-            // })
 
-
-            // state.tasks.sort((a:ITask,b:ITask) => {
-            //         if(b.startTime.getTime() >= a.startTime.getTime()) {
-            //         return -1
-            //     }
-            //         return  0
-            // })
-
-
-            // state.tasks.sort((a:ITask,b:ITask) => {
-            //     // console.log(a.startTime.getDate())
-            //     console.log(b.endTime.getDate()+1 === a.startTime.getDate())
-            //     // console.log(a.startTime.getDate())
-            //     if (b.endTime.getDate()+1 === a.startTime.getDate()) {
-            //         console.log(b)
-            //         console.log(a)
-            //         return 1
-            //     }
-            //     else return 0
-            // })
         },
         [fetchTasks.pending.type]: (state) => {
             state.isLoading = true;

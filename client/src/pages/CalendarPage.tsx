@@ -1,16 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Month from "../components/Calendar/Month/Month";
 import ModalFullScreen from "../components/UI/ModalFullScreen/ModalFullScreen";
 import CreateNewTask from "../components/UI/CreateNewTask/CreateNewTask";
 import Week from "../components/Calendar/Week/Week";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {fetchTasks} from "../store/reducers/ActionCreators";
 
 const CalendarPage = () => {
     const [visible, setVisible] = useState<boolean>(false)
-    const [calendarDisplayMode, setCalendarDisplayMode] = useState(0)
-    const calendarModes = [<Month/>, <Week/>]
+    const [calendarDisplayMode, setCalendarDisplayMode] = useState(1)
     const styles = (mode:number) => {
         if (mode === calendarDisplayMode) return {background: 'teal'}
     }
+    //@todo сделать лоадер
+    const dispatch = useAppDispatch()
+    const {tasks, isLoading, error} = useAppSelector(state => state.taskSlice)
+    useEffect(() => {
+        if (tasks.length === 0) dispatch(fetchTasks())
+    }, [])
+
+    const calendarModes = [<Month tasks={tasks}/>, <Week tasks={tasks}/>]
     return (
         <div>
             <button onClick={()=>setVisible(true)}>Create new Task</button>

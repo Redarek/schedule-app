@@ -3,13 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="8adacb84-ae57-493e-b94a-80a67d6fa09f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Week/TaskWeek.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Week/TaskWeek.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Week/TaskWeek.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Week/TaskWeek.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Week/Week.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Week/Week.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Week/Week.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Week/Week.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/store/reducers/taskSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/reducers/taskSlice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/store.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +65,7 @@
       <workItem from="1665835901828" duration="19516000" />
       <workItem from="1665865509309" duration="19000" />
       <workItem from="1665993633799" duration="9048000" />
+      <workItem from="1666350950726" duration="12393000" />
     </task>
     <servers />
   </component>

@@ -106,27 +106,25 @@
     border-radius: 5px
 }
 
-
-
+.taskDay {
+    background-color: rgb(121, 134, 203);
+    width: 100%;
+    margin: 0 3%;
+    border-radius: 5px
+}
 
 .longTermWrapper {
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
-    /*margin-left: 10%;*/
-    height: 8vh;
+    height: 11.5vh;
     position: relative;
-
-}
-
-.longTermFirstDiv {
-    border-color: darkgrey;
-    border-style: solid;
-    width: 11.1%;
-    border-width: 0 1px 0 1px;
 }
 
 .longTerm:first-child {
+    border-color: darkgrey;
+    border-style: solid;
+    width: 11.1%;
     border-width: 0 1px 1px 1px;
 }
 
@@ -143,4 +141,30 @@
     width: 90%;
     margin-left: 10%;
     position: absolute;
+}
+
+.emptyDiv {
+    height: 18px;
+    margin-bottom: 2%
+}
+
+.dayTaskCount {
+    margin-top: 2%;
+    margin-left: auto;
+    border-radius: 5px;
+    padding-left: 5px;
+    width: 98%;
+}
+.dayTaskCount:hover {
+    background-color: rgba(204, 204, 204, .5);
+}
+
+.dayTaskCountWrapper {
+    cursor: pointer;
+    width: 98%;
+    margin: auto 0 5% 0 ;
+}
+
+.nested {
+    width: 100%;
 }
