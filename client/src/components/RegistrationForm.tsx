@@ -12,6 +12,7 @@ const RegistrationForm: FC = () => {
   const newDAte = new Date(date);
   console.log(newDAte);
   console.log(newDAte.getTime());
+
   return (
     <div className={cl.auth}>
       <form className={cl.auth__form}>
@@ -19,9 +20,9 @@ const RegistrationForm: FC = () => {
         <input
           className={cx(cl.auth__input, cl.auth__input_email)}
           placeholder="Введите email"
-          //   value={state.email}
           name="email"
           id='registration-email'
+          //   value={}
           //   onChange={}
         />
         <label htmlFor='registration-password' className={cl.auth__label}>Пароль</label>
@@ -31,10 +32,10 @@ const RegistrationForm: FC = () => {
           type="password"
           name="password"
           id='registration-password'
-          //   value={state.password}
-          //   onChange={handleChange}
+          //   value={}
+          //   onChange={}
         />
-        <button className={cl.auth__button}>Войти</button>
+        <button className={cx(cl.auth__button,cl.auth__button_registration)}>Зарегистрироватсья</button>
         <p
           className={cl.auth__text}
           onClick={(e) => {
@@ -42,7 +43,7 @@ const RegistrationForm: FC = () => {
             e.preventDefault();
           }}
         >
-          <div className={cl.auth__link}>Зарегистрироваться</div>
+          <div className={cl.auth__link}>Вход</div>
         </p>
       </form>
     </div>

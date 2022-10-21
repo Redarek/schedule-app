@@ -4,7 +4,6 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  /* background-color: #000; */
 }
 .auth__title {
   font-size: 24px;
@@ -53,7 +52,6 @@
   min-height: 350px;
   border-radius: 15px;
   margin: 100px 0 0 0;
-  /* background-color: rgb(106, 195, 192, 0.3); */
 }
 .auth__text {
   color: #0078D4;
@@ -64,7 +62,6 @@
   cursor: pointer;
 }
 .auth__button {
-  max-width: 120px;
   min-height: 32px;
   width: 100%;
   background-color: #0078D4;
@@ -80,13 +77,12 @@
   font-family: Arial, Helvetica, sans-serif;
   margin: 55px 0 0 0;
 }
+.auth__button_registration{
+  max-width: 170px;
+}
+.auth__button_login{
+  max-width: 120px;
+}
 .auth__button:hover {
   opacity: 0.8;
 }
-/* .popup__submit-button:disabled {
-  border: 1px solid black;
-  background-color: white;
-  color: black;
-  opacity: .2;
-  cursor: default;
-} */
