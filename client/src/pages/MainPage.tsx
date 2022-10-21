@@ -31,11 +31,11 @@ const MainPage = () => {
                 <a rel="stylesheet" href="/login">"/login"</a>
             </div>
             <div className={cl.linkDesc} onClick={(e) => {
-                navigate('/reg');
+                navigate('/registration');
                 e.preventDefault()
             }}>
                 Employee Registration Component-
-                <a rel="stylesheet" href="/reg">"/reg"</a>
+                <a rel="stylesheet" href="/registration">"/reg"</a>
             </div>
         </div>
     );
