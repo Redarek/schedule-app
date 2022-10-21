@@ -6,7 +6,7 @@ import Week from "../components/Calendar/Week/Week";
 
 const CalendarPage = () => {
     const [visible, setVisible] = useState<boolean>(false)
-    const [calendarDisplayMode, setCalendarDisplayMode] = useState(1)
+    const [calendarDisplayMode, setCalendarDisplayMode] = useState(0)
     const calendarModes = [<Month/>, <Week/>]
     const styles = (mode:number) => {
         if (mode === calendarDisplayMode) return {background: 'teal'}

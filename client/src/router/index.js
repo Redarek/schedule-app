@@ -1,11 +1,11 @@
 import MainPage from "../pages/MainPage";
-import Month from "../components/Calendar/Month/Month";
 import LoginForm from "../pages/LoginForm";
 import RegistrationForm from "../components/RegistrationForm";
+import CalendarPage from "../pages/CalendarPage";
 
 export const publicRoutes = [
     {path: '/', element: <MainPage/>},
-    {path: '/month', element: <Month/>},
+    {path: '/month', element: <CalendarPage/>},
     {path: '/login', element: <LoginForm/>},
     {path: '/registration', element: <RegistrationForm/>},
 ];

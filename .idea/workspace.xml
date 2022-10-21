@@ -4,8 +4,12 @@
     <list default="true" id="8adacb84-ae57-493e-b94a-80a67d6fa09f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/UI/CreateNewTask/CreateNewTask.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/CreateNewTask/CreateNewTask.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/TaskMonth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/reducers/taskSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/reducers/taskSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/store.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +17,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">

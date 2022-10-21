@@ -10,3 +10,11 @@ export const getNumberOfTheDayOfTheMonth = (year, month) => {
     let date = new Date(year, month);
     return date.getDay();
 };
+
+
+
+/// year
+
+// const year = initialDate.getFullYear()
+
+// const dateNow

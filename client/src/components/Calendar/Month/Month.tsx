@@ -11,13 +11,13 @@ import {fetchTasks} from "../../../store/reducers/ActionCreators";
 
 
 const Month: FC = () => {
-    //@todo Перенести получение тасков из компонента на страницу где будет расположен компонент
-    //@todo Сделать нормальные стили для месячного календаря
+        //@todo Перенести получение тасков из компонента на страницу где будет расположен компонент
+        //@todo Сделать нормальные стили для месячного календаря
         const dispatch = useAppDispatch()
         const {tasks, isLoading, error} = useAppSelector(state => state.taskSlice)
 
         useEffect(() => {
-            if(tasks.length === 0) dispatch(fetchTasks())
+            if (tasks.length === 0) dispatch(fetchTasks())
         }, [])
 
         const [dateNow, setDateNow] = useState<Date>(new Date(initialDate));
@@ -150,19 +150,41 @@ const Month: FC = () => {
 
 
         const counterOfTasksOnDay = (date: IDate, task: ITask) => {
-            if (date.date.getDate() === task.startTime.getDate()
-                && date.date.getMonth() === task.startTime.getMonth()
-                && date.date.getMonth() === task.endTime.getMonth()
+            if (date.date.getTime() >= task.startTime.getTime()
+                && date.date.getTime() <= task.endTime.getTime()
+                // date.date.getDate() <= task.startTime.getDate()
+                // && date.date.getMonth() === task.startTime.getMonth()
+                // && date.date.getMonth() === task.endTime.getMonth()
             ) {
-                const startDay = datesInTheMonth.findIndex(obj => date.date.getTime() === obj.date.getTime());
-                const numOfDays = task.endTime.getDate() - task.startTime.getDate();
-                if (startDay !== 41) {
-                    for (let i = startDay; i <= startDay + numOfDays; i++) {
-                        if (!datesInTheMonth[i].dayTasks.includes(task)) {
-                            datesInTheMonth[i].dayTasks.push(task);
-                        } else {
-                        }
-                    }
+                // let startDay = 0
+                //  if (task.startTime.getMonth() === dateNow.getMonth()) {
+                //      startDay = datesInTheMonth.findIndex(obj => obj.date.getDate() === task.startTime.getDate());
+                //  }
+
+                // if (task.startTime.getMonth() !== dateNow.getMonth()) {
+                // const startDay = datesInTheMonth.findIndex(obj => obj.date.getDate() === task.startTime.getDate());
+                // }
+                // const numOfDays = task.endTime.getDate() - task.startTime.getDate();
+                // console.log(task)
+                // if (startDay !== 41) {
+                //     for (let i = startDay; i <= startDay + numOfDays; i++) {
+                //         if (datesInTheMonth[i].date.getTime() >= task.startTime.getTime()) {
+                //             if (task.title === '24-28/09') {
+                //                 console.log(task)
+                //                 console.log(startDay)
+                //                 console.log(numOfDays)
+                //             }
+                //             // console.log(task)
+                //             if (!datesInTheMonth[i].dayTasks.includes(task)) {
+                //                 datesInTheMonth[i].dayTasks.push(task);
+                //             } else {
+                //             }
+                //         }
+                //     }
+                // }
+
+                if (!date.dayTasks.includes(task)) {
+                    date.dayTasks.push(task);
                 }
             }
         };
@@ -190,6 +212,30 @@ const Month: FC = () => {
             fillingTheDayWithTasks();
         }
 
+        const createEmptyDivFirst = (tasks: ITask[], task: ITask, index: number, date: IDate) => {
+            // console.log(date.dayTasks)
+            if (index !== 0) {
+                if (task.startTime.getDate() <= tasks[index - 1].endTime.getDate() && date.dayTasks.length > 2) {
+                    return true
+                }
+
+            } else return false
+        }
+        const createEmptyDivSecond = (tasks: ITask[], task: ITask, index: number, date: IDate) => {
+            if (index !== 0) {
+                if (task.startTime.getDate() <= tasks[index - 1].endTime.getDate()) {
+                    return true
+                }
+            } else return false
+        }
+        const createEmptyDivThird = (tasks: ITask[], task: ITask, index: number, date: IDate) => {
+            if (task.startTime.getDate() === date.date.getDate() && !createEmptyDivSecond(tasks, task, index, date) && createEmptyDivFirst(tasks, task, index, date)) {
+                return true
+            } else return false
+        }
+
+        console.log(datesInTheMonth)
+        console.log(tasks)
         return (
             <div className={cl.calendar}>
                 {dateNow.toLocaleString('default', {month: 'long'})}
@@ -204,8 +250,7 @@ const Month: FC = () => {
                 <div className={cl.daysWrapper}>
                     <div className={cl.monthDays}>
                         {datesInTheMonth.map((day, index) =>
-                            <div className={cl.day} style={currentDateStyle(index, day.date)} key={index}>{day.day}
-                            </div>
+                            <div className={cl.day} style={currentDateStyle(index, day.date)} key={index}>{day.day}</div>
                         )}
                     </div>
                     <div className={cl.tasksWrapper}>
@@ -214,51 +259,132 @@ const Month: FC = () => {
                                 <div className={cl.taskWrapper}>
                                     {date.dayTasks.map((task, index) =>
                                         <div key={index}>
-                                            {index > 2
-                                                ? ''
-                                                : <div className={cl.nested}>
-                                                    {date.date.getDate() === task.startTime.getDate()
-                                                        ? <TaskMonth task={task} day={date}
-                                                                     week={getWeek(date)}/>
-                                                        : <div className={cl.nested}>
-                                                            {date.date.getDay() === 1
-                                                                ? <div className={cl.nested}>
-                                                                    <TaskMonth task={task}
-                                                                               day={date}
-                                                                               week={getWeek(date)}
-                                                                    />
-                                                                </div>
-                                                                : <div className={cl.nested}>
-                                                                    {date.date.getDate() < task.endTime.getDate() && date.date.getDate() > task.startTime.getDate()
-                                                                        ? <div className={cl.nested}>
-                                                                            <TaskMonth
-                                                                                task={task} day={date}
-                                                                                week={getWeek(date)}
-                                                                            />
-                                                                            <div className={cl.emptyDiv}></div>
-                                                                        </div>
-                                                                        : <div className={cl.nested}>
-                                                                            {date.dayTasks[date.dayTasks.length - 1]
-                                                                                ? <div className={cl.nested}>
-                                                                                    {task.startTime.getDate() <= date.dayTasks[date.dayTasks.length - 1].startTime.getDate()
-                                                                                        ?
-                                                                                        <TaskMonth
-                                                                                            task={task} day={date}
-                                                                                            week={getWeek(date)}
-                                                                                        />
-                                                                                        : ''
-                                                                                    }
-                                                                                </div>
-                                                                                : ''
-                                                                            }
-                                                                        </div>
-                                                                    }
-                                                                </div>
-                                                            }
+                                            {index === 0
+                                                ? <div>
+                                                    <TaskMonth task={task} day={date} week={getWeek(date)}/>
+                                                    {/*<div className={cl.emptyDiv}>1</div>*/}
+
+                                                    {task.startTime.getDate() !== date.date.getDate() && date.date.getDay() !== 1
+                                                    && date.date.getTime() <= task.endTime.getTime()
+                                                        ? <div>
+                                                                {/*<div>*/}
+                                                                   <div className={cl.emptyDiv}></div>
+
+                                                                {/*</div>*/}
+                                                            {/*{index !== date.dayTasks.length - 1*/}
+                                                            {/*    ? <div>{*/}
+                                                            {/*        date.dayTasks[index+1].endTime <= task.startTime*/}
+                                                            {/*        ? <div className={cl.emptyDiv}>he</div>*/}
+                                                            {/*            : ''*/}
+                                                            {/*    }</div>*/}
+                                                            {/*    : ''*/}
+                                                            {/*}*/}
                                                         </div>
+                                                        : ''
                                                     }
                                                 </div>
+                                                : ''
                                             }
+                                            {index === 1
+                                                ? <div>
+                                                    <TaskMonth task={task} day={date} week={getWeek(date)}/>
+                                                    {task.startTime.getDate() !== date.date.getDate() && date.date.getDay() !== 1
+                                                    && date.date.getTime() <= task.endTime.getTime()
+                                                        ?
+                                                        <div>
+                                                            {date.dayTasks[2]
+                                                            ?<div>
+                                                                    {/*{date.dayTasks[2].startTime.getDate() === date.date.getDate()*/}
+                                                                    {/*    ?   ''*/}
+                                                                    {/*    : */}
+                                                                    <div className={cl.emptyDiv}>
+                                                                        </div>
+                                                                    {/*}*/}
+                                                                </div>
+                                                            : ''
+                                                            }
+
+                                                            {/*<div className={cl.emptyDiv}>2</div>*/}
+                                                        </div>
+                                                        : ''
+                                                    }
+                                                </div>
+                                                : ''
+                                            }
+                                            {index === 2
+                                                ? <div>
+                                                    <TaskMonth task={task} day={date} week={getWeek(date)}/>
+                                                    {task.startTime.getDate() !== date.date.getDate() && date.date.getDay() !== 1
+                                                        ? <div className={cl.emptyDiv}></div>
+                                                        : ''
+                                                    }
+                                                </div>
+                                                : ''
+                                            }
+
+                                            {/*{index >= 3*/}
+                                            {/*    ? ''*/}
+                                            {/*    : <div className={cl.nested}>*/}
+                                            {/*        {date.date.getDate() === task.startTime.getDate()*/}
+                                            {/*            ? <div>*/}
+                                            {/*                /!*{createEmptyDivSecond(tasks, task, index, date)*!/*/}
+                                            {/*                /!*    ? <div className={cl.emptyDiv}></div>*!/*/}
+                                            {/*                /!*    : ''*!/*/}
+                                            {/*                /!*}*!/*/}
+                                            {/*                /!*{createEmptyDivThird(tasks, task, index, date)*!/*/}
+                                            {/*                /!*    ? <div className={cl.emptyDiv}></div>*!/*/}
+                                            {/*                /!*    : ''*!/*/}
+                                            {/*                /!*}*!/*/}
+                                            {/*                /!*{createEmptyDivFirst(tasks, task, index, date)*!/*/}
+                                            {/*                /!*    ? <div className={cl.emptyDiv}></div>*!/*/}
+                                            {/*                /!*    : ''*!/*/}
+                                            {/*                /!*}*!/*/}
+                                            {/*                /!*{createEmptyDivThird(tasks, task, index, date)*!/*/}
+                                            {/*                /!*    ? <div className={cl.emptyDiv}></div>*!/*/}
+                                            {/*                /!*    : ''*!/*/}
+                                            {/*                /!*}*!/*/}
+                                            {/*                <TaskMonth task={task} day={date}*/}
+                                            {/*                           week={getWeek(date)}/>*/}
+                                            {/*            </div>*/}
+                                            {/*            : <div className={cl.nested}>*/}
+                                            {/*                {date.date.getDay() === 1*/}
+                                            {/*                    ? <div className={cl.nested}>*/}
+                                            {/*                        <TaskMonth task={task}*/}
+                                            {/*                                   day={date}*/}
+                                            {/*                                   week={getWeek(date)}*/}
+                                            {/*                        />*/}
+                                            {/*                    </div>*/}
+                                            {/*                    : <div className={cl.nested}>*/}
+                                            {/*                        {date.date.getDate() <= task.endTime.getDate() && date.date.getDate() >= task.startTime.getDate()*/}
+                                            {/*                            ? <div className={cl.nested}>*/}
+                                            {/*                                <TaskMonth*/}
+                                            {/*                                    task={task} day={date}*/}
+                                            {/*                                    week={getWeek(date)}*/}
+                                            {/*                                />*/}
+                                            {/*                                <div className={cl.emptyDiv}></div>*/}
+                                            {/*                            </div>*/}
+                                            {/*                            : <div className={cl.nested}>*/}
+                                            {/*                                {date.dayTasks[date.dayTasks.length - 1]*/}
+                                            {/*                                    ? <div className={cl.nested}>*/}
+                                            {/*                                        {task.startTime.getDate() <= date.dayTasks[date.dayTasks.length - 1].startTime.getDate()*/}
+                                            {/*                                            ?*/}
+                                            {/*                                            <TaskMonth*/}
+                                            {/*                                                task={task} day={date}*/}
+                                            {/*                                                week={getWeek(date)}*/}
+                                            {/*                                            />*/}
+                                            {/*                                            : ''*/}
+                                            {/*                                        }*/}
+                                            {/*                                    </div>*/}
+                                            {/*                                    : ''*/}
+                                            {/*                                }*/}
+                                            {/*                            </div>*/}
+                                            {/*                        }*/}
+                                            {/*                    </div>*/}
+                                            {/*                }*/}
+                                            {/*            </div>*/}
+                                            {/*        }*/}
+                                            {/*    </div>*/}
+                                            {/*}*/}
                                         </div>
                                     )}
                                 </div>
@@ -269,9 +395,9 @@ const Month: FC = () => {
                                             {date.dayTasks.length - 3 === -1
                                                 ? <div className={cl.nested}>Ещё: 2</div>
                                                 : <div className={cl.nested}>{
-                                                    date.dayTasks.length - 3 === 0
+                                                    date.dayTasks.length > 3
                                                         ? ''
-                                                        : <div className={cl.nested}>Ещё: {date.dayTasks.length - 3}</div>
+                                                        : <div className={cl.nested}>Ещё: {date.dayTasks.length}</div>
                                                 }</div>
                                             }
                                         </div>
