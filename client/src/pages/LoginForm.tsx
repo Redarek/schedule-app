@@ -19,19 +19,19 @@ const LoginForm: FC = () => {
   return (
     <div className={cl.auth}>
       <form className={cl.auth__form}>
-        <label htmlFor="registration-email" className={cl.auth__label}>
+        <label htmlFor="login-email" className={cl.auth__label}>
           Email
         </label>
         <input
           className={cx(cl.auth__input, cl.auth__input_email)}
           placeholder="Введите email"
           name="email"
-          id="registration-email"
+          id="login-email"
           onChange={e => setEmail(e.target.value)}
           value={email}
           type='text'
         />
-        <label htmlFor="registration-password" className={cl.auth__label}>
+        <label htmlFor="login-password" className={cl.auth__label}>
           Пароль
         </label>
         <input
@@ -39,7 +39,7 @@ const LoginForm: FC = () => {
           placeholder="Введите пароль"
           type="password"
           name="password"
-          id="registration-password"
+          id="login-password"
           onChange={e => setPassword(e.target.value)}
           value={password}
         />
