@@ -5,6 +5,7 @@ import CreateNewTask from "../components/UI/CreateNewTask/CreateNewTask";
 import Week from "../components/Calendar/Week/Week";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {fetchTasks} from "../store/reducers/ActionCreators";
+import cl from '../styles/CalendarPage.module.css'
 
 const CalendarPage = () => {
     const [visible, setVisible] = useState<boolean>(false)
@@ -21,7 +22,7 @@ const CalendarPage = () => {
 
     const calendarModes = [<Month tasks={tasks}/>, <Week tasks={tasks}/>]
     return (
-        <div>
+        <div className={cl.wrapper}>
             <button onClick={()=>setVisible(true)}>Create new Task</button>
             <ModalFullScreen visible={visible} setVisible={setVisible}>
                 <CreateNewTask/>

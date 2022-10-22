@@ -21,6 +21,7 @@ export const fetchTasks = createAsyncThunk(
 interface LoginObject {
     email: string;
     password: string;
+    name: string;
 }
 
 export const login = createAsyncThunk(
@@ -41,10 +42,10 @@ export const registration = createAsyncThunk(
     'user/registration',
     async (loginObject: LoginObject) => {
         try {
-            const response = await AuthService.registration(loginObject.email, loginObject.password);
+            const response = await AuthService.registration(loginObject.email, loginObject.password, loginObject.name);
             // console.log(response);
             localStorage.setItem('token', response.data.accessToken);
-            return response.data; 
+            return response.data;
         } catch (e) {
             console.log(e);
         }
@@ -72,7 +73,7 @@ export const checkAuth = createAsyncThunk(
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
             // console.log(response);
             localStorage.setItem('token', response.data.accessToken);
-            return response.data; 
+            return response.data;
         } catch (e) {
             console.log(e);
         }

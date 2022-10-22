@@ -1,10 +1,11 @@
 import React, { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import {login, logout, registration} from "../store/reducers/ActionCreators";
+import {login, registration} from "../store/reducers/ActionCreators";
 
 const LoginForm:FC= () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [name, setName] = useState<string>('')
     const dispatch = useAppDispatch();
     const {isAuth, isLoading, error, user} = useAppSelector(state => state.authSlice)
     console.log(user.user);
@@ -23,9 +24,14 @@ const LoginForm:FC= () => {
                 type='password'
                 placeholder='Пароль'
             />
-            <button onClick={() => {dispatch(login({email: email, password: password}))}}>Логин</button>
-            <button onClick={() => {dispatch(registration({email: email, password: password}))}}>Регистрация</button>
-            <button onClick={() => {dispatch(logout())}}>Выйти</button>
+            <input
+                onChange={e => setName(e.target.value)}
+                value={name}
+                type='text'
+                placeholder='Name'
+            />
+            <button onClick={() => {dispatch(login({email: email, password: password, name: name}))}}>Логин</button>
+            <button onClick={() => {dispatch(registration({email: email, password: password, name: name}))}}>Регистрация</button>
         </div>
     );
 };

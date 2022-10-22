@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-
 }
 .calendarHeader {
     display: flex;
@@ -28,7 +27,7 @@
     padding-top: 8px;
     border: 1px solid lightgray;
     width: calc(100%/7);
-    height: calc(100vh/6.5);
+    height: calc(85vh/6.5);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -63,7 +62,7 @@
 
 .taskDay {
     width: calc(100%/7);
-    height: calc(100vh/6.5);
+    height: calc(85vh/6.5);
     display: flex;
     align-items: center;
     flex-direction: column;

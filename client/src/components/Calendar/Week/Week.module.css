@@ -2,13 +2,13 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-
 }
 
 .calendarWrapper {
     display: flex;
     overflow: auto;
     width: 100%;
+    height: 65vh;
 }
 
 .hours {
@@ -30,7 +30,7 @@
     width: 90%;
     display: flex;
     flex-wrap: nowrap;
-    height: 5vh;
+    height: 4vh;
 }
 
 
@@ -125,7 +125,7 @@
     border-color: darkgrey;
     border-style: solid;
     width: 11.1%;
-    border-width: 0 1px 1px 1px;
+    border-width: 0 1px 1px 0px;
 }
 
 .longTerm {
@@ -155,6 +155,7 @@
     padding-left: 5px;
     width: 98%;
 }
+
 .dayTaskCount:hover {
     background-color: rgba(204, 204, 204, .5);
 }
@@ -162,7 +163,7 @@
 .dayTaskCountWrapper {
     cursor: pointer;
     width: 98%;
-    margin: auto 0 5% 0 ;
+    margin: auto 0 5% 0;
 }
 
 .nested {

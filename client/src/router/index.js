@@ -5,7 +5,7 @@ import CalendarPage from "../pages/CalendarPage";
 
 export const publicRoutes = [
     {path: '/', element: <MainPage/>},
-    {path: '/month', element: <CalendarPage/>},
+    {path: '/calendar', element: <CalendarPage/>},
     {path: '/login', element: <LoginForm/>},
     {path: '/registration', element: <RegistrationForm/>},
 ];
