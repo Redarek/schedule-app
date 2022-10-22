@@ -1,0 +1,26 @@
+.listItemWrap {
+    width: 75%;
+    margin-left: 25%;
+    padding: 2px 0;
+    cursor: pointer;
+    margin-bottom: 1%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.listItemWrap:hover {
+    color: #3c64ff;
+}
+.activeItem {
+    background-color: #3c64ff;
+    width: 1.5%;
+    height: 2vw;
+}
+.itemTitle {
+    margin-left: 10%;
+}
+.itemLink {
+    text-decoration: none;
+    margin: 0;
+    color: black;
+}

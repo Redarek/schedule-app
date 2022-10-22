@@ -17,13 +17,22 @@ const initialState: TaskState = {
 const taskSlice = createSlice({
     name: 'tasks',
     initialState,
-    reducers: {},
+    reducers: {
+    },
 
     extraReducers: {
         [fetchTasks.fulfilled.type]: (state, action: PayloadAction<ITask[]>) => {
             state.isLoading = false;
             state.error = ''
-            state.tasks = action.payload;
+            const date = action.payload
+            for (let i = 0; i<date.length; i++) {
+                state.tasks = [...state.tasks, {
+                    title: date[i].title,
+                    startTime: new Date(date[i].startTime),
+                    endTime: new Date(date[i].endTime)
+                }]
+            }
+
         },
         [fetchTasks.pending.type]: (state) => {
             state.isLoading = true;

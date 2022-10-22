@@ -17,11 +17,11 @@ const MainPage = () => {
                 <a rel="stylesheet" href="/">"/"</a>
             </div>
             <div className={cl.linkDesc} onClick={(e) => {
-                navigate('/month');
+                navigate('/calendar');
                 e.preventDefault()
             }}>
-                MonthCalendar -
-                <a rel="stylesheet" href="/month">"/month"</a>
+                Calendar -
+                <a rel="stylesheet" href="/calendar">"/calendar"</a>
             </div>
             <div className={cl.linkDesc} onClick={(e) => {
                 navigate('/login');
@@ -31,11 +31,11 @@ const MainPage = () => {
                 <a rel="stylesheet" href="/login">"/login"</a>
             </div>
             <div className={cl.linkDesc} onClick={(e) => {
-                navigate('/reg');
+                navigate('/registration');
                 e.preventDefault()
             }}>
-                Employee Registration Component-
-                <a rel="stylesheet" href="/reg">"/reg"</a>
+                Registration-
+                <a rel="stylesheet" href="/registration">"/reg"</a>
             </div>
         </div>
     );
