@@ -2,21 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8adacb84-ae57-493e-b94a-80a67d6fa09f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/LoginForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/styles/RegistrationForm.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Month/Month.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Calendar/Week/Week.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Calendar/Week/Week.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CalendarPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AppRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AppRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RegistrationForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RegistrationForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UI/ListItem/ListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/ListItem/ListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/UI/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/UI/Navbar/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/LoginForm.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/MainPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/MainPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/services/AuthService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/AuthService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/store/reducers/ActionCreators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/reducers/ActionCreators.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles/MainPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/MainPage.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/types/AuthResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/types/AuthResponse.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/types/IUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/types/IUser.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +51,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/src/components" />
       <recent name="$PROJECT_DIR$/client/src/components/UI/CreateNewTask" />
     </key>
   </component>
@@ -69,6 +69,7 @@
       <workItem from="1665865509309" duration="19000" />
       <workItem from="1665993633799" duration="9048000" />
       <workItem from="1666350950726" duration="31107000" />
+      <workItem from="1666430322127" duration="3342000" />
     </task>
     <servers />
   </component>

@@ -15,12 +15,11 @@ const Navbar: FC<NavbarProps> = () => {
             items: [
                 {link: '/', title: 'MainPage'},
                 {link: '/calendar', title: 'Calendar'},
-                {link: '/login', title: 'login'},
+                {link: '/login', title: 'Login'},
                 {link: '/registration', title: 'Registration'}
             ]
         },
     ]
-
 
     return (
         <nav className={cl.navWrap}>

@@ -1,13 +1,14 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import cl from "./ListItem.module.css";
 import {useNavigate} from "react-router-dom";
+import {IList} from "../../../types/INavbar";
 
 interface ListItemProps {
     title: string;
     link: string;
     index: number;
     activeItem: number;
-    setActiveItem: (index: number) => void
+    setActiveItem: (index: number) => void;
 }
 
 

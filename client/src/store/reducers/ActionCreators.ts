@@ -21,6 +21,10 @@ export const fetchTasks = createAsyncThunk(
 interface LoginObject {
     email: string;
     password: string;
+}
+interface RegObject {
+    email: string;
+    password: string;
     name: string;
 }
 
@@ -40,9 +44,9 @@ export const login = createAsyncThunk(
 
 export const registration = createAsyncThunk(
     'user/registration',
-    async (loginObject: LoginObject) => {
+    async (regObject: RegObject) => {
         try {
-            const response = await AuthService.registration(loginObject.email, loginObject.password, loginObject.name);
+            const response = await AuthService.registration(regObject.email, regObject.password, regObject.name);
             // console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             return response.data;

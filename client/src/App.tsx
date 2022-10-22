@@ -5,8 +5,9 @@ import AppRouter from "./components/AppRouter";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
 import {checkAuth} from './store/reducers/ActionCreators';
 import Header from "./components/UI/Header/Header";
-import LoginForm from "./pages/LoginForm";
+import LoginForm from "./components/LoginForm";
 import Navbar from "./components/UI/Navbar/Navbar";
+import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -41,7 +42,7 @@ function App() {
                     </div>
                     : <div>
                         <h2>Пришла пора заводить аккаунт чтобы видеть красоту =)</h2>
-                        <LoginForm/>
+                        <AppRouter/>
                     </div>
                 }
             </BrowserRouter>

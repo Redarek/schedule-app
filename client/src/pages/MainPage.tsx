@@ -20,8 +20,8 @@ const MainPage = () => {
                 navigate('/calendar');
                 e.preventDefault()
             }}>
-                MonthCalendar -
-                <a rel="stylesheet" href="/calendar">"/month"</a>
+                Calendar -
+                <a rel="stylesheet" href="/calendar">"/calendar"</a>
             </div>
             <div className={cl.linkDesc} onClick={(e) => {
                 navigate('/login');
@@ -34,7 +34,7 @@ const MainPage = () => {
                 navigate('/registration');
                 e.preventDefault()
             }}>
-                Employee Registration Component-
+                Registration-
                 <a rel="stylesheet" href="/registration">"/reg"</a>
             </div>
         </div>
