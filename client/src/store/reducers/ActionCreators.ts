@@ -10,7 +10,7 @@ export const fetchTasks = createAsyncThunk(
     'tasks/fetchAll',
     async (_, thunkAPI) => {
         try {
-            const response = await axios.get<ITask[]>('http://localhost:3030/tasks')
+            const response = await axios.get<ITask[]>('http://localhost:5050/events')
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось загрузить задания")
@@ -21,6 +21,11 @@ export const fetchTasks = createAsyncThunk(
 interface LoginObject {
     email: string;
     password: string;
+}
+interface RegObject {
+    email: string;
+    password: string;
+    name: string;
 }
 
 export const login = createAsyncThunk(
@@ -39,12 +44,12 @@ export const login = createAsyncThunk(
 
 export const registration = createAsyncThunk(
     'user/registration',
-    async (loginObject: LoginObject) => {
+    async (regObject: RegObject) => {
         try {
-            const response = await AuthService.registration(loginObject.email, loginObject.password);
+            const response = await AuthService.registration(regObject.email, regObject.password, regObject.name);
             // console.log(response);
             localStorage.setItem('token', response.data.accessToken);
-            return response.data; 
+            return response.data;
         } catch (e) {
             console.log(e);
         }
@@ -72,7 +77,7 @@ export const checkAuth = createAsyncThunk(
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
             // console.log(response);
             localStorage.setItem('token', response.data.accessToken);
-            return response.data; 
+            return response.data;
         } catch (e) {
             console.log(e);
         }

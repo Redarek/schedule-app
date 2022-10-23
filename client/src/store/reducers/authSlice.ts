@@ -1,9 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
-import { AuthResponse } from "../../types/AuthResponse";
-import { IUser } from "../../types/IUser";
-import { login, logout } from "./ActionCreators";
-
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AuthResponse} from "../../types/AuthResponse";
+import {login, logout} from "./ActionCreators";
 
 interface UserState {
     user: AuthResponse;

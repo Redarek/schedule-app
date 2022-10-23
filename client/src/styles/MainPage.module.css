@@ -3,7 +3,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    height: 94vh;
+    width: 100%;
 }
 .linkDesc {
     display: flex;

@@ -15,6 +15,7 @@ router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
 
-router.post('/create-task', taskController.createTask);
+router.post('/create-task', authMiddleware, taskController.createTask);
+router.get('/tasks', authMiddleware, taskController.getTasks);
 
 module.exports = router;
