@@ -10,7 +10,7 @@ interface Time {
 }
 
 export interface ITask {
-    startTime: Time;
-    endTime: Time;
+    startTime: Date;
+    endTime: Date;
     title: string;
 }
