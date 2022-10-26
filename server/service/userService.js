@@ -7,7 +7,7 @@ const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/ApiError');
 
 class UserService {
-    async registration(email, password) {
+    async registration(email, password, name) {
         const candidate = await userModel.findOne({email});
         // Проверяем, есть ли email в БД
         if (candidate) {
@@ -17,10 +17,10 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 3); //хэшируем пароль
         const activationLink = uuid.v4(); // генерация ссылки активации для письма на email
 
-        const user = await userModel.create({email, password: hashPassword, activationLink}); // сохраняем польз-ля в БД
+        const user = await userModel.create({email, password: hashPassword, activationLink, name, spec}); // сохраняем польз-ля в БД
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
-        const userDto = new UserDto(user); //id, email, isActivated Отправляем письмо для активации
+        const userDto = new UserDto(user); //передаём все данные о пользователе в DTO (Data Transfer Object) dto получаем на клиенте и dto нужен для отправки email письма
         const tokens = tokenService.generateTokens({...userDto}); // генерируем JWT токены
         await tokenService.saveToken(userDto.id, tokens.refreshToken); // сохраняем рефреш токен в БД
 

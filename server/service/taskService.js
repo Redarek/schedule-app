@@ -10,6 +10,7 @@ class TaskService {
 
     async getAllTasks() {
         const tasks = await taskModel.find();
+        // sort tasks
         return tasks;
     }
 }
