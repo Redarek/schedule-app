@@ -13,10 +13,10 @@ import {
 
 import {IDate} from "../../../types/IDate";
 import TaskMonth from "./TaskMonth";
-import {ITask} from "../../../types/ITask";
+import {ITasks} from "../../../types/ITasks";
 
 interface MonthProps {
-    tasks: ITask[]
+    tasks: ITasks[]
 }
 
 const Month: FC<MonthProps> = ({tasks}) => {
@@ -145,8 +145,8 @@ const Month: FC<MonthProps> = ({tasks}) => {
                                         {checkIndex(index)
                                             ? <div>
                                                 <TaskMonth task={task} day={date} week={getWeek(date)}/>
-                                                {task.startTime.getDate() !== date.date.getDate() && date.date.getDay() !== 1
-                                                && date.date.getTime() <= task.endTime.getTime()
+                                                {task.start.getDate() !== date.date.getDate() && date.date.getDay() !== 1
+                                                && date.date.getTime() <= task.firstEnd.getTime()
                                                     ? <div className={cl.emptyDiv}></div>
                                                     : ''
                                                 }

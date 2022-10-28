@@ -9,12 +9,13 @@
     align-items: center;
 }
 .listItemWrap:hover {
-    color: #3c64ff;
+    color: #0078D4;
 }
 .activeItem {
-    background-color: #3c64ff;
+    background-color: #0078D4;
     width: 1.5%;
     height: 2vw;
+    border-radius: 5px;
 }
 .itemTitle {
     margin-left: 10%;

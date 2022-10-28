@@ -10,7 +10,7 @@ import {
     initialDate
 } from "../index";
 import {IDate} from "../../../types/IDate";
-import {ITask} from "../../../types/ITask";
+import {ITasks} from "../../../types/ITasks";
 import LongTaskWeek from "./LongTaskWeek";
 import DayTaskWeek from "./DayTaskWeek";
 
@@ -20,7 +20,7 @@ interface IHour {
 }
 
 interface WeekProps {
-    tasks: ITask[]
+    tasks: ITasks[]
 }
 
 const Week: FC <WeekProps> = ({tasks}) => {
@@ -162,9 +162,9 @@ const Week: FC <WeekProps> = ({tasks}) => {
         daysOfTheWeek = fillingTheDayWithTasks(daysOfTheWeek, tasks, dateNow, 'week');
     }
 
-    const checkTask = (task: ITask, date: Date, index: number) => {
-        if (task.startTime.getDate() === date.getDate()
-            && task.endTime.getDate() === date.getDate()
+    const checkTask = (task: ITasks, date: Date, index: number) => {
+        if (task.start.getDate() === date.getDate()
+            && task.firstEnd.getDate() === date.getDate()
         ) {
             return <DayTaskWeek task={task} date={date} key={index}/>
         }
@@ -197,8 +197,8 @@ const Week: FC <WeekProps> = ({tasks}) => {
                                     {checkIndex(index)
                                         ? <div>
                                             <LongTaskWeek days={daysOfTheWeek} task={task} date={day}/>
-                                            {task.startTime.getDate() !== day.date.getDate() && day.date.getDay() !== 1
-                                            && day.date.getTime() <= task.endTime.getTime()
+                                            {task.start.getDate() !== day.date.getDate() && day.date.getDay() !== 1
+                                            && day.date.getTime() <= task.firstEnd.getTime()
                                                 ? <div className={cl.emptyDiv}></div>
                                                 : ''
                                             }

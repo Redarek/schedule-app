@@ -9,4 +9,5 @@
   justify-content: center;
   flex-wrap: nowrap;
   width: 100vw;
+  position: relative;
 }
