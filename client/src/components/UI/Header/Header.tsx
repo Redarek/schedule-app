@@ -22,9 +22,6 @@ const Header: FC<HeaderProps> = ({user}) => {
                 <span className={cl.burgerSpan}></span>
             </div>
             <div className={cl.userInfo}>
-                <div className={cl.settingsIcon} onClick={() => dispatch(logout())}>
-                    <img src='/images/settingsIcon.svg' alt="settings"/>
-                </div>
                 <div className={cl.userIcon}>
                     {user.user.icon
                         ? <img src={user.user.icon} alt="settings"/>
@@ -32,10 +29,13 @@ const Header: FC<HeaderProps> = ({user}) => {
                     }
                 </div>
                 <div className={cl.userName}>
-                    {user.user.email
-                        ? user.user.email
+                    {user.user.name
+                        ? user.user.name
                         : 'Имя пользователя'
                     }
+                </div>
+                <div className={cl.settingsIcon} onClick={() => dispatch(logout())}>
+                    <img src='/images/exitIcon.svg' alt="exit"/>
                 </div>
             </div>
         </header>
