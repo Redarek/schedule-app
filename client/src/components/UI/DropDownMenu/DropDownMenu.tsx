@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import cl from './DropDownMenu.module.css'
 
 interface DropDownMenuProps {
@@ -8,9 +8,21 @@ interface DropDownMenuProps {
     dropMenuItem: string;
     setDropMenuItem: (item: string) => void;
     viewMode: 'right' | 'bottom'
+    setOpenMenuTitle?: (index: string) => void;
+    openMenuTitle?: string;
 }
 
-const DropDownMenu: FC<DropDownMenuProps> = ({title, menuItems, dropMenuItem, setDropMenuItem, menuType, viewMode}) => {
+const DropDownMenu: FC<DropDownMenuProps> = ({
+                                                 title,
+                                                 menuItems,
+                                                 dropMenuItem,
+                                                 setDropMenuItem,
+                                                 menuType,
+                                                 viewMode,
+                                                 openMenuTitle,
+                                                 setOpenMenuTitle
+                                             }) => {
+    //@todo Список specialities
     const specialities = ['Backend', 'Frontend', 'Design'];
 
     let items: any[]
@@ -34,11 +46,26 @@ const DropDownMenu: FC<DropDownMenuProps> = ({title, menuItems, dropMenuItem, se
             menuListWrapStyle.marginTop = '32px'
             break;
     }
+
     const [visible, setVisible] = useState(false)
+
+    useEffect(() => {
+        if (openMenuTitle !== title) setVisible(false)
+    }, [openMenuTitle])
+
+    const checkSetOpenMenuTitle = () => {
+        if (setOpenMenuTitle) setOpenMenuTitle(title);
+        setVisible(!visible);
+    }
+
     return (
         <div className={cl.wrapper}>
-            <div className={cl.wrap} style={wrapStyle} onClick={() => setVisible(!visible)}>
-                <div className={cl.menuTitle}>{dropMenuItem === '' ? title : items[items.findIndex(obj => obj === dropMenuItem)]}</div>
+            <div className={cl.wrap} style={wrapStyle} onClick={() => {
+                checkSetOpenMenuTitle();
+                setVisible(!visible);
+            }}>
+                <div
+                    className={cl.menuTitle}>{dropMenuItem === '' ? title : items[items.findIndex(obj => obj === dropMenuItem)]}</div>
                 <div className={cl.menuIcon}></div>
             </div>
             {visible

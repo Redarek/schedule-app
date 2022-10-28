@@ -14,8 +14,7 @@ const RegistrationForm: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [dropMenuItem, setDropMenuItem] = useState<string>('')
-    console.log(dropMenuItem)
-
+    //@todo сделать проверку заполнения инпутов
     return (
         <div className={cl.auth}>
             <form className={cl.auth__form}>
@@ -40,7 +39,7 @@ const RegistrationForm: FC = () => {
                 />
                 <label htmlFor='registration-name' className={cl.auth__label}>Имя</label>
                 <input
-                    className={cx(cl.auth__input, cl.auth__input_password)}
+                    className={cx(cl.auth__input, cl.auth__input_name)}
                     placeholder="Введите имя"
                     type="text"
                     name="name"

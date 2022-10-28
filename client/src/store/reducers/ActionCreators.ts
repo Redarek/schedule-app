@@ -1,9 +1,9 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_URL } from "../../http";
+import {API_URL} from "../../http";
 import AuthService from "../../services/AuthService";
-import { AuthResponse } from "../../types/AuthResponse";
-import { IUser } from "../../types/IUser";
+import {AuthResponse} from "../../types/AuthResponse";
+import {IUser} from "../../types/IUser";
 import TasksService from "../../services/TaskService";
 
 export const fetchTasks = createAsyncThunk(
@@ -22,6 +22,7 @@ interface LoginObject {
     email: string;
     password: string;
 }
+
 interface RegObject {
     email: string;
     password: string;

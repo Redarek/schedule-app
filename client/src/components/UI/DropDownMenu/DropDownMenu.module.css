@@ -3,7 +3,6 @@
     display: flex;
     flex-wrap: nowrap;
     position: relative;
-    margin-top: 25px;
     margin-right: auto;
     user-select: none;
 }
@@ -38,14 +37,17 @@
 }
 
 .menuListWrap {
+    z-index: 999;
     position: absolute;
     left: 75%;
     width: 240px;
-    background-color: #E6E6E6;
     border-radius: 2px;
     display: flex;
     flex-direction: column;
+    backdrop-filter: blur(10px);
+    background: rgba(230, 230, 230, .75);
 }
+
 .menuItem {
     height: 45px;
     display: flex;
