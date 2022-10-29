@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from './DropDownMenu.module.css'
 
 interface DropDownMenuProps {
-    menuType: 'spec' | 'other'
+    menuType: 'spec' | 'other' | 'employees'
     title: string;
     menuItems: any[];
     dropMenuItem: string;
@@ -10,6 +10,7 @@ interface DropDownMenuProps {
     viewMode: 'right' | 'bottom'
     setOpenMenuTitle?: (index: string) => void;
     openMenuTitle?: string;
+    setIndexOfSelectElem?: (index: number) => void;
 }
 
 const DropDownMenu: FC<DropDownMenuProps> = ({
@@ -20,12 +21,13 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
                                                  menuType,
                                                  viewMode,
                                                  openMenuTitle,
-                                                 setOpenMenuTitle
+                                                 setOpenMenuTitle,
+                                                 setIndexOfSelectElem
                                              }) => {
     //@todo Список specialities
     const specialities = ['Backend', 'Frontend', 'Design'];
 
-    let items: any[]
+    let items: any[] = []
     switch (menuType) {
         case 'spec':
             items = specialities;
@@ -33,6 +35,10 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
         case 'other':
             items = menuItems;
             break;
+        case "employees":
+            for (let i = 0; i<menuItems.length; i++) {
+                items = [...items, menuItems[i].name]
+            }
     }
 
     const wrapStyle = {width: '75%'}
@@ -74,6 +80,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
                     {items.map((item, index) =>
                         <div key={item} className={cl.menuItem} onClick={() => {
                             setDropMenuItem(item);
+                            if (setIndexOfSelectElem) setIndexOfSelectElem(index)
                             setVisible(false)
                         }}>
                             {item}

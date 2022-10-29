@@ -16,6 +16,7 @@
     justify-content: space-between;
     border-radius: 2px;
     cursor: pointer;
+    border: 1px solid #0078D4;
 }
 
 .menuTitle {
@@ -46,10 +47,12 @@
     flex-direction: column;
     backdrop-filter: blur(10px);
     background: rgba(230, 230, 230, .75);
+    max-height: 450px;
+    overflow: auto;
 }
 
 .menuItem {
-    height: 45px;
+    min-height: 45px;
     display: flex;
     align-items: center;
     padding-left: 20px;

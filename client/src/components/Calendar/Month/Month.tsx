@@ -14,6 +14,7 @@ import {
 import {IDate} from "../../../types/IDate";
 import TaskMonth from "./TaskMonth";
 import {ITasks} from "../../../types/ITasks";
+import Button from "../../UI/Button/Button";
 
 interface MonthProps {
     tasks: ITasks[]
@@ -121,11 +122,19 @@ const Month: FC<MonthProps> = ({tasks}) => {
 
     return (
         <div className={cl.calendar}>
-            {dateNow.toLocaleString('default', {month: 'long'})}
-            <button onClick={() => handleChangeMonth('today')}>today</button>
-            <button onClick={() => handleChangeMonth('prev')}>prev</button>
-            <button onClick={() => handleChangeMonth('next')}>next</button>
             <div className={cl.calendarHeader}>
+                <div className={cl.calendarMenu}>
+                    <div className={cl.btn}>
+                        <Button onClick={() => handleChangeMonth('prev')}>Предыдущий</Button>
+                    </div>
+                    <div className={cl.btn}>
+                        <Button onClick={() => handleChangeMonth('today')}>{dateNow.toLocaleString('default', {month: 'long'})}</Button>
+
+                    </div>
+                    <div className={cl.btn}><Button onClick={() => handleChangeMonth('next')}>Следующий</Button>
+                    </div>
+
+                </div>
                 {dayName.map(day =>
                     <div className={cl.weekDay} key={day}>{day}</div>
                 )}

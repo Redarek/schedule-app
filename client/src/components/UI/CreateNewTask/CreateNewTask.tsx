@@ -1,12 +1,15 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {initialDate} from "../../Calendar";
 import {ITask, ITasks} from "../../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import TasksService from "../../../services/TaskService";
+import Button from "../Button/Button";
+import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
+import {fetchUsers} from "../../../store/reducers/ActionCreators";
 
 const CreateNewTask: FC = () => {
-    //@todo Список сотрудников поле Employee
+    const dispatch = useAppDispatch()
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
     const [spec, setSpec] = useState<string>('')
@@ -19,7 +22,12 @@ const CreateNewTask: FC = () => {
     const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
     const [openMenuTitle, setOpenMenuTitle] = useState<string>('')
 
-    const employees = ['Радмир', 'Влад', 'Ефим']
+    const {employees, isLoading, error} = useAppSelector(state => state.employeesSlice)
+    useEffect(() => {
+        if (employees.length === 0) {
+            dispatch(fetchUsers())
+        }
+    })
 
     const handleCreate = async (e: any) => {
         e.preventDefault()
@@ -104,7 +112,7 @@ const CreateNewTask: FC = () => {
                 <DropDownMenu
                     openMenuTitle={openMenuTitle}
                     setOpenMenuTitle={setOpenMenuTitle}
-                    menuType={'other'}
+                    menuType={'employees'}
                     title={'Сотрудник...'}
                     menuItems={employees}
                     dropMenuItem={employee}
@@ -160,7 +168,7 @@ const CreateNewTask: FC = () => {
             </div>
 
             <div className={cl.inputWrap}>
-                <input type="submit" onClick={(e) => handleCreate(e)}/>
+                <Button onClick={(e) => handleCreate(e)}>Создать</Button>
             </div>
         </form>
     );

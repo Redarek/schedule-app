@@ -5,6 +5,7 @@ import AuthService from "../../services/AuthService";
 import {AuthResponse} from "../../types/AuthResponse";
 import {IUser} from "../../types/IUser";
 import TasksService from "../../services/TaskService";
+import UserService from "../../services/UserService";
 
 export const fetchTasks = createAsyncThunk(
     'tasks/fetchAll',
@@ -81,6 +82,18 @@ export const checkAuth = createAsyncThunk(
             return response.data;
         } catch (e) {
             console.log(e);
+        }
+    }
+)
+
+export const fetchUsers = createAsyncThunk(
+    'users/fetchAll',
+    async (_, thunkAPI) => {
+        try {
+            const response = await UserService.fetchUsers()
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось загрузить сотрудников")
         }
     }
 )
