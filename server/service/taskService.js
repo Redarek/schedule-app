@@ -19,8 +19,8 @@ class TaskService {
         return tasks;
     }
 
-    async getAllTasksByEmployee(employee) {
-        const tasks = await taskModel.find(employee)
+    async getAllTasksByEmployeeId(employeeId) {
+        const tasks = await taskModel.find(employeeId)
         return tasks;
     }
 

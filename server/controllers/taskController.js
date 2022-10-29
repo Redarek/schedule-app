@@ -39,7 +39,8 @@ class TaskController {
 
     async getAllTasksByEmployeeId(req, res, next) {
         try {
-            const tasks = await taskService.getAllTasksByEmployeeId(req.params.employeeId);
+            const tasks = await taskService.getAllTasksByEmployeeId({employeeId: req.params.employeeId});
+            return res.json(tasks);
         } catch (error) {
             next(error);
         }
