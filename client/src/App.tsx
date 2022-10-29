@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
@@ -8,6 +8,7 @@ import Header from "./components/UI/Header/Header";
 import LoginForm from "./components/LoginForm";
 import Navbar from "./components/UI/Navbar/Navbar";
 import RegistrationForm from "./components/RegistrationForm";
+import DropDownMenu from "./components/UI/DropDownMenu/DropDownMenu";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -19,7 +20,6 @@ function App() {
             dispatch(checkAuth);
         }
     }, [])
-
     return (
         <div className="App">
             <BrowserRouter>

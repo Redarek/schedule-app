@@ -1,7 +1,7 @@
-import {ITask} from "./ITask";
+import {ITasks} from "./ITasks";
 
 export interface IDate {
   day: number;
   date: Date;
-  dayTasks: ITask[]
+  dayTasks: ITasks[]
 }

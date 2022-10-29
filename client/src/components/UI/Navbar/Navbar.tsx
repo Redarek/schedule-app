@@ -16,7 +16,8 @@ const Navbar: FC<NavbarProps> = () => {
                 {link: '/', title: 'MainPage'},
                 {link: '/calendar', title: 'Calendar'},
                 {link: '/login', title: 'Login'},
-                {link: '/registration', title: 'Registration'}
+                {link: '/registration', title: 'Registration'},
+                {link: '/employeePage', title: 'EmployeePage'},
             ]
         },
     ]

@@ -10,9 +10,10 @@ import {
     initialDate
 } from "../index";
 import {IDate} from "../../../types/IDate";
-import {ITask} from "../../../types/ITask";
+import {ITasks} from "../../../types/ITasks";
 import LongTaskWeek from "./LongTaskWeek";
 import DayTaskWeek from "./DayTaskWeek";
+import Button from "../../UI/Button/Button";
 
 interface IHour {
     time: number;
@@ -20,10 +21,10 @@ interface IHour {
 }
 
 interface WeekProps {
-    tasks: ITask[]
+    tasks: ITasks[]
 }
 
-const Week: FC <WeekProps> = ({tasks}) => {
+const Week: FC<WeekProps> = ({tasks}) => {
     const [dateNow, setDateNow] = useState(new Date(initialDate));
 
     const lastDayOfThePrevMonth = getLastDayOfMonth(dateNow.getMonth(), dateNow.getFullYear());
@@ -162,9 +163,9 @@ const Week: FC <WeekProps> = ({tasks}) => {
         daysOfTheWeek = fillingTheDayWithTasks(daysOfTheWeek, tasks, dateNow, 'week');
     }
 
-    const checkTask = (task: ITask, date: Date, index: number) => {
-        if (task.startTime.getDate() === date.getDate()
-            && task.endTime.getDate() === date.getDate()
+    const checkTask = (task: ITasks, date: Date, index: number) => {
+        if (task.start.getDate() === date.getDate()
+            && task.firstEnd.getDate() === date.getDate()
         ) {
             return <DayTaskWeek task={task} date={date} key={index}/>
         }
@@ -172,22 +173,38 @@ const Week: FC <WeekProps> = ({tasks}) => {
 
     return (
         <div className="calendarWeek">
-            <button onClick={() => handleChangeWeek('today')}>today</button>
-            <button onClick={() => handleChangeWeek('prev')}>prev</button>
-            <button onClick={() => handleChangeWeek('next')}>next</button>
             <div className={cl.wrapper}>
                 <div className={cl.calendarHeader}>
-                    {dayName.map(day =>
-                        <div className={cl.weekDay} key={day}>{day}</div>
-                    )}
-                </div>
-                <div className={cl.calendarHeader}>
-                    {daysOfTheWeek.map(day =>
-                        <div className={cl.calendarHeaderDay} style={currentDayStyle(day)} key={day.day}>
-                            {day.day}
+                    <div className={cl.calendarMenu}>
+                        <div className={cl.btn}>
+                            <Button onClick={() => handleChangeWeek('prev')}>Предыдущая</Button>
                         </div>
-                    )}
+                        <div className={cl.btn}>
+                            <Button
+                                onClick={() => handleChangeWeek('today')}>{dateNow.toLocaleString('default', {month: 'long'})}</Button>
+                        </div>
+                        <div className={cl.btn}>
+                            <Button onClick={() => handleChangeWeek('next')}>Следующая</Button>
+                        </div>
+                    </div>
+                    <div className={cl.headerInfo}>
+                        {dayName.map(day =>
+                            <div className={cl.weekDay} key={day}>{day}</div>
+                        )}
+                        {daysOfTheWeek.map(day =>
+                            <div className={cl.calendarHeaderDay} style={currentDayStyle(day)} key={day.day}>
+                                {day.day}
+                            </div>
+                        )}
+                    </div>
                 </div>
+                {/*<div className={cl.calendarHeader}>*/}
+                {/*    {daysOfTheWeek.map(day =>*/}
+                {/*        <div className={cl.calendarHeaderDay} style={currentDayStyle(day)} key={day.day}>*/}
+                {/*            {day.day}*/}
+                {/*        </div>*/}
+                {/*    )}*/}
+                {/*</div>*/}
                 <div className={cl.longTermWrapper}>
                     <div className={cl.longTerm}></div>
                     {daysOfTheWeek.map(day =>
@@ -197,8 +214,8 @@ const Week: FC <WeekProps> = ({tasks}) => {
                                     {checkIndex(index)
                                         ? <div>
                                             <LongTaskWeek days={daysOfTheWeek} task={task} date={day}/>
-                                            {task.startTime.getDate() !== day.date.getDate() && day.date.getDay() !== 1
-                                            && day.date.getTime() <= task.endTime.getTime()
+                                            {task.start.getDate() !== day.date.getDate() && day.date.getDay() !== 1
+                                            && day.date.getTime() <= task.firstEnd.getTime()
                                                 ? <div className={cl.emptyDiv}></div>
                                                 : ''
                                             }

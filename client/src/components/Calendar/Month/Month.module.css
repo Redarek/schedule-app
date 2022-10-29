@@ -3,17 +3,45 @@
     flex-wrap: wrap;
     width: 100%;
 }
+
+.calendarMenu {
+    width: 100%;
+    display: flex;
+    height: 6vh;
+    border: 1px solid #D9D9D9;
+    border-bottom: none;
+    align-items: center;
+}
+
+.btn {
+    text-transform: capitalize;
+    margin: 0 2%;
+    /*margin-top: 1%;*/
+    width: 15%;
+}
+
 .calendarHeader {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     width: 100%;
+    /*border-top: 1px solid #D9D9D9;*/
+    /*border: 1px solid #D9D9D9;*/
+    border-bottom: none;
+    /*border-right: none;*/
 }
+
 .weekDay {
-    width: 100%;
+    width: calc(100% / 7);
+    height: 4vh;
+    /*width: 14%;*/
+    /*margin: 0 auto;*/
     display: flex;
     justify-content: center;
     align-items: center;
-    color: darkgrey;
+    color: #0078D4;
+    border: 1px solid #D9D9D9;
+    border-top: none;
+    /*border-left: px solid #D9D9D9;*/
 }
 
 .monthDays {
@@ -26,8 +54,8 @@
 .day {
     padding-top: 8px;
     border: 1px solid lightgray;
-    width: calc(100%/7);
-    height: calc(85vh/6.5);
+    width: calc(100% / 7);
+    min-height: calc(81.3vh / 6.5);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -46,6 +74,7 @@
     width: 100%;
     position: relative;
 }
+
 .tasksWrapper {
     position: absolute;
     width: 100%;
@@ -61,41 +90,46 @@
 }
 
 .taskDay {
-    width: calc(100%/7);
-    height: calc(85vh/6.5);
+    width: calc(100% / 7);
+    min-height: calc(81.3vh / 6.5);
     display: flex;
     align-items: center;
     flex-direction: column;
     padding-top: 3.5vh;
 
 }
+
 .taskWrapper {
     width: 100%;
 }
-.taskTitle  {
+
+.taskTitle {
     margin-left: auto;
     background-color: rgb(121, 134, 203);
-    border-radius: 5px 0 0 5px ;
+    border-radius: 5px 0 0 5px;
     width: 95%;
     padding-left: 5px;
 }
+
 .taskTitleEnd {
     margin-left: auto;
     margin-right: auto;
     background-color: rgb(121, 134, 203);
     width: 90%;
     padding-left: 5px;
-    border-radius: 5px  5px 5px 5px ;
+    border-radius: 5px 5px 5px 5px;
 }
+
 .taskBg {
     background-color: rgb(121, 134, 203);
     width: 100%;
 }
+
 .taskBgLast {
     background-color: rgb(121, 134, 203);
     width: 95%;
     margin-right: auto;
-    border-radius: 0  5px 5px 0 ;
+    border-radius: 0 5px 5px 0;
 }
 
 .dayTaskCount {
@@ -105,6 +139,7 @@
     padding-left: 5px;
     width: 100%;
 }
+
 .dayTaskCount:hover {
     background-color: rgba(204, 204, 204, .5);
 }
@@ -112,7 +147,7 @@
 .dayTaskCountWrapper {
     cursor: pointer;
     width: 98%;
-    margin: auto 0 5% 0 ;
+    margin: auto 0 5% 0;
 }
 
 
