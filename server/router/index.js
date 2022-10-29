@@ -15,6 +15,8 @@ router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
+router.get('/user/:id', authMiddleware, userController.getUserById);
+router.put('/user/:id', authMiddleware, userController.updateUser);
 //task
 router.post('/create-task', authMiddleware, taskController.createTask);
 router.get('/task/:id', authMiddleware, taskController.getTaskById);
