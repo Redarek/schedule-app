@@ -1,7 +1,7 @@
 //@todo добавить icon в модель пользователя на бэке
 export interface IUser {
     email: string;
-    id: string;
+    _id: string;
     isActivated: boolean;
     role: string;
     name: string;

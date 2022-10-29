@@ -11,6 +11,7 @@
     border: 1px solid #D9D9D9;
     border-bottom: none;
     align-items: center;
+    justify-content: center;
 }
 
 .btn {

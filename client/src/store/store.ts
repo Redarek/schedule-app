@@ -18,7 +18,11 @@ const persistConfig = {
     storage,
     blacklist: ['taskSlice', 'employeesSlice']
 };
-
+const conf = {
+    key: 'Nav',
+    storage,
+    blacklist: ['taskSlice', 'employeesSlice', "authSlice"]
+};
 
 const persistedReducer = persistReducer<RootState>(persistConfig, rootReducer);
 

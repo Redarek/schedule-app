@@ -27,15 +27,6 @@ const CalendarPage = () => {
     return (
         <div className={cl.wrapper}>
             <div className={cl.calendarMenu}>
-                <div className={cl.createTaskBtn}>
-                    <Button onClick={() => setVisible(true)}>Create new Task</Button>
-                </div>
-                {visible
-                    ? <ModalFullScreen visible={visible} setVisible={setVisible}>
-                        <CreateNewTask/>
-                    </ModalFullScreen>
-                    : ''
-                }
                 <div className={cl.calendarModeBtn}>
                     <DropDownMenu
                         menuType={"other"}
@@ -46,6 +37,16 @@ const CalendarPage = () => {
                         viewMode={"bottom"}
                         setIndexOfSelectElem={setCalendarModeIndex}
                     />
+                </div>
+                {visible
+                    ? <ModalFullScreen visible={visible} setVisible={setVisible}>
+                        <CreateNewTask/>
+                    </ModalFullScreen>
+                    : ''
+                }
+
+                <div className={cl.createTaskBtn}>
+                    <Button onClick={() => setVisible(true)}>Create new Task</Button>
                 </div>
             </div>
             {calendarModes[calendarModeIndex]}
