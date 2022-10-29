@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import cl from './TaskMonth.module.css'
-import {ITask} from "../../../types/ITask";
 import {IDate} from "../../../types/IDate";
+import {ITasks} from "../../../types/ITasks";
 
 interface TaskMonthProps {
-    task: ITask;
+    task: ITasks;
     day: IDate;
     week: any
 }
@@ -20,22 +20,22 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
     let endsThisWeek = 100;
 
     const widthCalculation = () => {
-        if (task.startTime.getDate() === date.getDate() && task.endTime.getDate() >= weekEnd.getDate()) {
-            startsThisWeek = (7 - task.startTime.getDate() + 1) * 100 - 8;
+        if (task.start.getDate() === date.getDate() && task.firstEnd.getDate() >= weekEnd.getDate()) {
+            startsThisWeek = (7 - task.start.getDate() + 1) * 100 - 8;
         }
 
-        if (task.endTime.getTime() <= weekEnd.getTime()) {
-            endsThisWeekWidth = task.endTime.getDay()* 100 - 8
+        if (task.firstEnd.getTime() <= weekEnd.getTime()) {
+            endsThisWeekWidth = task.firstEnd.getDay()* 100 - 8
         }
 
-        if (task.startTime.getDay() !== 1) {
-            if (task.endTime.getTime() <= weekEnd.getTime()) {
-                endsThisWeek = (task.endTime.getDay() - task.startTime.getDay() + 1) * 100 - 8;
+        if (task.start.getDay() !== 1) {
+            if (task.firstEnd.getTime() <= weekEnd.getTime()) {
+                endsThisWeek = (task.firstEnd.getDay() - task.start.getDay() + 1) * 100 - 8;
             } else {
-                if (task.startTime.getDay() === 0) {
+                if (task.start.getDay() === 0) {
                     endsThisWeek = 100 - 8;
                 } else {
-                    endsThisWeek = (7 - task.startTime.getDay() + 1) * 100 - 8;
+                    endsThisWeek = (7 - task.start.getDay() + 1) * 100 - 8;
                 }
             }
         }
@@ -48,15 +48,15 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
         <div className={cl.taskWrapper}>
             {task
                 ? <div>
-                    {task.startTime.getDate() === date.getDate()
+                    {task.start.getDate() === date.getDate()
                         ? <div>
-                            {task.startTime.getDay() !== 1
+                            {task.start.getDay() !== 1
                                 ? <div className={cl.taskTitle} style={{width: `${endsThisWeek}%`}}>{task.title}</div>
                                 : <div>
-                                    {task.endTime.getTime() >= weekEnd.getTime()
+                                    {task.firstEnd.getTime() >= weekEnd.getTime()
                                         ? <div className={cl.taskTitle} style={{width: `${startsThisWeek}%`}}>{task.title}</div>
                                         : <div className={cl.taskTitle} style={{width: `${endsThisWeekWidth}%`}}>
-                                            {task.endTime.getDay() === 1
+                                            {task.firstEnd.getDay() === 1
                                                 ? ''
                                                 : <div>{task.title}</div>
                                             }
@@ -66,8 +66,8 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
                             }</div>
                         : ''
                     }
-                    {date.getDay() === 1 &&task.startTime.getDate() !==date.getDate() && date.getTime() >= task.startTime.getTime() && task.endTime.getTime() >= date.getTime()
-                        ? <div>{task.endTime.getTime() >= date.getTime() && task.endTime.getTime() >= weekEnd.getTime()
+                    {date.getDay() === 1 &&task.start.getDate() !==date.getDate() && date.getTime() >= task.start.getTime() && task.firstEnd.getTime() >= date.getTime()
+                        ? <div>{task.firstEnd.getTime() >= date.getTime() && task.firstEnd.getTime() >= weekEnd.getTime()
                             ? <div className={cl.taskTitle} style={{width: `${wholeWeekWidth}%`}}>{task.title}</div>
                             : <div className={cl.taskTitle} style={{width: `${endsThisWeekWidth}%`}}>{task.title}</div>
                         }

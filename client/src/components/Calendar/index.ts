@@ -1,5 +1,5 @@
 import {IDate} from "../../types/IDate";
-import {ITask} from "../../types/ITask";
+import {ITasks} from "../../types/ITasks";
 
 export const initialDate = new Date();
 export const dayName = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
@@ -22,24 +22,24 @@ export const getIndexOfDay = (day: IDate) => {
     return indexOfDay;
 };
 
-const counterOfTasksOnDay = (date: IDate, task: ITask, calendarType: 'week' | 'month') => {
+const counterOfTasksOnDay = (date: IDate, task: ITasks, calendarType: 'week' | 'month') => {
     if (
-        (date.date.getTime() >=task.startTime.getTime()
-        && date.date.getTime() <= task.endTime.getTime()) ||
-        (date.date.getDate() >= task.startTime.getDate()
-        && date.date.getDate() <= task.endTime.getDate()
-        && date.date.getMonth() === task.startTime.getMonth()
-        && date.date.getMonth() === task.endTime.getMonth())
+        (date.date.getTime() >=task.start.getTime()
+        && date.date.getTime() <= task.firstEnd.getTime()) ||
+        (date.date.getDate() >= task.start.getDate()
+        && date.date.getDate() <= task.firstEnd.getDate()
+        && date.date.getMonth() === task.start.getMonth()
+        && date.date.getMonth() === task.firstEnd.getMonth())
     ) {
         if (!date.dayTasks.includes(task)) {
             date.dayTasks.push(task);
         }
     }
 };
-export const fillingTheDayWithTasks = (datesArr: IDate[], tasks: ITask[], dateNow: Date, calendarType: 'week' | 'month') => {
+export const fillingTheDayWithTasks = (datesArr: IDate[], tasks: ITasks[], dateNow: Date, calendarType: 'week' | 'month') => {
     for (let i = 0; i < datesArr.length; i++) {
         for (let j = 0; j < tasks.length; j++) {
-            if (tasks[j].startTime.getFullYear() === dateNow.getFullYear()) {
+            if (tasks[j].start.getFullYear() === dateNow.getFullYear()) {
                 counterOfTasksOnDay(datesArr[i], tasks[j], calendarType);
             }
         }

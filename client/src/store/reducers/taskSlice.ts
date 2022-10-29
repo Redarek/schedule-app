@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ITask} from "../../types/ITask";
 import {fetchTasks} from "./ActionCreators";
+import {ITasks} from "../../types/ITasks";
 
 
 interface TaskState {
-    tasks: ITask[];
+    tasks: ITasks[];
     isLoading: boolean;
     error: string;
 }
@@ -17,19 +17,19 @@ const initialState: TaskState = {
 const taskSlice = createSlice({
     name: 'tasks',
     initialState,
-    reducers: {
-    },
+    reducers: {},
 
     extraReducers: {
-        [fetchTasks.fulfilled.type]: (state, action: PayloadAction<ITask[]>) => {
+        [fetchTasks.fulfilled.type]: (state, action: PayloadAction<ITasks[]>) => {
             state.isLoading = false;
             state.error = ''
             const date = action.payload
-            for (let i = 0; i<date.length; i++) {
+            for (let i = 0; i < date.length; i++) {
                 state.tasks = [...state.tasks, {
-                    title: date[i].title,
-                    startTime: new Date(date[i].startTime),
-                    endTime: new Date(date[i].endTime)
+                    ...date[i],
+                    start: new Date(date[i].start),
+                    firstEnd: new Date(date[i].firstEnd),
+                    secondEnd: new Date(date[i].firstEnd),
                 }]
             }
 

@@ -45,6 +45,10 @@
 .auth__input_email {
   margin-top: 7px;
 }
+.auth__input_name {
+  margin-top: 7px;
+  margin-bottom: 25px;
+}
 
 .auth__form {
   display: flex;
