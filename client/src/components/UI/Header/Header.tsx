@@ -13,7 +13,6 @@ const Header: FC<HeaderProps> = ({user}) => {
     const dispatch = useAppDispatch()
     const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
 
-    //@todo Email временное решение, ждем бэк чтобы получать имя пользователя НУ и с Icon надо решить
     return (
         <header className={cl.header}>
             <div className={cl.menuBtn} onClick={() => dispatch(setNavbarVisible(navbarIsVisible))}>

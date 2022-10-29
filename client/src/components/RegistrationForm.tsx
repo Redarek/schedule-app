@@ -13,7 +13,7 @@ const RegistrationForm: FC = () => {
     const [name, setName] = useState<string>("");
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [dropMenuItem, setDropMenuItem] = useState<string>('')
+    const [spec, setSpec] = useState<string>('')
     //@todo сделать проверку заполнения инпутов
     return (
         <div className={cl.auth}>
@@ -51,15 +51,15 @@ const RegistrationForm: FC = () => {
                     menuType={'spec'}
                     title={'Специальность...'}
                     menuItems={[]}
-                    dropMenuItem={dropMenuItem}
-                    setDropMenuItem={setDropMenuItem}
+                    dropMenuItem={spec}
+                    setDropMenuItem={setSpec}
                     viewMode={'bottom'}
                 />
                 <button
                     className={cx(cl.auth__button, cl.auth__button_registration)}
                     onClick={(e) => {
                         e.preventDefault()
-                        dispatch(registration({email: email, password: password, name: name, spec: dropMenuItem}))
+                        dispatch(registration({email: email, password: password, name: name, spec: spec}))
                         navigate("/login");
                     }}
                 >Зарегистрироваться
