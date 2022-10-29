@@ -8,10 +8,25 @@ class TaskService {
         return task;
     }
 
+    async getTaskById(id) {
+        const task = await taskModel.findById(id);
+        return task;
+    }
+
     async getAllTasks() {
         const tasks = await taskModel.find();
         // sort tasks
         return tasks;
+    }
+
+    async updateTask(id, taskData) {
+        const task = await taskModel.findByIdAndUpdate(id, taskData)
+        return task;
+    }
+
+    async deleteTask(id) {
+        const task = await taskModel.findByIdAndDelete(id);
+        return task;
     }
 }
 
