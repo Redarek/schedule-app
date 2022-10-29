@@ -1,12 +1,13 @@
 const taskService = require('../service/taskService');
-const userModel = require('../models/userModel');
+const userService = require('../service/userService');
 const taskModel = require('../models/taskModel');
 
 class TaskController {
     async createTask(req, res, next) {
         try {
             const {employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
-            const task = new taskModel({user: req.user.id, employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
+            const employeeId = await userService.getUserIdByName({employee: req.body.employee});
+            const task = new taskModel({user: req.user.id, employee, employeeId, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
             const taskData = await taskService.createTask(task);
             return res.json(taskData);
             // return res.json({task: taskData, status: 'success'});
@@ -31,6 +32,14 @@ class TaskController {
             const tasks = await taskService.getAllTasks();
             return res.json(tasks);
             // return res.json({tasks, status: 'success'});
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getAllTasksByEmployeeId(req, res, next) {
+        try {
+            const tasks = await taskService.getAllTasksByEmployeeId(req.params.employeeId);
         } catch (error) {
             next(error);
         }
