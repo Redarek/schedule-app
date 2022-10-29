@@ -1,4 +1,3 @@
-import {AuthResponse} from "../../types/AuthResponse";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
 import {fetchUsers} from "./ActionCreators";
@@ -30,7 +29,6 @@ const employeesSlice = createSlice({
                     latinName: translit(users[i].name)
                 }
             }
-            // state.employees = action.payload;
         },
         [fetchUsers.pending.type]: (state) => {
             state.isLoading = true;

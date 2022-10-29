@@ -24,7 +24,7 @@ const AppRouter: FC = () => {
                 )
             }
             {isAuth
-                ?  <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.id}`}/>}/>
+                ?  <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
                 :  <Route path="*" element={<Navigate replace to="/login"/>}/>
             }
         </Routes>

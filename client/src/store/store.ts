@@ -5,23 +5,20 @@ import taskSlice from "./reducers/taskSlice";
 import authSlice from './reducers/authSlice'
 import navbarSlice from "./reducers/navbarSlice";
 import employeesSlice from "./reducers/EmployeesSlice";
+import employeeSlice from "./reducers/EmployeeSlice";
 
 const rootReducer = combineReducers({
     taskSlice,
     authSlice,
     navbarSlice,
-    employeesSlice
+    employeesSlice,
+    employeeSlice
 })
 
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['taskSlice', 'employeesSlice']
-};
-const conf = {
-    key: 'Nav',
-    storage,
-    blacklist: ['taskSlice', 'employeesSlice', "authSlice"]
+    blacklist: ['taskSlice', 'employeesSlice', 'employeeSlice']
 };
 
 const persistedReducer = persistReducer<RootState>(persistConfig, rootReducer);

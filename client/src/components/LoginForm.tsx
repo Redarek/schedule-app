@@ -12,7 +12,6 @@ const LoginForm: FC = () => {
   const navigate = useNavigate();
   const {user, isAuth} = useAppSelector(state => state.authSlice);
 
-    console.log(user)
   return (
     <div className={cl.auth}>
       <form className={cl.auth__form}>
