@@ -7,6 +7,11 @@ const taskSchema =  new Schema({
     },
     employee: {
         type: String,
+        required: true,
+        unique: true
+    },
+    employeeId: {
+        type: String,
         required: true
     },
     spec: {

@@ -8,10 +8,16 @@ const ApiError = require('../exceptions/ApiError');
 
 class UserService {
     async registration(email, password, name, spec) {
-        const candidate = await userModel.findOne({email});
+        const candidateEmail = await userModel.findOne({email});
         // Проверяем, есть ли email в БД
-        if (candidate) {
+        if (candidateEmail) {
             throw ApiError.badRequest(`Пользователь с почтовым адресом ${email} уже существует`);
+        }
+
+        const candidateName = await userModel.findOne({name});
+        // Проверяем, есть ли name в БД
+        if (candidateName) {
+            throw ApiError.badRequest(`Пользователь с именем ${name} уже существует`);
         }
 
         const hashPassword = await bcrypt.hash(password, 3); //хэшируем пароль
@@ -96,6 +102,11 @@ class UserService {
     async getUserById(id) {
         const user = await userModel.findById(id);
         return user;
+    }
+
+    async getUserIdByName(name) {
+        const user = await userModel.findOne(name);
+        return user.id;
     }
 
     async updateUser(id, userData) {
