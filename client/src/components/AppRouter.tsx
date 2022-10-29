@@ -4,10 +4,10 @@ import {authRoutes, publicRoutes} from "../router";
 import {useAppSelector} from "../hooks/redux";
 
 const AppRouter: FC = () => {
-    const {isAuth} = useAppSelector(state => state.authSlice)
+    const {user, isAuth} = useAppSelector(state => state.authSlice)
     return (
         <Routes>
-            {isAuth
+            {!isAuth
                 ? publicRoutes.map(route =>
                     <Route
                         key={route.path}
@@ -24,7 +24,7 @@ const AppRouter: FC = () => {
                 )
             }
             {isAuth
-                ?  <Route path="*" element={<Navigate replace to="/"/>}/>
+                ?  <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
                 :  <Route path="*" element={<Navigate replace to="/login"/>}/>
             }
         </Routes>

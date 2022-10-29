@@ -2,6 +2,9 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from './NavList.module.css'
 import ListItem from "../ListItem/ListItem";
 import {IList} from "../../../types/INavbar";
+import {useParams} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
+import {setNavbarOpenListTitle} from "../../../store/reducers/navbarSlice";
 
 
 interface NavListProps {
@@ -12,20 +15,26 @@ const NavList: FC<NavListProps> = ({list}) => {
     const [visible, setVisible] = useState(false)
     const [styles, setStyles] = useState([cl.icon])
 
+    const {navbarActiveItem, openListTitle} =useAppSelector(state => state.navbarSlice)
+
+    const [activeItem, setActiveItem] = useState(list.items.findIndex(obj => obj.link === window.location.pathname));
+const dispatch = useAppDispatch()
     useEffect(() => {
-        if (localStorage.getItem(list.listTitle)) {
+        setActiveItem(list.items.findIndex(obj => obj.link === window.location.pathname))
+        if (openListTitle) {
             setVisible(true)
             setStyles([...styles, cl.active]);
         } else setStyles([cl.icon]);
-    }, [visible])
+    }, [navbarActiveItem, visible])
 
     const openList = () => {
         setVisible(!visible)
-        if (!visible) localStorage.setItem(list.listTitle, list.listTitle)
-        else localStorage.removeItem(list.listTitle)
+        if (!visible)
+            dispatch(setNavbarOpenListTitle(list.listTitle))
+            // localStorage.setItem(list.listTitle, list.listTitle)
+        else dispatch(setNavbarOpenListTitle(''))
     }
 
-    const [activeItem, setActiveItem] = useState(list.items.findIndex(obj => obj.link === window.location.pathname));
 
     return (
         <div className={cl.navListWrap}>

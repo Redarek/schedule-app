@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useAppDispatch } from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import { login, logout } from "../store/reducers/ActionCreators";
 import cl from "../styles/RegistrationForm.module.css";
 import cx from "classnames";
@@ -10,6 +10,7 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const {user, isAuth} = useAppSelector(state => state.authSlice);
 
   return (
     <div className={cl.auth}>
@@ -40,8 +41,10 @@ const LoginForm: FC = () => {
         />
         <button className={cx(cl.auth__button,cl.auth__button_login)}
                 onClick={(e) => {
+                  e.preventDefault()
                   dispatch(login({email: email, password: password}));
-                  e.preventDefault()}
+                  navigate(`/employee-page`)
+                }
         }
         >Войти</button>
         <div

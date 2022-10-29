@@ -17,6 +17,19 @@
     border: 1px solid #0078D4;
 }
 
+.rewards {
+    margin: 0 auto;
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.rewardsInputWrap {
+    margin: 0 auto;
+    width: 25%;
+}
 .textarea {
     width: 100%;
     height: 15vw;

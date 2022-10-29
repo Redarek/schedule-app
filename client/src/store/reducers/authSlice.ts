@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AuthResponse} from "../../types/AuthResponse";
 import {login, logout} from "./ActionCreators";
 import {IUser} from "../../types/IUser";
+import {translit} from "../../utils/transliter";
 
 interface UserState {
     user: AuthResponse;
@@ -19,13 +20,7 @@ const initialState: UserState = {
 const authSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {
-        editUser: (state, action:PayloadAction<IUser>) => {
-            state.user.user.name = action.payload.name;
-            state.user.user.email = action.payload.email;
-            state.user.user.spec = action.payload.spec
-        }
-    },
+    reducers: {},
 
     extraReducers: {
         [login.fulfilled.type]: (state, action: PayloadAction<AuthResponse>) => {
@@ -34,6 +29,7 @@ const authSlice = createSlice({
             if (action.payload != undefined) {
                 state.isAuth = true;
                 state.user = action.payload;
+                state.user.user.latinName = translit(state.user.user.name)
             }
         },
         [login.pending.type]: (state) => {
@@ -58,5 +54,5 @@ const authSlice = createSlice({
         },
     }
 })
-export const {editUser} = authSlice.actions;
+export const {} = authSlice.actions;
 export default authSlice.reducer;

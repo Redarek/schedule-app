@@ -1,7 +1,7 @@
-import {AuthResponse} from "../../types/AuthResponse";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
 import {fetchUsers} from "./ActionCreators";
+import {translit} from "../../utils/transliter";
 
 interface EmployeesState {
     employees: IUser[];
@@ -22,7 +22,13 @@ const employeesSlice = createSlice({
         [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
             state.isLoading = false;
             state.error = '';
-            state.employees = action.payload;
+            let users = action.payload
+            for (let i = 0; i < users.length; i++) {
+                state.employees[i] = {
+                    ...users[i],
+                    latinName: translit(users[i].name)
+                }
+            }
         },
         [fetchUsers.pending.type]: (state) => {
             state.isLoading = true;

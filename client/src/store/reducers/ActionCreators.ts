@@ -97,3 +97,31 @@ export const fetchUsers = createAsyncThunk(
         }
     }
 )
+export const fetchUserById = createAsyncThunk(
+    'user/fetchById',
+    async (id: string, thunkAPI) => {
+        try {
+            const response = await UserService.fetchUserDyId(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось загрузить сотрудника")
+        }
+    }
+)
+
+interface updateObject {
+    user: IUser;
+    id: string
+}
+
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    async (updateObject: updateObject, thunkAPI) => {
+        try {
+            const response = await UserService.updateUser(updateObject.user, updateObject.id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось обновить данные")
+        }
+    }
+)

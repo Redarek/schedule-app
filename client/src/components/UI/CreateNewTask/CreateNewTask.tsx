@@ -120,41 +120,43 @@ const CreateNewTask: FC = () => {
                     viewMode={"bottom"}
                 />
             </div>
-            <div className={cl.inputWrap}>
-                <label htmlFor="firstReward">Первая награда: </label>
-                <input id="firstReward"
-                       required
-                       className={cl.input}
-                       type="number"
-                       placeholder={"0"}
-                       value={firstReward}
-                       min={0}
-                       onChange={(e: any) => setFirstReward(e.target.value)}
-                />
-            </div>
-            <div className={cl.inputWrap}>
-                <label htmlFor="secondReward">Вторая награда: </label>
-                <input id="secondReward"
-                       required
-                       className={cl.input}
-                       type="number"
-                       placeholder={"0"}
-                       value={secondReward}
-                       min={0}
-                       onChange={(e: any) => setSecondReward(e.target.value)}
-                />
-            </div>
-            <div className={cl.inputWrap}>
-                <label htmlFor="penalty">Штраф: </label>
-                <input id="penalty"
-                       required
-                       className={cl.input}
-                       type="number"
-                       placeholder={'0'}
-                       value={penalty}
-                       min={0}
-                       onChange={(e: any) => setPenalty(e.target.value)}
-                />
+            <div className={cl.rewards}>
+                <div className={cl.rewardsInputWrap}>
+                    <label htmlFor="firstReward">Первая награда: </label>
+                    <input id="firstReward"
+                           required
+                           className={cl.input}
+                           type="number"
+                           placeholder={"0"}
+                           value={firstReward}
+                           min={0}
+                           onChange={(e: any) => setFirstReward(e.target.value)}
+                    />
+                </div>
+                <div className={cl.rewardsInputWrap}>
+                    <label htmlFor="secondReward">Вторая награда: </label>
+                    <input id="secondReward"
+                           required
+                           className={cl.input}
+                           type="number"
+                           placeholder={"0"}
+                           value={secondReward}
+                           min={0}
+                           onChange={(e: any) => setSecondReward(e.target.value)}
+                    />
+                </div>
+                <div className={cl.rewardsInputWrap}>
+                    <label htmlFor="penalty">Штраф: </label>
+                    <input id="penalty"
+                           required
+                           className={cl.input}
+                           type="number"
+                           placeholder={'0'}
+                           value={penalty}
+                           min={0}
+                           onChange={(e: any) => setPenalty(e.target.value)}
+                    />
+                </div>
             </div>
             <div className={cl.inputWrap}>
                 <label htmlFor="text">Описание: </label>
