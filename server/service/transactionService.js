@@ -1,7 +1,7 @@
 const ApiError = require('../exceptions/ApiError');
 const transactionModel = require('../models/transactionModel');
 
-class transactionService {
+class TransactionService {
 
 }
 

@@ -22,7 +22,7 @@ router.get('/tasks', authMiddleware, taskController.getAllTasks);
 router.put('/task/:id', authMiddleware, taskController.updateTask);
 router.delete('/task/:id', authMiddleware, taskController.deleteTask);
 //transaction
-router.post('/task/:id/complete', authMiddleware, transactionController.completeTask);
-router.get('/user/transactions', authMiddleware, transactionController.getTransactionsByUserId)
+// router.post('/task/:id/complete', authMiddleware, transactionController.completeTask);
+// router.get('/user/transactions', authMiddleware, transactionController.getTransactionsByUserId)
 
 module.exports = router;
