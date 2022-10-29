@@ -24,7 +24,7 @@ const Navbar: FC<NavbarProps> = () => {
     const employeesItems = []
     if (employees.length !== 0) {
         for (let i = 0; i < employees.length; i++) {
-            employeesItems.push({link: `/employee-page/${employees[i]._id}`, title: `${employees[i].name}`})
+            employeesItems.push({link: `/employee-page/${employees[i].latinName}`, title: `${employees[i].name}`})
         }
     }
 

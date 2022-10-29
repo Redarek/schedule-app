@@ -11,8 +11,9 @@ import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
 const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
-    const {employeeId} = useParams()
+    const {latinName} = useParams()
 
+    // console.log(latinName)
 
     //@todo getEmployeeById
 
@@ -21,6 +22,7 @@ const EmployeePage: FC = () => {
     const [employee, setEmployee] = useState<string>('')
     const [indexOfSelectEmployee, setIndexOfSelectEmployee] = useState<number>()
 
+    console.log(employees)
     useEffect(() => {
         // if (employees.length === 0) {
         // dispatch(fetchUsers())
@@ -29,9 +31,9 @@ const EmployeePage: FC = () => {
         // setIndexOfSelectEmployee(employees.findIndex(obj => obj.id === user.id))
         // }
         // }
-        if (employeeId)
-            dispatch(setNavbarActiveItem(employeeId))
-    }, [employeeId])
+        if (latinName)
+            dispatch(setNavbarActiveItem(latinName))
+    }, [latinName])
 
     return (
         <div className={cl.wrapper}>

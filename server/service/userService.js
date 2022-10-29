@@ -92,6 +92,16 @@ class UserService {
         const users = await userModel.find();
         return users;
     }
+
+    async getUserById(id) {
+        const user = await userModel.findById(id);
+        return user;
+    }
+
+    async updateUser(id, userData) {
+        const user = await userModel.findByIdAndUpdate(id, userData)
+        return user;
+    }
 }
 
 module.exports = new UserService();

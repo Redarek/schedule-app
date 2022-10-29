@@ -12,6 +12,7 @@ const LoginForm: FC = () => {
   const navigate = useNavigate();
   const {user, isAuth} = useAppSelector(state => state.authSlice);
 
+    console.log(user)
   return (
     <div className={cl.auth}>
       <form className={cl.auth__form}>
@@ -41,9 +42,9 @@ const LoginForm: FC = () => {
         />
         <button className={cx(cl.auth__button,cl.auth__button_login)}
                 onClick={(e) => {
-                  dispatch(login({email: email, password: password}));
                   e.preventDefault()
-                  navigate(`/employee-page/${user.user._id}`)
+                  dispatch(login({email: email, password: password}));
+                  navigate(`/employee-page`)
                 }
         }
         >Войти</button>

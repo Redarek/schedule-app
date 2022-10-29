@@ -5,7 +5,6 @@ import {useAppSelector} from "../hooks/redux";
 
 const AppRouter: FC = () => {
     const {user, isAuth} = useAppSelector(state => state.authSlice)
-
     return (
         <Routes>
             {!isAuth
@@ -25,7 +24,7 @@ const AppRouter: FC = () => {
                 )
             }
             {isAuth
-                ?  <Route path="*" element={<Navigate replace to={`/employee-page/${user.user._id}`}/>}/>
+                ?  <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.id}`}/>}/>
                 :  <Route path="*" element={<Navigate replace to="/login"/>}/>
             }
         </Routes>

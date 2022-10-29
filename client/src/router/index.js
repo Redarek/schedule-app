@@ -13,5 +13,5 @@ export const privateRoutes = [
     ///
 ];
 export const authRoutes = [
-    {path: '/employee-page/:employeeId', element: <EmployeePage/>, exact: true},
+    {path: '/employee-page/:latinName', element: <EmployeePage/>, exact: true},
 ];
