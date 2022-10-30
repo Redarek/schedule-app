@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {fetchTasks} from "./ActionCreators";
+import {fetchAllTasks, fetchEmployeeTasks} from "./ActionCreators";
 import {ITasks} from "../../types/ITasks";
 
 
@@ -10,7 +10,7 @@ interface TaskState {
 }
 
 const initialState: TaskState = {
-    tasks: [],
+    tasks: [] as ITasks[],
     isLoading: false,
     error: ''
 }
@@ -20,7 +20,7 @@ const taskSlice = createSlice({
     reducers: {},
 
     extraReducers: {
-        [fetchTasks.fulfilled.type]: (state, action: PayloadAction<ITasks[]>) => {
+        [fetchAllTasks.fulfilled.type]: (state, action: PayloadAction<ITasks[]>) => {
             state.isLoading = false;
             state.error = ''
             const date = action.payload
@@ -34,10 +34,32 @@ const taskSlice = createSlice({
             }
 
         },
-        [fetchTasks.pending.type]: (state) => {
+        [fetchAllTasks.pending.type]: (state) => {
             state.isLoading = true;
         },
-        [fetchTasks.rejected.type]: (state, action: PayloadAction<string>) => {
+        [fetchAllTasks.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload
+        },
+        [fetchEmployeeTasks.fulfilled.type]: (state, action: PayloadAction<ITasks[]>) => {
+            state.isLoading = false;
+            state.error = ''
+            const date = action.payload
+            state.tasks = initialState.tasks;
+            for (let i = 0; i < date.length; i++) {
+                state.tasks = [...state.tasks, {
+                    ...date[i],
+                    start: new Date(date[i].start),
+                    firstEnd: new Date(date[i].firstEnd),
+                    secondEnd: new Date(date[i].firstEnd),
+                }]
+            }
+
+        },
+        [fetchEmployeeTasks.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchEmployeeTasks.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload
         },

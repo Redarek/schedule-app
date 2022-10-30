@@ -7,11 +7,22 @@ import {IUser} from "../../types/IUser";
 import TasksService from "../../services/TaskService";
 import UserService from "../../services/UserService";
 
-export const fetchTasks = createAsyncThunk(
+export const fetchAllTasks = createAsyncThunk(
     'tasks/fetchAll',
     async (_, thunkAPI) => {
         try {
             const response = await TasksService.fetchTasks()
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось загрузить задания")
+        }
+    }
+)
+export const fetchEmployeeTasks = createAsyncThunk(
+    '/tasks/:employeeId',
+    async (id:string, thunkAPI) => {
+        try {
+            const response = await TasksService.fetchEmployeeTasks(id)
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось загрузить задания")

@@ -23,6 +23,7 @@ const CreateNewTask: FC = () => {
     const [openMenuTitle, setOpenMenuTitle] = useState<string>('')
 
     const {employees, isLoading, error} = useAppSelector(state => state.employeesSlice)
+
     useEffect(() => {
         if (employees.length === 0) {
             dispatch(fetchUsers())
