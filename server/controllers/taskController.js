@@ -6,7 +6,8 @@ class TaskController {
     async createTask(req, res, next) {
         try {
             const {employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
-            const employeeId = await userService.getUserIdByName({employee: req.body.employee});
+            const employeeId = await userService.getUserIdByName(req.body.employee);
+            console.log(employeeId)
             const task = new taskModel({user: req.user._id, employee, employeeId, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
             const taskData = await taskService.createTask(task);
             return res.json(taskData);
