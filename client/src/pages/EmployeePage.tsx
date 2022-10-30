@@ -3,9 +3,10 @@ import cl from '../styles/EmployeePage.module.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import CalendarPage from "./CalendarPage";
 import EmployeeCard from "../components/EmployeeCard";
-import {fetchUserById, fetchUsers} from "../store/reducers/ActionCreators";
+import {fetchEmployeeTasks, fetchUserById, fetchUsers} from "../store/reducers/ActionCreators";
 import {useParams} from "react-router-dom";
 import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
+import {ITasks} from "../types/ITasks";
 
 const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
@@ -15,12 +16,17 @@ const EmployeePage: FC = () => {
     const {employee, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const {employees} = useAppSelector(state => state.employeesSlice)
 
+    const {tasks} = useAppSelector(state => state.taskSlice)
 
     useEffect(() => {
         const index = employees.findIndex(emp => emp.latinName === latinName)
         if (index !== -1) dispatch(fetchUserById(employees[index]._id))
         if (latinName) dispatch(setNavbarActiveItem(latinName))
     }, [employees, latinName])
+
+    useEffect(() => {
+        if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
+    }, [employee, latinName])
 
     return (
         <div className={cl.wrapper}>
@@ -33,7 +39,7 @@ const EmployeePage: FC = () => {
                         ? ''
                         : <EmployeeCard employee={employee}/>
                     }
-                    <CalendarPage/>
+                    <CalendarPage tasks={tasks}/>
                 </div>
                 : "Загрузка"
             }

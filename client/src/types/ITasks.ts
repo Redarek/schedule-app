@@ -8,7 +8,7 @@ export interface ITask {
     penalty: string;
     start: string;
     firstEnd: string;
-    secondEnd: string
+    secondEnd: string;
 }
 
 export interface ITasks {

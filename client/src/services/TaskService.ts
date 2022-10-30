@@ -7,6 +7,10 @@ export default class TasksService {
         return $api.get<ITasks[]>('/tasks')
     }
 
+    static async fetchEmployeeTasks(employeeId:string): Promise<AxiosResponse<ITasks[]>> {
+        return $api.get<ITasks[]>(`/tasks/${employeeId}`)
+    }
+
     static async createTask(task: ITask): Promise<AxiosResponse<ITask>> {
         return $api.post<ITask>('/create-task', task)
     }
