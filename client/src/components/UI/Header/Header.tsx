@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {logout} from "../../../store/reducers/ActionCreators";
@@ -12,7 +12,6 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({user}) => {
     const dispatch = useAppDispatch()
     const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
-
     return (
         <header className={cl.header}>
             <div className={cl.menuBtn} onClick={() => dispatch(setNavbarVisible(navbarIsVisible))}>

@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
-import {checkAuth} from './store/reducers/ActionCreators';
+import {checkAuth, fetchUsers} from './store/reducers/ActionCreators';
 import Header from "./components/UI/Header/Header";
-import LoginForm from "./components/LoginForm";
 import Navbar from "./components/UI/Navbar/Navbar";
-import RegistrationForm from "./components/RegistrationForm";
-import DropDownMenu from "./components/UI/DropDownMenu/DropDownMenu";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -17,9 +14,14 @@ function App() {
     // Проверка наличия токена доступа при первом запуске приложения
     useEffect(() => {
         if (localStorage.getItem('token')) {
-            dispatch(checkAuth);
+            dispatch(checkAuth());
+        }
+        if (isAuth) {
+            dispatch(fetchUsers())
         }
     }, [])
+
+
     return (
         <div className="App">
             <BrowserRouter>
@@ -41,7 +43,6 @@ function App() {
                         </div>
                     </div>
                     : <div>
-                        <h2>Пришла пора заводить аккаунт чтобы видеть красоту =)</h2>
                         <AppRouter/>
                     </div>
                 }

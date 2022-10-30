@@ -2,7 +2,6 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from './NavList.module.css'
 import ListItem from "../ListItem/ListItem";
 import {IList} from "../../../types/INavbar";
-import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {setNavbarOpenListTitle} from "../../../store/reducers/navbarSlice";
 
@@ -12,13 +11,14 @@ interface NavListProps {
 }
 
 const NavList: FC<NavListProps> = ({list}) => {
+    const dispatch = useAppDispatch()
     const [visible, setVisible] = useState(false)
     const [styles, setStyles] = useState([cl.icon])
 
-    const {navbarActiveItem, openListTitle} =useAppSelector(state => state.navbarSlice)
+    const {navbarActiveItem, openListTitle} = useAppSelector(state => state.navbarSlice)
 
     const [activeItem, setActiveItem] = useState(list.items.findIndex(obj => obj.link === window.location.pathname));
-const dispatch = useAppDispatch()
+
     useEffect(() => {
         setActiveItem(list.items.findIndex(obj => obj.link === window.location.pathname))
         if (openListTitle) {
@@ -31,7 +31,6 @@ const dispatch = useAppDispatch()
         setVisible(!visible)
         if (!visible)
             dispatch(setNavbarOpenListTitle(list.listTitle))
-            // localStorage.setItem(list.listTitle, list.listTitle)
         else dispatch(setNavbarOpenListTitle(''))
     }
 
@@ -58,7 +57,6 @@ const dispatch = useAppDispatch()
                         />
                     )
                     : ''
-
                 }
             </div>
         </div>

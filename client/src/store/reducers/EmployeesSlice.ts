@@ -17,7 +17,16 @@ const initialState: EmployeesState = {
 const employeesSlice = createSlice({
     name: 'employees',
     initialState,
-    reducers: {},
+    reducers: {
+        editEmployees: (state, action:PayloadAction<IUser>) => {
+            const ind = state.employees.findIndex(emp => emp._id === action.payload._id)
+            state.employees[ind] = {
+                ...action.payload,
+                // latinName: translit(action.payload.name)
+            }
+        }
+
+    },
     extraReducers: {
         [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
             state.isLoading = false;
@@ -39,5 +48,5 @@ const employeesSlice = createSlice({
         }
     }
 })
-export const {} = employeesSlice.actions;
+export const {editEmployees} = employeesSlice.actions;
 export default employeesSlice.reducer;
