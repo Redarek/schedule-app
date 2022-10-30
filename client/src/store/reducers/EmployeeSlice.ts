@@ -1,6 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
-import {fetchUserById, updateUser} from "./ActionCreators";
+import {fetchUserById, fetchUsers, updateUser} from "./ActionCreators";
+import {translit} from "../../utils/transliter";
+
 
 interface EmployeeState {
     isLoading: boolean;
@@ -17,17 +19,22 @@ const employeeSlice = createSlice({
     name: 'employee',
     initialState,
     reducers: {
-        editUser: (state, action: PayloadAction<IUser>) => {
-            state.employee.name = action.payload.name;
-            state.employee.email = action.payload.email;
-            state.employee.spec = action.payload.spec
-        }
+        editEmployee: (state, action: PayloadAction<IUser>) => {
+            state.employee = action.payload
+            // state.employee.name = action.payload.name;
+            // state.employee.email = action.payload.email;
+            // state.employee.spec = action.payload.spec
+            // state.employee.latinName = translit(action.payload.name)
+        },
     },
     extraReducers: {
         [fetchUserById.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
             state.isLoading = false;
             state.error = '';
-            state.employee = action.payload
+            state.employee = {
+             ...action.payload,
+             latinName: translit(action.payload.name),
+            }
         },
         [fetchUserById.pending.type]: (state) => {
             state.isLoading = true;
@@ -49,5 +56,5 @@ const employeeSlice = createSlice({
         }
     }
 })
-export const {editUser} = employeeSlice.actions;
+export const {editEmployee} = employeeSlice.actions;
 export default employeeSlice.reducer;

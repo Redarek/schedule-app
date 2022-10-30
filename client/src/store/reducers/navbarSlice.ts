@@ -18,13 +18,14 @@ const navbarSlice = createSlice({
         setNavbarVisible: (state, action: PayloadAction<boolean>) => {
             state.navbarIsVisible = !action.payload
         },
-        setNavbarActiveItem: (state, action: PayloadAction<string>) => {
-            state.navbarActiveItem = action.payload
-        },
-        setNavbarOpenListTitle: (state, action: PayloadAction<string>) => {
-            state.openListTitle = action.payload
-        },
-
+        setNavbarActiveItem:
+            (state, action: PayloadAction<string>) => {
+                state.navbarActiveItem = action.payload
+            },
+        setNavbarOpenListTitle:
+            (state, action: PayloadAction<string>) => {
+                state.openListTitle = action.payload
+            },
     },
 
     extraReducers: {}

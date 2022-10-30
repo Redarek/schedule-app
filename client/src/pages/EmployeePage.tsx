@@ -6,7 +6,6 @@ import EmployeeCard from "../components/EmployeeCard";
 import {fetchEmployeeTasks, fetchUserById, fetchUsers} from "../store/reducers/ActionCreators";
 import {useParams} from "react-router-dom";
 import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
-import {ITasks} from "../types/ITasks";
 
 const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
@@ -41,7 +40,7 @@ const EmployeePage: FC = () => {
                     }
                     <CalendarPage tasks={tasks}/>
                 </div>
-                : "Загрузка"
+                : "Загрузка страницы сотрудника"
             }
         </div>
     );

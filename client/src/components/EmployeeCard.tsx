@@ -4,14 +4,19 @@ import Input from "./UI/Input/Input";
 import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import {IUser} from "../types/IUser";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {editUser} from "../store/reducers/EmployeeSlice";
+import {editEmployee} from "../store/reducers/EmployeeSlice";
 import {updateUser} from "../store/reducers/ActionCreators";
+import {editUser} from "../store/reducers/authSlice";
+import {useNavigate} from "react-router-dom";
+import {translit} from "../utils/transliter";
+import {editEmployees} from "../store/reducers/EmployeesSlice";
 
 interface EmployeeCardProps {
     employee: IUser
 }
 
 const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
 
@@ -28,13 +33,15 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
             spec: spec,
             email: email,
             name: name,
+            latinName: translit(name),
         }
-        const obj = {
-            user: changedUser,
-            id: employee._id
+        if (user._id === changedUser._id) {
+            dispatch(editUser(changedUser))
         }
-        dispatch(updateUser(obj))
-        dispatch(editUser(changedUser))
+        dispatch(editEmployee(changedUser))
+        dispatch(editEmployees(changedUser))
+        dispatch(updateUser({user: changedUser, id: changedUser._id}))
+        navigate(`/employee-page/${changedUser.latinName}`)
     }
 
     return (
