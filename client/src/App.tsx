@@ -14,7 +14,7 @@ function App() {
     // Проверка наличия токена доступа при первом запуске приложения
     useEffect(() => {
         if (localStorage.getItem('token')) {
-            dispatch(checkAuth);
+            dispatch(checkAuth());
         }
         if (isAuth) {
             dispatch(fetchUsers())

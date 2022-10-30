@@ -1,3 +1,7 @@
+.inputWrap {
+    width: 100%;
+    position: relative;
+}
 .input {
     border: 1px solid rgba(0, 0, 0, 0.6);
     font-size: 14px;
@@ -8,4 +12,13 @@
     border-radius: 2px;
     padding: 0 0 0 12px
 
+}
+.inputBtn {
+    user-select: none;
+    position: absolute;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    right: 12px;
+    top: 8px;
 }

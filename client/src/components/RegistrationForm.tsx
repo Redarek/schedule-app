@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../hooks/redux";
 import {registration} from "../store/reducers/ActionCreators";
 import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
+import Input from "./UI/Input/Input";
 
 
 const RegistrationForm: FC = () => {
@@ -28,14 +29,15 @@ const RegistrationForm: FC = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <label htmlFor='registration-password' className={cl.auth__label}>Пароль</label>
-                <input
-                    className={cx(cl.auth__input, cl.auth__input_password)}
-                    placeholder="Введите пароль"
-                    type="password"
-                    name="password"
-                    id='registration-password'
+                <Input
+                    classes={cl.auth__input_password}
+                    placeholder={"Введите пароль"}
+                    type={'password'}
+                    name={'password'}
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    setValue={setPassword}
+                    showBtn={true}
+                    id={"login-password"}
                 />
                 <label htmlFor='registration-name' className={cl.auth__label}>Имя</label>
                 <input

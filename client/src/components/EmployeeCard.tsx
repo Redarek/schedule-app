@@ -83,6 +83,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                     <div className={cl.infoContainer}>
                         <div className={cl.infoText}>
                             <Input
+                                id={'email'}
                                 name={'Email'}
                                 placeholder={`${email}`}
                                 value={email}
@@ -92,6 +93,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         </div>
                         <div className={cl.infoText}>
                             <Input
+                                id={'name'}
                                 name={'Name'}
                                 placeholder={`${name}`}
                                 value={name}
