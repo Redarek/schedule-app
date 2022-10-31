@@ -2,6 +2,7 @@ import React, {FC, useEffect} from 'react';
 import cl from "./ListItem.module.css";
 import {useNavigate} from "react-router-dom";
 import {IList} from "../../../types/INavbar";
+import {useAppSelector} from "../../../hooks/redux";
 
 interface ListItemProps {
     title: string;
@@ -21,7 +22,7 @@ const ListItem: FC<ListItemProps> = ({title, index, activeItem, setActiveItem, l
                  navigate(link);
                  e.preventDefault()
              }}>
-            {index === activeItem
+            {index === activeItem && link === window.location.pathname
                 ? <div className={cl.activeItem}></div>
                 : ''
             }

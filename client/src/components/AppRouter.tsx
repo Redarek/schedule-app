@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import {authRoutes, publicRoutes} from "../router";
+import {authRoutes, privateRoutes, publicRoutes} from "../router";
 import {useAppSelector} from "../hooks/redux";
 
 const AppRouter: FC = () => {
@@ -24,8 +24,19 @@ const AppRouter: FC = () => {
                 )
             }
             {isAuth
-                ?  <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
-                :  <Route path="*" element={<Navigate replace to="/login"/>}/>
+                ? user.user.role === 'admin'
+                    ? privateRoutes.map(route =>
+                        <Route
+                            key={route.path}
+                            element={route.element}
+                            path={route.path}
+                        />)
+                    : ''
+                : ''
+            }
+            {isAuth
+                ? <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
+                : <Route path="*" element={<Navigate replace to="/login"/>}/>
             }
         </Routes>
     );

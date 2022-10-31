@@ -11,6 +11,7 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = () => {
     const {employees, isLoading, error} = useAppSelector(state => state.employeesSlice)
+    const {user} = useAppSelector(state => state.authSlice.user)
     const employeesItems: any = []
     useEffect(() => {
         if (employees.length === 0) {
@@ -32,6 +33,12 @@ const Navbar: FC<NavbarProps> = () => {
             items: employeesItems
         },
     ]
+    if (user.role === "admin") {
+        lists.push({
+            listTitle: 'Админ',
+            items:[{link: `/admin/${user.latinName}`, title: 'Панель админа'}] ,
+        })
+    }
 
     return (
         <nav className={cl.navWrap}>
