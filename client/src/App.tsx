@@ -19,7 +19,7 @@ function App() {
         if (isAuth) {
             dispatch(fetchUsers())
         }
-    }, [])
+    }, [isAuth])
 
 
     return (

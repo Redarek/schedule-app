@@ -26,7 +26,6 @@ const NavList: FC<NavListProps> = ({list}) => {
             setStyles([...styles, cl.active]);
         } else setStyles([cl.icon]);
     }, [navbarActiveItem, visible])
-
     const openList = () => {
         setVisible(!visible)
         if (!visible)
