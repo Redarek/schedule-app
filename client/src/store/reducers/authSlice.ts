@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AuthResponse} from "../../types/AuthResponse";
-import {login, logout} from "./ActionCreators";
+import {checkAuth, fetchUser, login, logout} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
 import {IUser} from "../../types/IUser";
 
@@ -23,21 +23,49 @@ const authSlice = createSlice({
     reducers: {
         editUser: (state, action: PayloadAction<IUser>) => {
             state.user.user = action.payload
-            // state.user.user.name = action.payload.name;
-            // state.user.user.email = action.payload.email;
-            // state.user.user.spec = action.payload.spec
-            // state.user.user.latinName = translit(state.user.user.name)
         }
     },
 
     extraReducers: {
-        [login.fulfilled.type]: (state, action: PayloadAction<AuthResponse>) => {
+        [fetchUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+            state.isLoading = false;
+            state.error = '';
+            if (action.payload != undefined) {
+                state.user.user = action.payload;
+                state.user.user.latinName = translit(action.payload.name)
+            }
+        },
+        [fetchUser.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchUser.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload
+        },
+        [checkAuth.fulfilled.type]: (state, action: PayloadAction<AuthResponse>) => {
             state.isLoading = false;
             state.error = '';
             if (action.payload != undefined) {
                 state.isAuth = true;
+            }
+        },
+        [checkAuth.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [checkAuth.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload
+        },
+        [login.fulfilled.type]: (state, action: PayloadAction<AuthResponse>) => {
+            state.isLoading = false;
+            state.error = '';
+            if (action.payload != undefined) {
+                localStorage.setItem('userId', `${action.payload.user._id}`)
+                state.isAuth = true;
+                // console.log(action.payload)
                 state.user = action.payload;
                 state.user.user.latinName = translit(state.user.user.name)
+                console.log(state.user.user)
             }
         },
         [login.pending.type]: (state) => {
@@ -52,6 +80,7 @@ const authSlice = createSlice({
             state.error = '';
             state.isAuth = false;
             state.user = action.payload;
+            localStorage.removeItem('userId')
         },
         [logout.pending.type]: (state) => {
             state.isLoading = true;

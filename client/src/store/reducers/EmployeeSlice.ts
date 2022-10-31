@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
-import {fetchUserById, fetchUsers, updateUser} from "./ActionCreators";
+import {fetchEmployeeById, updateEmployee} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
 
 
@@ -28,7 +28,7 @@ const employeeSlice = createSlice({
         },
     },
     extraReducers: {
-        [fetchUserById.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+        [fetchEmployeeById.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
             state.isLoading = false;
             state.error = '';
             state.employee = {
@@ -36,21 +36,21 @@ const employeeSlice = createSlice({
              latinName: translit(action.payload.name),
             }
         },
-        [fetchUserById.pending.type]: (state) => {
+        [fetchEmployeeById.pending.type]: (state) => {
             state.isLoading = true;
         },
-        [fetchUserById.rejected.type]: (state, action: PayloadAction<string>) => {
+        [fetchEmployeeById.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload
         },
-        [updateUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+        [updateEmployee.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
             state.isLoading = false;
             state.error = '';
         },
-        [updateUser.pending.type]: (state) => {
+        [updateEmployee.pending.type]: (state) => {
             state.isLoading = true;
         },
-        [updateUser.rejected.type]: (state, action: PayloadAction<string>) => {
+        [updateEmployee.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload
         }

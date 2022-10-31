@@ -32,7 +32,6 @@ const NavList: FC<NavListProps> = ({list}) => {
         }
     }, [navbarActiveItem, visible, openListsTitle])
 
-    console.log(openListsTitle)
     const openList = () => {
         // if (openListTitle === list.listTitle) {
         setVisible(!visible)

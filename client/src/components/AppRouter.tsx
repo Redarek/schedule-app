@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import React, {FC, useEffect} from 'react';
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {authRoutes, privateRoutes, publicRoutes} from "../router";
 import {useAppSelector} from "../hooks/redux";
 
 const AppRouter: FC = () => {
-    const {user, isAuth} = useAppSelector(state => state.authSlice)
+    const {user, isAuth, isLoading} = useAppSelector(state => state.authSlice)
     return (
         <Routes>
             {!isAuth
@@ -23,7 +23,7 @@ const AppRouter: FC = () => {
                     />
                 )
             }
-            {isAuth
+            {user.user && isAuth
                 ? user.user.role === 'admin'
                     ? privateRoutes.map(route =>
                         <Route
@@ -34,9 +34,12 @@ const AppRouter: FC = () => {
                     : ''
                 : ''
             }
-            {isAuth
+            {isAuth && user.user
                 ? <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
-                : <Route path="*" element={<Navigate replace to="/login"/>}/>
+
+                : localStorage.getItem('userId')
+                    ? ''
+                    : <Route path="*" element={<Navigate replace to="/login"/>}/>
             }
         </Routes>
     );

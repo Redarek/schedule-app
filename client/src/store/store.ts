@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['authSlice', "navbarSlice"],
+    whitelist: ["navbarSlice"],
     // blacklist: ['taskSlice', 'employeesSlice', 'employeeSlice']
 };
 

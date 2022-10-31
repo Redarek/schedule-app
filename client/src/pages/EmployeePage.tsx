@@ -3,9 +3,10 @@ import cl from '../styles/EmployeePage.module.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import CalendarPage from "./CalendarPage";
 import EmployeeCard from "../components/EmployeeCard";
-import {fetchEmployeeTasks, fetchUserById, fetchUsers} from "../store/reducers/ActionCreators";
+import {fetchEmployeeTasks, fetchEmployeeById} from "../store/reducers/ActionCreators";
 import {useParams} from "react-router-dom";
 import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
+import {editEmployee} from "../store/reducers/EmployeeSlice";
 
 const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
@@ -17,11 +18,13 @@ const EmployeePage: FC = () => {
 
     const {tasks} = useAppSelector(state => state.taskSlice)
 
+    // console.log(employee)
     useEffect(() => {
         const index = employees.findIndex(emp => emp.latinName === latinName)
-        if (index !== -1) dispatch(fetchUserById(employees[index]._id))
+
+        if (index !== -1) dispatch(editEmployee(employees[index]))
         if (latinName) dispatch(setNavbarActiveItem(latinName))
-    }, [employees, latinName])
+    }, [latinName])
 
     useEffect(() => {
         if (employee._id) dispatch(fetchEmployeeTasks(employee._id))

@@ -6,7 +6,7 @@ import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import TasksService from "../../../services/TaskService";
 import Button from "../Button/Button";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
-import {fetchUsers} from "../../../store/reducers/ActionCreators";
+import {fetchEmployees} from "../../../store/reducers/ActionCreators";
 
 const CreateNewTask: FC = () => {
     const dispatch = useAppDispatch()
@@ -26,9 +26,9 @@ const CreateNewTask: FC = () => {
 
     useEffect(() => {
         if (employees.length === 0) {
-            dispatch(fetchUsers())
+            dispatch(fetchEmployees())
         }
-    })
+    }, [])
 
     const handleCreate = async (e: any) => {
         e.preventDefault()
