@@ -37,6 +37,21 @@ const Input: FC<Interface> = ({
         if (show) setInputType("text")
         else setInputType(type)
     }
+
+    const [width, setWidth] = useState<number>(window.innerWidth);
+
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+    }, []);
+
+    const isMobile = width <= 768;
+
     return (
         <div className={clStyles.join(' ')}>
             <input
@@ -49,13 +64,25 @@ const Input: FC<Interface> = ({
                 onChange={(e) => setValue(e.target.value)}
             />
             {showBtn
-                ? <div className={cl.inputBtn}
-                       onMouseLeave={() => showValue(false)}
-                       onMouseDown={() => showValue(true)}
-                       onMouseUp={() => showValue(false)}>
-                    {isShow
-                        ? <img draggable={false} src="/images/eyeOpen.png" alt=""/>
-                        : <img draggable={false} src="images/eyeClose.png" alt=""/>
+                ?<div>
+                    {isMobile
+                        ? <div className={cl.inputBtn}
+                               onClick={()=> showValue(!isShow)}>
+                            {isShow
+                                ? <img draggable={false} src="/images/eyeOpen.png" alt=""/>
+                                : <img draggable={false} src="images/eyeClose.png" alt=""/>
+                            }
+                        </div>
+                        : <div className={cl.inputBtn}
+                               onMouseLeave={() => showValue(false)}
+                               onMouseDown={() => showValue(true)}
+                               onMouseUp={() => showValue(false)}>
+                            {isShow
+                                ? <img draggable={false} src="/images/eyeOpen.png" alt=""/>
+                                : <img draggable={false} src="images/eyeClose.png" alt=""/>
+                            }
+                        </div>
+
                     }
                 </div>
                 : ''
