@@ -33,12 +33,10 @@ const NavList: FC<NavListProps> = ({list}) => {
     }, [navbarActiveItem, visible, openListsTitle])
 
     const openList = () => {
-        // if (openListTitle === list.listTitle) {
         setVisible(!visible)
         if (!visible)
             dispatch(setNavbarOpenListsTitle(list))
         else dispatch(setNavbarOpenListsTitle(list))
-        // }
     }
 
 

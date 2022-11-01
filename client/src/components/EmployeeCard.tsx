@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import cl from "../styles/EmployeePage.module.css";
 import Input from "./UI/Input/Input";
 import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
@@ -19,6 +19,12 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
+
+    useEffect(() => {
+        setEmail(employee.email);
+        setName(employee.name);
+        setSpec(employee.spec)
+    }, [employee])
 
     const [editMenuIsShow, setEditMenuIsShow] = useState<boolean>(false)
 

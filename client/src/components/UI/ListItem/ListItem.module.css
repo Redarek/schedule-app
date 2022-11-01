@@ -7,19 +7,25 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    border-radius: 5px;
 }
+
 .listItemWrap:hover {
-    color: #0078D4;
+    background-color: #0078D4;
+    opacity: .9;
 }
+
 .activeItem {
     background-color: #0078D4;
     width: 1.5%;
     height: 2vw;
     border-radius: 5px;
 }
+
 .itemTitle {
     margin-left: 10%;
 }
+
 .itemLink {
     text-decoration: none;
     margin: 0;

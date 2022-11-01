@@ -1,0 +1,100 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.employeesTable {
+    border-collapse: collapse;
+    margin: 2% auto;
+    text-align: center;
+    width: 95%;
+    background-color: #D9D9D9;
+    border: 1px solid #000000;
+
+}
+
+.nameTd {
+    max-width: 30%;
+    padding: 2px;
+    border: 1px solid #000000;
+    cursor: pointer;
+}
+
+.specTd {
+    max-width: 20%;
+    padding: 2px;
+    border: 1px solid #000000;
+}
+
+.emailTd {
+    max-width: 30%;
+    padding: 2px;
+    border: 1px solid #000000;
+}
+
+.roleTd {
+    max-width: 15%;
+    padding: 2px;
+    border: 1px solid #000000;
+    border-right: none;
+}
+
+.thr {
+    border: 1px solid #000000;
+}
+
+.nameTh {
+    width: 30%;
+    padding: 2px;
+    border: 1px solid #000000;
+}
+
+.specTh {
+    max-width: 20%;
+    padding: 2px;
+    border: 1px solid #000000;
+}
+
+.emailTh {
+    max-width: 30%;
+    padding: 2px;
+    border: 1px solid #000000;
+}
+
+.roleTh {
+    max-width: 15%;
+    padding: 2px;
+    border: 1px solid #000000;
+    border-right: none;
+}
+
+.empTr {
+    border: 1px solid #000000;
+}
+
+.confBtn {
+    cursor: pointer;
+    position: relative;
+    width: 40px;
+}
+
+.confBtn span {
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    background-color: #0191ff;
+    border-radius: 2px;
+    top: 16px;
+}
+
+.confBtn span:first-child {
+    left: 3px;
+    transform: rotate(65deg);
+}
+
+.confBtn span:last-child {
+    left: 11px;
+    transform: rotate(-65deg);
+}

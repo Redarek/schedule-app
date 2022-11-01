@@ -1,8 +1,6 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import cl from "./ListItem.module.css";
 import {useNavigate} from "react-router-dom";
-import {IList} from "../../../types/INavbar";
-import {useAppSelector} from "../../../hooks/redux";
 
 interface ListItemProps {
     title: string;
