@@ -24,15 +24,8 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
 
     const [role, setRole] = useState<string>(employee.role)
     const {user} = useAppSelector(state => state.authSlice.user)
-    const [showEditBtn, setShowEditBtn] = useState<boolean>(false)
 
-    console.log(employee)
     const navigate = useNavigate()
-
-    useEffect(() => {
-        if (role === employee.role) setShowEditBtn(false)
-        else setShowEditBtn(true)
-    }, [role])
 
     const dispatch = useAppDispatch()
 
