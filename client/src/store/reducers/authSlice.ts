@@ -7,6 +7,7 @@ import {IUser} from "../../types/IUser";
 interface UserState {
     user: AuthResponse;
     isAuth: boolean;
+    isChecked: boolean
     isLoading: boolean;
     error: string;
 }
@@ -15,6 +16,7 @@ const initialState: UserState = {
     user: {} as AuthResponse,
     isAuth: false,
     isLoading: false,
+    isChecked: false,
     error: ''
 }
 const authSlice = createSlice({
@@ -31,6 +33,7 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.error = '';
             if (action.payload != undefined) {
+                state.isAuth = true
                 state.user.user = action.payload;
                 state.user.user.latinName = translit(action.payload.name)
             }
@@ -46,7 +49,7 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.error = '';
             if (action.payload != undefined) {
-                state.isAuth = true;
+                state.isChecked = true;
             }
         },
         [checkAuth.pending.type]: (state) => {
@@ -79,6 +82,7 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.error = '';
             state.isAuth = false;
+            state.isChecked = false;
             state.user = action.payload;
             localStorage.removeItem('userId')
         },

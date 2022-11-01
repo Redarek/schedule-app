@@ -23,7 +23,7 @@ const AppRouter: FC = () => {
                     />
                 )
             }
-            {user.user && isAuth
+            {isAuth
                 ? user.user.role === 'admin'
                     ? privateRoutes.map(route =>
                         <Route
@@ -34,7 +34,7 @@ const AppRouter: FC = () => {
                     : ''
                 : ''
             }
-            {isAuth && user.user
+            {isAuth
                 ? <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
 
                 : localStorage.getItem('userId')

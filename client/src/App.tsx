@@ -8,7 +8,7 @@ import Header from "./components/UI/Header/Header";
 import Navbar from "./components/UI/Navbar/Navbar";
 
 function App() {
-    const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
+    const {isAuth, isLoading, user, isChecked} = useAppSelector(state => state.authSlice)
     const {employees} = useAppSelector(state => state.employeesSlice)
     const {employee} = useAppSelector(state => state.employeeSlice)
     const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
@@ -21,10 +21,12 @@ function App() {
             dispatch(checkAuth());
             // dispatch(fetchEmployees())
         }
-        if (userId && !user.user) {
+    }, [])
+    useEffect(()=> {
+        if (isChecked && userId) {
             dispatch(fetchUser(userId))
         }
-    }, [])
+    }, [isChecked])
     useEffect(() => {
         dispatch(fetchEmployees())
     }, [employee])
@@ -34,7 +36,7 @@ function App() {
                 <div className="loader">
                     {isLoading
                         ? 'Loader will be soon...'
-                        : isAuth && user.user
+                        : isAuth
                             ? <div className="isAuth">
                                 <Header user={user.user}/>
                                 <div className="wrapper">
