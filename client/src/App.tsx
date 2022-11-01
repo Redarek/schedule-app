@@ -6,6 +6,7 @@ import {useAppDispatch, useAppSelector} from './hooks/redux';
 import {checkAuth, fetchEmployees, fetchUser} from './store/reducers/ActionCreators';
 import Header from "./components/UI/Header/Header";
 import Navbar from "./components/UI/Navbar/Navbar";
+import {CSSTransition} from "react-transition-group";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -27,10 +28,17 @@ function App() {
                             ? <div className="isAuth">
                                 <Header user={user.user}/>
                                 <div className="wrapper">
-                                    {navbarIsVisible
-                                        ? <Navbar/>
-                                        : ''
-                                    }
+                                    <CSSTransition
+                                        in={navbarIsVisible}
+                                        classNames={'navBar'}
+                                        timeout={600}
+                                        mountOnEnter
+                                        unmountOnExit
+                                    >
+                                        <div className={'navBar'}>
+                                            <Navbar/>
+                                        </div>
+                                    </CSSTransition>
                                     <AppRouter/>
                                 </div>
                             </div>

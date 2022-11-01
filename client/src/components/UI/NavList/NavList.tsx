@@ -1,10 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from './NavList.module.css'
+import './navlist.css'
 import ListItem from "../ListItem/ListItem";
 import {IList} from "../../../types/INavbar";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {setNavbarOpenListsTitle} from "../../../store/reducers/navbarSlice";
-
+import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 
 interface NavListProps {
     list: IList
@@ -21,7 +22,7 @@ const NavList: FC<NavListProps> = ({list}) => {
 
     useEffect(() => {
         setActiveItem(list.items.findIndex(obj => obj.link === window.location.pathname))
-        if (openListsTitle.length > 0) {
+        if (openListsTitle.length >= 0) {
             // console.log(list.listTitle)
             const listIndex = openListsTitle.findIndex(obj => obj.listTitle === list.listTitle)
             // console.log(listIndex)
@@ -29,6 +30,8 @@ const NavList: FC<NavListProps> = ({list}) => {
                 setVisible(true)
                 setStyles([...styles, cl.active]);
             } else setStyles([cl.icon]);
+
+
         }
     }, [navbarActiveItem, visible, openListsTitle])
 
@@ -50,19 +53,31 @@ const NavList: FC<NavListProps> = ({list}) => {
                 <div className={cl.listTitle}>{list.listTitle}</div>
             </div>
             <div className={cl.list}>
-                {visible
-                    ? list.items.map((item, index) =>
-                        <ListItem
-                            title={item.title}
-                            link={item.link}
-                            index={index}
-                            key={item.title}
-                            activeItem={activeItem}
-                            setActiveItem={() => setActiveItem(index)}
-                        />
-                    )
-                    : ''
-                }
+                <TransitionGroup>
+                    {visible
+                        ?
+                        <CSSTransition
+                            key={list.listTitle}
+                            timeout={500}
+                            classNames='list'
+                        >
+                            <div className='list'>
+                                {list.items.map((item, index) =>
+                                    <ListItem
+                                        title={item.title}
+                                        link={item.link}
+                                        index={index}
+                                        key={item.title}
+                                        activeItem={activeItem}
+                                        setActiveItem={() => setActiveItem(index)}
+                                    />
+                                )}
+                            </div>
+                        </CSSTransition>
+
+                        : ''
+                    }
+                </TransitionGroup>
             </div>
         </div>
     );
