@@ -12,6 +12,12 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({user}) => {
     const dispatch = useAppDispatch()
     const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
+    const {isAuth} = useAppSelector(state => state.authSlice)
+
+    useEffect(() => {
+        dispatch(fetchEmployees())
+    }, [isAuth])
+
     return (
         <header className={cl.header}>
             <div className={cl.menuBtn} onClick={() => dispatch(setNavbarVisible(navbarIsVisible))}>

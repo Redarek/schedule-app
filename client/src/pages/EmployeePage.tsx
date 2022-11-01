@@ -18,13 +18,12 @@ const EmployeePage: FC = () => {
 
     const {tasks} = useAppSelector(state => state.taskSlice)
 
-    // console.log(employee)
     useEffect(() => {
         const index = employees.findIndex(emp => emp.latinName === latinName)
 
         if (index !== -1) dispatch(editEmployee(employees[index]))
         if (latinName) dispatch(setNavbarActiveItem(latinName))
-    }, [latinName])
+    }, [latinName, employees])
 
     useEffect(() => {
         if (employee._id) dispatch(fetchEmployeeTasks(employee._id))

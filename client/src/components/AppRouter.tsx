@@ -4,7 +4,7 @@ import {authRoutes, privateRoutes, publicRoutes} from "../router";
 import {useAppSelector} from "../hooks/redux";
 
 const AppRouter: FC = () => {
-    const {user, isAuth, isLoading} = useAppSelector(state => state.authSlice)
+    const {user, isAuth} = useAppSelector(state => state.authSlice)
     return (
         <Routes>
             {!isAuth
