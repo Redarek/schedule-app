@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
-import {fetchUsers} from "./ActionCreators";
+import {fetchEmployees} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
 
 interface EmployeesState {
@@ -28,10 +28,11 @@ const employeesSlice = createSlice({
 
     },
     extraReducers: {
-        [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
+        [fetchEmployees.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
             state.isLoading = false;
             state.error = '';
             let users = action.payload
+            // console.log(1)
             for (let i = 0; i < users.length; i++) {
                 state.employees[i] = {
                     ...users[i],
@@ -39,10 +40,10 @@ const employeesSlice = createSlice({
                 }
             }
         },
-        [fetchUsers.pending.type]: (state) => {
+        [fetchEmployees.pending.type]: (state) => {
             state.isLoading = true;
         },
-        [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+        [fetchEmployees.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload
         }

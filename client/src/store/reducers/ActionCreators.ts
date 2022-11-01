@@ -20,7 +20,7 @@ export const fetchAllTasks = createAsyncThunk(
 )
 export const fetchEmployeeTasks = createAsyncThunk(
     '/tasks/:employeeId',
-    async (id:string, thunkAPI) => {
+    async (id: string, thunkAPI) => {
         try {
             const response = await TasksService.fetchEmployeeTasks(id)
             return response.data;
@@ -92,30 +92,44 @@ export const checkAuth = createAsyncThunk(
             localStorage.setItem('token', response.data.accessToken);
             return response.data;
         } catch (e) {
-            console.log(e);
+            //@ts-ignore
+            console.log(e.response?.data?.message);
         }
     }
 )
 
-export const fetchUsers = createAsyncThunk(
+export const fetchEmployees = createAsyncThunk(
     'users/fetchAll',
     async (_, thunkAPI) => {
         try {
-            const response = await UserService.fetchUsers()
+            const response = await UserService.fetchEmployees()
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось загрузить сотрудников")
         }
     }
 )
-export const fetchUserById = createAsyncThunk(
+
+export const fetchEmployeeById = createAsyncThunk(
     'user/fetchById',
     async (id: string, thunkAPI) => {
         try {
-            const response = await UserService.fetchUserDyId(id)
+            const response = await UserService.fetchEmployeeById(id)
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось загрузить сотрудника")
+        }
+    }
+)
+
+export const fetchUser = createAsyncThunk(
+    'user/fetchById',
+    async (id: string, thunkAPI) => {
+        try {
+            const response = await UserService.fetchEmployeeById(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось загрузить пользователя")
         }
     }
 )
@@ -125,11 +139,11 @@ interface updateObject {
     id: string
 }
 
-export const updateUser = createAsyncThunk(
+export const updateEmployee = createAsyncThunk(
     'user/updateUser',
     async (updateObject: updateObject, thunkAPI) => {
         try {
-            const response = await UserService.updateUser(updateObject.user, updateObject.id)
+            const response = await UserService.updateEmployee(updateObject.user, updateObject.id)
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось обновить данные")

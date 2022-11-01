@@ -1,0 +1,29 @@
+.list {
+    width: 100%;
+}
+.list-exit-active {
+    animation: fade-out 1000ms forwards;
+}
+.list-enter-active {
+    animation: fade-in 500ms forwards;
+}
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}

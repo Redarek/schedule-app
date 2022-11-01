@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import './App.css';
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, useNavigate} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
-import {checkAuth, fetchUsers} from './store/reducers/ActionCreators';
+import {checkAuth, fetchEmployees, fetchUser} from './store/reducers/ActionCreators';
 import Header from "./components/UI/Header/Header";
 import Navbar from "./components/UI/Navbar/Navbar";
+import {CSSTransition} from "react-transition-group";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -16,36 +17,36 @@ function App() {
         if (localStorage.getItem('token')) {
             dispatch(checkAuth());
         }
-        if (isAuth) {
-            dispatch(fetchUsers())
-        }
-    }, [isAuth])
-
-
+    }, [])
     return (
         <div className="App">
             <BrowserRouter>
                 <div className="loader">
                     {isLoading
                         ? 'Loader will be soon...'
-                        : ''
+                        : isAuth
+                            ? <div className="isAuth">
+                                <Header user={user.user}/>
+                                <div className="wrapper">
+                                    <CSSTransition
+                                        in={navbarIsVisible}
+                                        classNames={'navBar'}
+                                        timeout={600}
+                                        mountOnEnter
+                                        unmountOnExit
+                                    >
+                                        <div className={'navBar'}>
+                                            <Navbar/>
+                                        </div>
+                                    </CSSTransition>
+                                    <AppRouter/>
+                                </div>
+                            </div>
+                            : isLoading
+                                ? ''
+                                : <AppRouter/>
                     }
                 </div>
-                {isAuth
-                    ? <div className="isAuth">
-                        <Header user={user}/>
-                        <div className="wrapper">
-                            {navbarIsVisible
-                                ? <Navbar/>
-                                : ''
-                            }
-                            <AppRouter/>
-                        </div>
-                    </div>
-                    : <div>
-                        <AppRouter/>
-                    </div>
-                }
             </BrowserRouter>
         </div>
     );

@@ -6,7 +6,7 @@ import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import TasksService from "../../../services/TaskService";
 import Button from "../Button/Button";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
-import {fetchUsers} from "../../../store/reducers/ActionCreators";
+import {fetchEmployees} from "../../../store/reducers/ActionCreators";
 
 const CreateNewTask: FC = () => {
     const dispatch = useAppDispatch()
@@ -20,15 +20,16 @@ const CreateNewTask: FC = () => {
     const [start, setStart] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
     const [firstEnd, setFirstEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
     const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
-    const [openMenuTitle, setOpenMenuTitle] = useState<string>('')
+    // const [openMenuTitle, setOpenMenuTitle] = useState<string>('')
+    const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
 
     const {employees, isLoading, error} = useAppSelector(state => state.employeesSlice)
 
     useEffect(() => {
         if (employees.length === 0) {
-            dispatch(fetchUsers())
+            dispatch(fetchEmployees())
         }
-    })
+    }, [])
 
     const handleCreate = async (e: any) => {
         e.preventDefault()
@@ -99,8 +100,9 @@ const CreateNewTask: FC = () => {
             </div>
             <div className={cl.inputWrap}>
                 <DropDownMenu
-                    openMenuTitle={openMenuTitle}
-                    setOpenMenuTitle={setOpenMenuTitle}
+                    indexOfMenu={'0'}
+                    indexOfOpenMenu={indexOfOpenMenu}
+                    setIndexOfOpenMenu={setIndexOfOpenMenu}
                     menuType={'spec'}
                     title={'Специализация...'}
                     menuItems={[]}
@@ -111,8 +113,9 @@ const CreateNewTask: FC = () => {
             </div>
             <div className={cl.inputWrap}>
                 <DropDownMenu
-                    openMenuTitle={openMenuTitle}
-                    setOpenMenuTitle={setOpenMenuTitle}
+                    indexOfMenu={'1'}
+                    indexOfOpenMenu={indexOfOpenMenu}
+                    setIndexOfOpenMenu={setIndexOfOpenMenu}
                     menuType={'employees'}
                     title={'Сотрудник...'}
                     menuItems={employees}
