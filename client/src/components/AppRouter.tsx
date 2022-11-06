@@ -36,10 +36,7 @@ const AppRouter: FC = () => {
             }
             {isAuth
                 ? <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
-
-                : localStorage.getItem('userId')
-                    ? ''
-                    : <Route path="*" element={<Navigate replace to="/login"/>}/>
+                : <Route path="*" element={<Navigate replace to="/login"/>}/>
             }
         </Routes>
     );
