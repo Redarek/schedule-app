@@ -1,0 +1,67 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+}
+.wrap {
+    width: 80%;
+    height: 94vh;
+}
+.inputWrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.pointsEdit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    max-width: 430px;
+}
+.titleEdit {
+    width: 60%;
+    display: flex;
+    align-items: center;
+}
+.saveBtn {
+    width: 15%;
+    margin-top: auto;
+    margin-left: 10%;
+}
+.specEdit {
+    width: 400px;
+    padding-top: 10px;
+
+}
+
+.label {
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+.employeeEdit {
+    width: 400px;
+    padding-top: 10px;
+}
+
+.textEdit {
+    padding-top: 10px;
+    overflow-x: hidden;
+    min-width: 300px;
+}
+.textarea {
+    max-width: 630px;
+    max-height: 38.5vh;
+    overflow-y: auto;
+    padding: 5px;
+    resize: none;
+    min-height: 20vh;
+    outline: none;
+}
+
+.dateWrap {
+    width: 330px;
+}

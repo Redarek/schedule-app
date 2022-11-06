@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
-import {initialDate} from "../../Calendar";
-import {ITask, ITasks} from "../../../types/ITasks";
+import {initialDate} from "../Calendar";
+import {ITask, ITasks} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
-import DropDownMenu from "../DropDownMenu/DropDownMenu";
-import TasksService from "../../../services/TaskService";
-import Button from "../Button/Button";
-import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
-import {fetchEmployees} from "../../../store/reducers/ActionCreators";
+import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
+import TasksService from "../../services/TaskService";
+import Button from "../UI/Button/Button";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {fetchEmployees} from "../../store/reducers/ActionCreators";
 
 const CreateNewTask: FC = () => {
     const dispatch = useAppDispatch()
@@ -36,6 +36,7 @@ const CreateNewTask: FC = () => {
         if (employee === '' || spec === '' || title === '' || text === '' || firstReward === 0 || penalty === 0) {
         } else {
             const task: ITask = {
+                _id: '',
                 employee: employee,
                 spec: spec,
                 title: title,

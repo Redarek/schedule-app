@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from './DropDownMenu.module.css'
-import {log} from "util";
 
 interface DropDownMenuProps {
     menuType: 'spec' | 'other' | 'employees' | 'role';

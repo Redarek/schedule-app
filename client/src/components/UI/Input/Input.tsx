@@ -2,7 +2,7 @@ import React, {CSSProperties, FC, useEffect, useState} from 'react';
 import cl from './Input.module.css'
 
 
-interface Interface {
+interface InputProps {
     id: string;
     showBtn?: boolean;
     classes?: any;
@@ -14,7 +14,7 @@ interface Interface {
 }
 
 
-const Input: FC<Interface> = ({
+const Input: FC<InputProps> = ({
                                   placeholder,
                                   id,
                                   type,

@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import cl from './TaskMonth.module.css'
 import {IDate} from "../../../types/IDate";
 import {ITasks} from "../../../types/ITasks";
+import {useNavigate} from "react-router-dom";
 
 interface TaskMonthProps {
     task: ITasks;
@@ -10,6 +11,7 @@ interface TaskMonthProps {
 }
 
 const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
+    const navigate = useNavigate()
     const date = day.date;
     const weekEnd = week.endTime;
 
@@ -45,7 +47,7 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
 
     return (
 
-        <div className={cl.taskWrapper}>
+        <div className={cl.taskWrapper} onClick={()=> navigate(`/task-edit/${task._id}`)}>
             {task
                 ? <div>
                     {task.start.getDate() === date.getDate()

@@ -1,8 +1,8 @@
 import React, {FC, useEffect} from 'react';
 import cl from './Navbar.module.css'
 import NavList from "../NavList/NavList";
-import {IList} from "../../../types/INavbar";
-import {useAppSelector} from "../../../hooks/redux";
+import {IList} from "../../types/INavbar";
+import {useAppSelector} from "../../hooks/redux";
 
 
 interface NavbarProps {

@@ -1,12 +1,13 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {BrowserRouter, useNavigate} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
-import {checkAuth, fetchEmployees, fetchUser} from './store/reducers/ActionCreators';
-import Header from "./components/UI/Header/Header";
-import Navbar from "./components/UI/Navbar/Navbar";
+import {checkAuth} from './store/reducers/ActionCreators';
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
 import {CSSTransition} from "react-transition-group";
+import TaskEditPage from "./pages/TaskEditPage";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)

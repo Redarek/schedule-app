@@ -1,9 +1,9 @@
 import React, {FC, useEffect} from 'react';
 import cl from './Header.module.css'
-import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
-import {fetchEmployees, logout} from "../../../store/reducers/ActionCreators";
-import {setNavbarVisible} from "../../../store/reducers/navbarSlice";
-import {IUser} from "../../../types/IUser";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {fetchEmployees, logout} from "../../store/reducers/ActionCreators";
+import {setNavbarVisible} from "../../store/reducers/navbarSlice";
+import {IUser} from "../../types/IUser";
 
 interface HeaderProps {
     user: IUser
