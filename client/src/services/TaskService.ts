@@ -14,4 +14,10 @@ export default class TasksService {
     static async createTask(task: ITask): Promise<AxiosResponse<ITask>> {
         return $api.post<ITask>('/create-task', task)
     }
+    static async fetchTaskById(taskId: string): Promise<AxiosResponse<ITask>> {
+        return $api.get<ITask>(`/task/${taskId}`)
+    }
+    static async editTask(taskId: string, task:ITask): Promise<AxiosResponse<ITask>> {
+        return $api.put<ITask>(`/task/${taskId}`, task)
+    }
 }

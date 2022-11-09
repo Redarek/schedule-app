@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import Month from "../components/Calendar/Month/Month";
 import ModalFullScreen from "../components/UI/ModalFullScreen/ModalFullScreen";
-import CreateNewTask from "../components/UI/CreateNewTask/CreateNewTask";
+import CreateNewTask from "../components/CreateNewTask/CreateNewTask";
 import Week from "../components/Calendar/Week/Week";
 import cl from '../styles/CalendarPage.module.css'
 import Button from "../components/UI/Button/Button";
@@ -16,7 +16,6 @@ const CalendarPage: FC<CalendarPageProps> = ({tasks}) => {
     const [calendarDisplayMode, setCalendarDisplayMode] = useState('Месяц')
     const [calendarModeIndex, setCalendarModeIndex] = useState(0)
     //@todo сделать лоадер
-
     const calendarModes = [<Month tasks={tasks}/>, <Week tasks={tasks}/>]
 
     return (

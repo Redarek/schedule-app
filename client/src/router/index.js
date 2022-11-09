@@ -1,8 +1,8 @@
-import MainPage from "../pages/MainPage";
 import LoginForm from "../components/LoginForm";
 import RegistrationForm from "../components/RegistrationForm";
-import CalendarPage from "../pages/CalendarPage";
 import EmployeePage from "../pages/EmployeePage";
+import AdminPage from "../pages/Admin/AdminPage";
+import TaskEditPage from "../pages/TaskEditPage";
 
 export const publicRoutes = [
     {path: '/login', element: <LoginForm/>},
@@ -10,8 +10,9 @@ export const publicRoutes = [
 ];
 
 export const privateRoutes = [
-    ///
+    {path: '/admin/:latinName', element: <AdminPage/>, exact: true},
 ];
 export const authRoutes = [
     {path: '/employee-page/:latinName', element: <EmployeePage/>, exact: true},
+    {path: '/task-edit/:taskId', element: <TaskEditPage/>, exact: true},
 ];

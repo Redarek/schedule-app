@@ -2,15 +2,16 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from './DropDownMenu.module.css'
 
 interface DropDownMenuProps {
-    menuType: 'spec' | 'other' | 'employees'
+    menuType: 'spec' | 'other' | 'employees' | 'role';
     title: string;
     menuItems: any[];
     dropMenuItem: string;
     setDropMenuItem: (item: string) => void;
     viewMode: 'right' | 'bottom'
-    setOpenMenuTitle?: (index: string) => void;
-    openMenuTitle?: string;
     setIndexOfSelectElem?: (index: number) => void;
+    indexOfMenu?: string;
+    indexOfOpenMenu?: string;
+    setIndexOfOpenMenu?: (index: string) => void;
 }
 
 const DropDownMenu: FC<DropDownMenuProps> = ({
@@ -20,12 +21,14 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
                                                  setDropMenuItem,
                                                  menuType,
                                                  viewMode,
-                                                 openMenuTitle,
-                                                 setOpenMenuTitle,
-                                                 setIndexOfSelectElem
+                                                 setIndexOfSelectElem,
+                                                 indexOfMenu,
+                                                 indexOfOpenMenu,
+                                                 setIndexOfOpenMenu,
                                              }) => {
     //@todo Список specialities
     const specialities = ['Backend', 'Frontend', 'Design'];
+    const roles = ['guest', 'user', 'admin'];
 
     let items: any[] = []
     switch (menuType) {
@@ -36,9 +39,12 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
             items = menuItems;
             break;
         case "employees":
-            for (let i = 0; i<menuItems.length; i++) {
+            for (let i = 0; i < menuItems.length; i++) {
                 items = [...items, menuItems[i].name]
             }
+            break;
+        case "role":
+            items = roles
     }
 
     const wrapStyle = {width: '75%'}
@@ -54,13 +60,26 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
     }
 
     const [visible, setVisible] = useState(false)
-
+    // console.log(numberOfMenu)
+    // console.log(numberOfOpenMenu)
     useEffect(() => {
-        if (openMenuTitle !== title) setVisible(false)
-    }, [openMenuTitle])
+        if (indexOfOpenMenu !== indexOfMenu) setVisible(false)
+    }, [indexOfOpenMenu])
 
     const checkSetOpenMenuTitle = () => {
-        if (setOpenMenuTitle) setOpenMenuTitle(title);
+        // console.log(indexOfOpenMenu)
+        // console.log(setIndexOfOpenMenu)
+        // console.log(indexOfMenu)
+        // console.log(indexOfMenu)
+        if (setIndexOfOpenMenu && indexOfMenu) {
+            setIndexOfOpenMenu(indexOfMenu);
+            // console.log(indexOfMenu)
+        }
+        // console.log(setNumberOfOpenMenu)
+        // console.log(numberOfOpenMenu)
+        // console.log(numberOfMenu)
+        // console.log(numberOfOpenMenu)
+        // console.log(numberOfMenu)
         setVisible(!visible);
     }
 

@@ -9,7 +9,6 @@ import Input from "./UI/Input/Input";
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [passwordttes, setPasswordttes] = useState<string>("");
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {user, isAuth} = useAppSelector(state => state.authSlice);

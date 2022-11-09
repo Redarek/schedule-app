@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import cl from './Navbar.module.css'
 import NavList from "../NavList/NavList";
-import {IList} from "../../../types/INavbar";
-import {useAppSelector} from "../../../hooks/redux";
+import {IList} from "../../types/INavbar";
+import {useAppSelector} from "../../hooks/redux";
 
 
 interface NavbarProps {
@@ -11,8 +11,16 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = () => {
     const {employees, isLoading, error} = useAppSelector(state => state.employeesSlice)
-
+    const {user} = useAppSelector(state => state.authSlice.user)
     const employeesItems: any = []
+    useEffect(() => {
+        if (employees.length === 0) {
+            for (let i = 0; i < employees.length; i++) {
+                employeesItems.push({link: `/employee-page/${employees[i].latinName}`, title: `${employees[i].name}`})
+            }
+        }
+    }, [employees])
+
     if (employees.length !== 0) {
         for (let i = 0; i < employees.length; i++) {
             employeesItems.push({link: `/employee-page/${employees[i].latinName}`, title: `${employees[i].name}`})
@@ -25,6 +33,12 @@ const Navbar: FC<NavbarProps> = () => {
             items: employeesItems
         },
     ]
+    if (user.role === "admin") {
+        lists.push({
+            listTitle: 'Админ',
+            items: [{link: `/admin/${user.latinName}`, title: 'Настройка ролей'}],
+        })
+    }
 
     return (
         <nav className={cl.navWrap}>

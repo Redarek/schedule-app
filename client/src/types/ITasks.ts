@@ -9,9 +9,11 @@ export interface ITask {
     start: string;
     firstEnd: string;
     secondEnd: string;
+    _id: string;
 }
 
 export interface ITasks {
+    _id: string
     user: string;
     employee: string;
     spec: string;
