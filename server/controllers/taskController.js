@@ -7,10 +7,9 @@ class TaskController {
         try {
             const {employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
             const employeeId = await userService.getUserIdByName(req.body.employee);
-            console.log(employeeId)
-            const task = new taskModel({user: req.user._id, employee, employeeId, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
-            const taskData = await taskService.createTask(task);
-            return res.json(taskData);
+            const taskData = new taskModel({user: req.user._id, employee, employeeId, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
+            const task = await taskService.createTask(taskData);
+            return res.json(task);
             // return res.json({task: taskData, status: 'success'});
         } catch (error) {
             console.log(error);
@@ -49,7 +48,10 @@ class TaskController {
 
     async updateTask(req, res, next) {
         try {
-            const task = await taskService.updateTask(req.params.id, req.body)
+            const {employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
+            const employeeId = await userService.getUserIdByName(req.body.employee);
+            const taskData = {user: req.user._id, employee, employeeId, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd}
+            const task = await taskService.updateTask(req.params.id, taskData)
             return res.json(task);
             // return res.json({task, status: 'success'});
         } catch (error) {
