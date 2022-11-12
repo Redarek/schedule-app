@@ -1,17 +1,15 @@
 import {persistReducer, persistStore} from "redux-persist";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import taskSlice from "./reducers/taskSlice";
 import authSlice from './reducers/authSlice'
 import navbarSlice from "./reducers/navbarSlice";
-import employeesSlice from "./reducers/EmployeesSlice";
 import employeeSlice from "./reducers/EmployeeSlice";
+import taskSlice from "./reducers/taskSlice";
 
 const rootReducer = combineReducers({
     taskSlice,
     authSlice,
     navbarSlice,
-    employeesSlice,
     employeeSlice,
 })
 

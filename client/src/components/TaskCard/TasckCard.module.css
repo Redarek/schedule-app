@@ -1,0 +1,68 @@
+.wrap {
+    max-width: 300px;
+    position: relative;
+}
+
+.cardBtns {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -20px;
+}
+
+.btn {
+    margin-left: 3%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    opacity: .75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.btn img {
+    width: 16px;
+    height: 16px;
+}
+
+.btn:hover {
+    opacity: 1;
+}
+
+
+.btn:first-child {
+    margin-left: auto;
+}
+
+.taskInfo {
+    padding-top: 10px;
+}
+
+.taskTitle {
+}
+
+.taskRewards {
+    margin-top: 5px;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.taskReward {
+    margin: 0 10%;
+}
+
+.taskTerms {
+    margin-top: 5px;
+}
+
+.taskTerm {
+    text-transform: capitalize;
+}
+

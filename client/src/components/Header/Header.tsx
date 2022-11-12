@@ -37,6 +37,7 @@ const Header: FC<HeaderProps> = ({user}) => {
                         ? user.name
                         : 'Имя пользователя'
                     }
+                    <span>Баланс: {user.balance}</span>
                 </div>
                 <div className={cl.settingsIcon} onClick={() => dispatch(logout())}>
                     <img src='/images/exitIcon.svg' alt="exit"/>

@@ -153,7 +153,7 @@ export const fetchEmployeeTasks = createAsyncThunk(
 )
 
 export const fetchTaskById = createAsyncThunk(
-    '/task/:id',
+    '/task/fetchById',
     async (id: string, thunkAPI) => {
         try {
             const response = await TasksService.fetchTaskById(id)
@@ -164,18 +164,43 @@ export const fetchTaskById = createAsyncThunk(
     }
 )
 
-interface UpdateTask {
+interface EditedTask {
     id: string;
     task: ITask;
 }
+
 export const editTask = createAsyncThunk(
-    'user/updateUser',
-    async (updateTask: UpdateTask, thunkAPI) => {
+    'task/edit',
+    async (updateTask: EditedTask, thunkAPI) => {
         try {
             const response = await TasksService.editTask(updateTask.id, updateTask.task,)
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось обновить данные")
+        }
+    }
+)
+
+export const createTask = createAsyncThunk(
+    'task/create',
+    async (task: ITask, thunkAPI) => {
+        try {
+            const response = await TasksService.createTask(task)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось создать задачу")
+        }
+    }
+)
+
+export const deleteTask = createAsyncThunk(
+    '/task/delete',
+    async (id: string, thunkAPI) => {
+        try {
+            const response = await TasksService.deleteTask(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось удалить задачу")
         }
     }
 )

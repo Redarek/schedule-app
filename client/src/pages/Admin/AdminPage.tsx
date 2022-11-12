@@ -4,7 +4,7 @@ import cl from './admin-styles/AdminPage.module.css'
 import EmployeeTr from "./EmployeeTr";
 
 const AdminPage: FC = () => {
-    const {employees, isLoading, error} = useAppSelector(state => state.employeesSlice)
+    const {employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
     return (
         <div className={cl.wrapper}>

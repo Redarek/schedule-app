@@ -5,18 +5,54 @@
     right: 0;
     left: 0;
     display: none;
-    background: rgba(0,0,0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 999;
+    cursor: default;
 }
+
 .modal.active {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .modalContent {
     padding: 25px;
     background: white;
     border-radius: 16px;
     min-width: 250px;
     max-height: 100vh;
+    position: relative;
+}
+
+.exitBtn {
+    height: 32px;
+    width: 32px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    opacity: .6;
+}
+
+.exitBtn:hover {
+    opacity: 1;
+}
+
+.exitBtn span {
+    position: absolute;
+    top: 48%;
+    right: 17%;
+    width: 20px;
+    height: 2px;
+    background-color: black;
+    border-radius: 3px;
+}
+
+.exitBtn span:first-child {
+    transform: rotate(-45deg);
+}
+
+.exitBtn span:last-child {
+    transform: rotate(45deg);
 }

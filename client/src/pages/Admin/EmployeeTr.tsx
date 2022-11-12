@@ -4,8 +4,8 @@ import {IUser} from "../../types/IUser";
 import cl from './admin-styles/AdminPage.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {updateEmployee} from "../../store/reducers/ActionCreators";
-import {editEmployees} from "../../store/reducers/EmployeesSlice";
 import {useNavigate} from "react-router-dom";
+import {changeEmployee} from "../../store/reducers/EmployeeSlice";
 
 interface EmployeeTrProps {
     employee: IUser;
@@ -35,7 +35,7 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
                 ...employee,
                 role: role
             }
-            dispatch(editEmployees(changedUser))
+            dispatch(changeEmployee(changedUser))
             dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
         }
     }
