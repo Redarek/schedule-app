@@ -33,8 +33,8 @@ const CalendarPage: FC<CalendarPageProps> = ({tasks}) => {
                     />
                 </div>
                 {visible
-                    ? <ModalFullScreen visible={visible} setVisible={setVisible}>
-                        <CreateNewTask/>
+                    ? <ModalFullScreen visible={visible} exitBtn={true} setVisible={setVisible} exitBackground={false}>
+                        <CreateNewTask setModalVisible={setVisible}/>
                     </ModalFullScreen>
                     : ''
                 }

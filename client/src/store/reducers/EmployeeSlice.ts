@@ -1,17 +1,19 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
-import {fetchEmployeeById, updateEmployee} from "./ActionCreators";
+import {fetchEmployeeById, fetchEmployees, updateEmployee} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
 
 
 interface EmployeeState {
     isLoading: boolean;
     employee: IUser;
+    employees: IUser[];
     error: string;
 }
 
 const initialState: EmployeeState = {
     employee: {} as IUser,
+    employees: [] as IUser[],
     isLoading: false,
     error: ''
 }
@@ -19,22 +21,41 @@ const employeeSlice = createSlice({
     name: 'employee',
     initialState,
     reducers: {
-        editEmployee: (state, action: PayloadAction<IUser>) => {
-            state.employee = action.payload
-            // state.employee.name = action.payload.name;
-            // state.employee.email = action.payload.email;
-            // state.employee.spec = action.payload.spec
-            // state.employee.latinName = translit(action.payload.name)
+        changeEmployee: (state, action: PayloadAction<IUser>) => {
+            const ind = state.employees.findIndex(emp => emp._id === action.payload._id)
+            state.employee = state.employees[ind]
+            state.employees[ind] = action.payload
+
         },
     },
     extraReducers: {
-        [fetchEmployeeById.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+        [fetchEmployees.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
             state.isLoading = false;
             state.error = '';
-            state.employee = {
-             ...action.payload,
-             latinName: translit(action.payload.name),
+            let users = action.payload
+            for (let i = 0; i < users.length; i++) {
+                state.employees[i] = {
+                    ...users[i],
+                    latinName: translit(users[i].name)
+                }
             }
+        },
+        [fetchEmployees.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchEmployees.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload
+        },
+
+        [fetchEmployeeById.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+            console.log(action.payload)
+            state.error = '';
+            state.employee = {
+                ...action.payload,
+                latinName: translit(action.payload.name),
+            }
+            state.isLoading = false;
         },
         [fetchEmployeeById.pending.type]: (state) => {
             state.isLoading = true;
@@ -56,5 +77,5 @@ const employeeSlice = createSlice({
         }
     }
 })
-export const {editEmployee} = employeeSlice.actions;
+export const {changeEmployee} = employeeSlice.actions;
 export default employeeSlice.reducer;

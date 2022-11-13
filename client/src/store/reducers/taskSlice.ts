@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {editTask, fetchAllTasks, fetchEmployeeTasks, fetchTaskById} from "./ActionCreators";
+import {createTask, deleteTask, editTask, fetchAllTasks, fetchEmployeeTasks, fetchTaskById} from "./ActionCreators";
 import {ITask, ITasks} from "../../types/ITasks";
 
 
@@ -14,14 +14,47 @@ const initialState: TaskState = {
     tasks: [] as ITasks[],
     task: {} as ITask,
     isLoading: false,
-    error: ''
+    error: 'null',
 }
+
 const taskSlice = createSlice({
-    name: 'tasks',
+    name: 'taskSlice',
     initialState,
     reducers: {},
 
     extraReducers: {
+        [editTask.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
+            const index = state.tasks.findIndex(obj => obj._id === action.payload._id)
+            const date = action.payload
+            state.tasks[index] = {
+                ...date,
+                start: new Date(date.start),
+                firstEnd: new Date(date.firstEnd),
+                secondEnd: new Date(date.firstEnd),
+            }
+            state.error = ''
+            state.isLoading = false;
+        },
+        [editTask.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [editTask.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.error = action.payload
+            state.isLoading = false;
+        },
+
+        [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITask>) => {
+            state.task = action.payload
+            state.error = ''
+            state.isLoading = false;
+        },
+        [fetchTaskById.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchTaskById.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.error = action.payload
+            state.isLoading = false;
+        },
         [fetchAllTasks.fulfilled.type]: (state, action: PayloadAction<ITasks[]>) => {
             state.isLoading = false;
             state.error = ''
@@ -45,8 +78,6 @@ const taskSlice = createSlice({
         },
 
         [fetchEmployeeTasks.fulfilled.type]: (state, action: PayloadAction<ITasks[]>) => {
-            state.isLoading = false;
-            state.error = ''
             const date = action.payload
             state.tasks = initialState.tasks;
             for (let i = 0; i < date.length; i++) {
@@ -57,45 +88,48 @@ const taskSlice = createSlice({
                     secondEnd: new Date(date[i].firstEnd),
                 }]
             }
-
+            state.error = ''
+            state.isLoading = false;
         },
         [fetchEmployeeTasks.pending.type]: (state) => {
             state.isLoading = true;
         },
         [fetchEmployeeTasks.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isLoading = false;
             state.error = action.payload
+            state.isLoading = false;
         },
 
-        [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITask>) => {
-            state.isLoading = false;
+        [createTask.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
+            const date = action.payload
+            state.tasks = [...state.tasks, {
+                ...date,
+                start: new Date(date.start),
+                firstEnd: new Date(date.firstEnd),
+                secondEnd: new Date(date.firstEnd),
+            }
+            ]
             state.error = ''
-            state.task = action.payload
-            // state.task ={
-            //     ...action.payload,
-            //     // start: new Date(action.payload.start),
-            //     // firstEnd: new Date(action.payload.firstEnd),
-            //     // secondEnd: new Date(action.payload.firstEnd),
-            // }
+            state.isLoading = false;
         },
-        [fetchTaskById.pending.type]: (state) => {
+        [createTask.pending.type]: (state) => {
             state.isLoading = true;
         },
-        [fetchTaskById.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isLoading = false;
+        [createTask.rejected.type]: (state, action: PayloadAction<string>) => {
             state.error = action.payload
+            state.isLoading = false;
         },
 
-        [editTask.fulfilled.type]: (state, action: PayloadAction<ITask[]>) => {
-            state.isLoading = false;
+        [deleteTask.fulfilled.type]: (state, action: PayloadAction<ITask>) => {
+            state.tasks = state.tasks.filter(obj => obj._id !== action.payload._id)
             state.error = ''
+            state.isLoading = false;
         },
-        [editTask.pending.type]: (state) => {
+        [deleteTask.pending.type]: (state) => {
             state.isLoading = true;
         },
-        [editTask.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isLoading = false;
+        [deleteTask.rejected.type]: (state, action: PayloadAction<string>) => {
             state.error = action.payload
+            state.isLoading = false;
         },
     }
 })

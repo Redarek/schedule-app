@@ -10,7 +10,7 @@ interface NavbarProps {
 
 
 const Navbar: FC<NavbarProps> = () => {
-    const {employees, isLoading, error} = useAppSelector(state => state.employeesSlice)
+    const {employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const {user} = useAppSelector(state => state.authSlice.user)
     const employeesItems: any = []
     useEffect(() => {

@@ -7,17 +7,23 @@ export default class TasksService {
         return $api.get<ITasks[]>('/tasks')
     }
 
-    static async fetchEmployeeTasks(employeeId:string): Promise<AxiosResponse<ITasks[]>> {
+    static async fetchEmployeeTasks(employeeId: string): Promise<AxiosResponse<ITasks[]>> {
         return $api.get<ITasks[]>(`/tasks/${employeeId}`)
     }
 
     static async createTask(task: ITask): Promise<AxiosResponse<ITask>> {
         return $api.post<ITask>('/create-task', task)
     }
+
     static async fetchTaskById(taskId: string): Promise<AxiosResponse<ITask>> {
         return $api.get<ITask>(`/task/${taskId}`)
     }
-    static async editTask(taskId: string, task:ITask): Promise<AxiosResponse<ITask>> {
+
+    static async editTask(taskId: string, task: ITask): Promise<AxiosResponse<ITask>> {
         return $api.put<ITask>(`/task/${taskId}`, task)
+    }
+
+    static async deleteTask(taskId: string): Promise<AxiosResponse<string>> {
+        return $api.delete<string>(`/task/${taskId}`)
     }
 }

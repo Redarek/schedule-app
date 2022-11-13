@@ -1,4 +1,5 @@
 export interface ITask {
+    _id: string;
     employee: string;
     spec: string;
     title: string;
@@ -9,7 +10,6 @@ export interface ITask {
     start: string;
     firstEnd: string;
     secondEnd: string;
-    _id: string;
 }
 
 export interface ITasks {

@@ -1,37 +1,39 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from '../styles/TaskEditPage.module.css'
-import {ITask} from "../types/ITasks";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {useAppDispatch, useAppSelector,} from "../hooks/redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {editTask, fetchEmployees, fetchTaskById} from "../store/reducers/ActionCreators";
+import {editTask, fetchTaskById} from "../store/reducers/ActionCreators";
 import Input from "../components/UI/Input/Input";
-import {initialDate} from "../components/Calendar";
 import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
 import Button from "../components/UI/Button/Button";
 
-interface TaskEditPage {
+interface TaskEditPageProps {
+
 }
 
-const TaskEditPage: FC<TaskEditPage> = () => {
+const TaskEditPage: FC<TaskEditPageProps> = () => {
     const navigate = useNavigate()
-    const {task} = useAppSelector(state => state.taskSlice)
-    const {employees} = useAppSelector(state => state.employeesSlice)
+    const {task, error, isLoading} = useAppSelector(state => state.taskSlice)
+    const {employees, employee} = useAppSelector(state => state.employeeSlice)
     const {taskId} = useParams()
     const dispatch = useAppDispatch()
-    useEffect(() => {
+    useEffect( () => {
         dispatch(fetchTaskById(`${taskId}`))
-    }, [])
+        dispatch(fetchTaskById(`${taskId}`))
+        dispatch(fetchTaskById(`${taskId}`))
+        dispatch(fetchTaskById(`${taskId}`))
+    }, [taskId])
 
-    const [title, setTitle] = useState<string>(task.title)
-    const [text, setText] = useState<string>(task.text)
-    const [spec, setSpec] = useState<string>(task.spec)
-    const [employee, setEmployee] = useState<string>(task.employee)
-    const [firstReward, setFirstReward] = useState<number>(Number(task.firstReward))
-    const [secondReward, setSecondReward] = useState<number>(Number(task.secondReward))
-    const [penalty, setPenalty] = useState<number>(Number(task.penalty))
-    const [start, setStart] = useState<string>(task.start)
-    const [firstEnd, setFirstEnd] = useState<string>(task.firstEnd)
-    const [secondEnd, setSecondEnd] = useState<string>(task.secondEnd)
+    const [title, setTitle] = useState<string>('')
+    const [text, setText] = useState<string>('')
+    const [spec, setSpec] = useState<string>('')
+    const [empl, setEmpl] = useState<string>('')
+    const [firstReward, setFirstReward] = useState<number>(Number(''))
+    const [secondReward, setSecondReward] = useState<number>(Number(''))
+    const [penalty, setPenalty] = useState<number>(Number(''))
+    const [start, setStart] = useState<string>('')
+    const [firstEnd, setFirstEnd] = useState<string>('')
+    const [secondEnd, setSecondEnd] = useState<string>('')
     const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('')
 
     useEffect(() => {
@@ -39,7 +41,7 @@ const TaskEditPage: FC<TaskEditPage> = () => {
             setTitle(task.title)
             setText(task.text)
             setSpec(task.spec)
-            setEmployee(task.employee)
+            setEmpl(task.employee)
             setFirstReward(Number(task.firstReward))
             setSecondReward(Number(task.secondReward))
             setPenalty(Number(task.penalty))
@@ -65,7 +67,7 @@ const TaskEditPage: FC<TaskEditPage> = () => {
                     title: title,
                     text: text,
                     spec: spec,
-                    employee: employee,
+                    employee: empl,
                     firstReward: String(firstReward),
                     secondReward: String(secondReward),
                     penalty: String(penalty),
@@ -76,6 +78,7 @@ const TaskEditPage: FC<TaskEditPage> = () => {
                 }
             }
             dispatch(editTask(updateTask))
+            dispatch(fetchTaskById(employee._id))
             navigate('/')
         }
     }
@@ -192,9 +195,9 @@ const TaskEditPage: FC<TaskEditPage> = () => {
                             <label htmlFor="employee" className={cl.label}>Сотрудник:</label>
                             <DropDownMenu
                                 title={"Сотрудник"}
-                                setDropMenuItem={setEmployee}
+                                setDropMenuItem={setEmpl}
                                 viewMode={'right'}
-                                dropMenuItem={employee}
+                                dropMenuItem={empl}
                                 menuType={"employees"}
                                 menuItems={employees}
                                 indexOfMenu={'1'}
