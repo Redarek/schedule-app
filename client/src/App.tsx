@@ -14,8 +14,9 @@ function App() {
     const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
     const dispatch = useAppDispatch()
     // Проверка наличия токена доступа при первом запуске приложения
+    const token = localStorage.getItem('token')
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        if (token) {
             dispatch(checkAuth());
         }
     }, [])
@@ -25,27 +26,27 @@ function App() {
                 <div className="loader">
                     {isLoading
                         ? 'Loader will be soon...'
-                        : isAuth
-                            ? <div className="isAuth">
-                                <Header user={user.user}/>
-                                <div className="wrapper">
-                                    <CSSTransition
-                                        in={navbarIsVisible}
-                                        classNames={'navBar'}
-                                        timeout={600}
-                                        mountOnEnter
-                                        unmountOnExit
-                                    >
-                                        <div className={'navBar'}>
-                                            <Navbar/>
-                                        </div>
-                                    </CSSTransition>
-                                    <AppRouter/>
+                        : token
+                            ? isAuth
+                                ? <div className="isAuth">
+                                    <Header user={user.user}/>
+                                    <div className="wrapper">
+                                        <CSSTransition
+                                            in={navbarIsVisible}
+                                            classNames={'navBar'}
+                                            timeout={600}
+                                            mountOnEnter
+                                            unmountOnExit
+                                        >
+                                            <div className={'navBar'}>
+                                                <Navbar/>
+                                            </div>
+                                        </CSSTransition>
+                                        <AppRouter/>
+                                    </div>
                                 </div>
-                            </div>
-                            : isLoading
-                                ? ''
-                                : <AppRouter/>
+                                : ''
+                            : <AppRouter/>
                     }
                 </div>
             </BrowserRouter>

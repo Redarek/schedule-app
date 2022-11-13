@@ -8,7 +8,7 @@ import {
     getLastDayOfMonth,
     getNumberOfTheDayOfTheMonth,
     initialDate
-} from "../index";
+} from "../utils";
 import {IDate} from "../../../types/IDate";
 import {ITasks} from "../../../types/ITasks";
 import LongTaskWeek from "./LongTaskWeek";

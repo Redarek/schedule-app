@@ -9,7 +9,7 @@ import {
     getLastDayOfMonth,
     getNumberOfTheDayOfTheMonth,
     initialDate, weeks
-} from "../index";
+} from "../utils";
 
 import {IDate} from "../../../types/IDate";
 import TaskMonth from "./TaskMonth";

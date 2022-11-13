@@ -1,17 +1,18 @@
-import React, {FC, useEffect, useState} from 'react';
-import Month from "../components/Calendar/Month/Month";
-import ModalFullScreen from "../components/UI/ModalFullScreen/ModalFullScreen";
-import CreateNewTask from "../components/CreateNewTask/CreateNewTask";
-import Week from "../components/Calendar/Week/Week";
-import cl from '../styles/CalendarPage.module.css'
-import Button from "../components/UI/Button/Button";
-import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
-import {ITasks} from "../types/ITasks";
+import React, {FC, useState} from 'react';
+import Month from "../Calendar/Month/Month";
+import ModalFullScreen from "../UI/ModalFullScreen/ModalFullScreen";
+import CreateNewTask from "../CreateNewTask/CreateNewTask";
+import Week from "../Calendar/Week/Week";
+import cl from './Calendar.module.css'
+import Button from "../UI/Button/Button";
+import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
+import {ITasks} from "../../types/ITasks";
 
 interface CalendarPageProps {
     tasks: ITasks[];
 }
-const CalendarPage: FC<CalendarPageProps> = ({tasks}) => {
+
+const CalendarComponent: FC<CalendarPageProps> = ({tasks}) => {
     const [visible, setVisible] = useState<boolean>(false)
     const [calendarDisplayMode, setCalendarDisplayMode] = useState('Месяц')
     const [calendarModeIndex, setCalendarModeIndex] = useState(0)
@@ -48,4 +49,4 @@ const CalendarPage: FC<CalendarPageProps> = ({tasks}) => {
     );
 };
 
-export default CalendarPage;
+export default CalendarComponent;
