@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AuthResponse} from "../../types/AuthResponse";
-import {checkAuth, fetchUser, login, logout} from "./ActionCreators";
+import {checkAuth, login, logout} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
 import {IUser} from "../../types/IUser";
 
@@ -29,13 +29,13 @@ const authSlice = createSlice({
     extraReducers: {
         //checkAuth
         [checkAuth.fulfilled.type]: (state, action: PayloadAction<AuthResponse>) => {
-            state.isLoading = false;
-            state.error = '';
             if (action.payload != undefined) {
                 state.user = action.payload
                 state.isAuth = true;
                 state.user.user.latinName = translit(state.user.user.name)
             }
+            state.error = '';
+            state.isLoading = false;
         },
         [checkAuth.pending.type]: (state) => {
             state.isLoading = true;

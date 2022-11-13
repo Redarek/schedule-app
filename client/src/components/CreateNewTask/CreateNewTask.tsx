@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {initialDate} from "../Calendar";
+import {initialDate} from "../Calendar/utils";
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
