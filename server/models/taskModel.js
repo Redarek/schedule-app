@@ -18,10 +18,6 @@ const taskSchema =  new Schema({
         type: String,
         required: true
     },
-    timestamp: {
-        type: String,
-        default: Date.now
-    },
     title: {
         type: String,
         required: true
@@ -62,6 +58,6 @@ const taskSchema =  new Schema({
         type: String,
         default: ''
     }
-});
+}, {timestamps: true});
 
 module.exports = model('Task', taskSchema);

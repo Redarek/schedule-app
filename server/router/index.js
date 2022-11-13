@@ -27,8 +27,8 @@ router.get('/tasks/:employeeId', authMiddleware, taskController.getAllTasksByEmp
 router.put('/task/:id', authMiddleware, taskController.updateTask);
 router.delete('/task/:id', authMiddleware, taskController.deleteTask);
 router.put('/complete-task/:id', authMiddleware, taskController.completeTask);
-//transaction
-// router.post('/task/:id/complete', authMiddleware, transactionController.completeTask);
-// router.get('/user/transactions', authMiddleware, transactionController.getTransactionsByUserId)
+// bonus
+router.get('/bonus')
+
 
 module.exports = router;
