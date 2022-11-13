@@ -57,6 +57,10 @@ const taskSchema =  new Schema({
     secondEnd: {
         type: Date,
         required: true
+    },
+    deadlineStatus: {
+        type: String,
+        default: ''
     }
 });
 

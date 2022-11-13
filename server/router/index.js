@@ -4,7 +4,7 @@ const taskController = require('../controllers/taskController');
 const router = new Router();
 const {body} = require('express-validator');
 const authMiddleware = require('../middlewares/authMiddleware');
-const transactionController = require('../controllers/transactionController');
+const bonusController = require('../controllers/bonusController');
 const userModel = require('../models/userModel');
 //user
 router.post('/registration',
@@ -26,6 +26,7 @@ router.get('/tasks', authMiddleware, taskController.getAllTasks);
 router.get('/tasks/:employeeId', authMiddleware, taskController.getAllTasksByEmployeeId);
 router.put('/task/:id', authMiddleware, taskController.updateTask);
 router.delete('/task/:id', authMiddleware, taskController.deleteTask);
+router.put('/complete-task/:id', authMiddleware, taskController.completeTask);
 //transaction
 // router.post('/task/:id/complete', authMiddleware, transactionController.completeTask);
 // router.get('/user/transactions', authMiddleware, transactionController.getTransactionsByUserId)

@@ -1,6 +1,7 @@
 const taskService = require('../service/taskService');
 const userService = require('../service/userService');
 const taskModel = require('../models/taskModel');
+const bonusService = require('../service/bonusService');
 
 class TaskController {
     async createTask(req, res, next) {
@@ -63,6 +64,27 @@ class TaskController {
         try {
             const task = await taskService.deleteTask(req.params.id)
             return res.json(task);
+            // return res.json({task, status: 'success'});
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async completeTask(req, res, next) {
+        try {
+            // let task;
+            const candidate = await taskService.getTaskById(req.params.id)
+            console.log()
+            console.log(candidate.complete)
+            if (!candidate.complete) {
+                const task = await taskService.updateTask(req.params.id, {complete: true}) // таск "выполнен"
+                const bonus = await bonusService.addBonus(req.user._id, req.params.id) //получение награды за таск. передаю user и task ID
+                return res.json(task);
+            } else {
+                const task = await taskService.updateTask(req.params.id, {complete: false}) // отмена "выполнено" у таска
+                const bonus = await bonusService.deleteBonus(req.params.id) // удаление бонуса за таск
+                return res.json(task);
+            }
             // return res.json({task, status: 'success'});
         } catch (error) {
             next(error);
