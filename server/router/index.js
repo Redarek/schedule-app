@@ -28,7 +28,9 @@ router.put('/task/:id', authMiddleware, taskController.updateTask);
 router.delete('/task/:id', authMiddleware, taskController.deleteTask);
 router.put('/complete-task/:id', authMiddleware, taskController.completeTask);
 // bonus
-router.get('/bonus')
+router.get('/bonuses/:id', authMiddleware, bonusController.getAllBonusesByUserId)
+router.get('/bonuses-week/:id', authMiddleware, bonusController.getAllBonusesByUserIdForWeek);
+
 
 
 module.exports = router;
