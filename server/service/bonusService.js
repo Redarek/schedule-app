@@ -9,7 +9,7 @@ class BonusService {
         let amount = 0
         const taskData = await taskModel.findById(task)
         if (taskData.deadlineStatus === 'afterSecond') {
-            amount = taskData.penalty
+            amount = -taskData.penalty
         } else {
             amount = taskData.firstReward;
         }
