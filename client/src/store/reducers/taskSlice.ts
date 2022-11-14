@@ -1,5 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {createTask, deleteTask, editTask, fetchAllTasks, fetchEmployeeTasks, fetchTaskById} from "./ActionCreators";
+import {
+    completeTask,
+    createTask,
+    deleteTask,
+    editTask,
+    fetchAllTasks,
+    fetchEmployeeTasks,
+    fetchTaskById
+} from "./ActionCreators";
 import {ITask, ITasks} from "../../types/ITasks";
 
 
@@ -128,6 +136,17 @@ const taskSlice = createSlice({
             state.isLoading = true;
         },
         [deleteTask.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.error = action.payload
+            state.isLoading = false;
+        },
+        [completeTask.fulfilled.type]: (state, action: PayloadAction<string>) => {
+            state.error = ''
+            state.isLoading = false;
+        },
+        [completeTask.pending.type]: (state) => {
+            state.isLoading = true;
+        },
+        [completeTask.rejected.type]: (state, action: PayloadAction<string>) => {
             state.error = action.payload
             state.isLoading = false;
         },

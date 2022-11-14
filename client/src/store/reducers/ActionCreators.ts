@@ -170,7 +170,7 @@ interface EditedTask {
 }
 
 export const editTask = createAsyncThunk(
-    'task/edit',
+    'task/edit/:id',
     async (updateTask: EditedTask, thunkAPI) => {
         try {
             const response = await TasksService.editTask(updateTask.id, updateTask.task,)
@@ -201,6 +201,18 @@ export const deleteTask = createAsyncThunk(
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось удалить задачу")
+        }
+    }
+)
+
+export const completeTask = createAsyncThunk(
+    '/complete-task/:id',
+    async (id:string, thunkAPI) => {
+        try {
+            const response = await TasksService.completeTask(id)
+            return id;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось завершить")
         }
     }
 )

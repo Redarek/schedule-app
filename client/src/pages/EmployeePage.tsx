@@ -27,7 +27,6 @@ const EmployeePage: FC = () => {
         if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
     }, [employee])
 
-    console.log(tasks)
     return (
         <div className={cl.wrapper}>
             {!isLoading
