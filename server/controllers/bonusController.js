@@ -18,7 +18,7 @@ class BonusController {
 
     async getAllBonusesByUserId(req, res, next) {
         try {
-            const bonus = bonusModel.find(user)
+            const bonus = await bonusService.getAllBonusesByUserId(req.params.id)
             return res.json(bonus);
             // return res.json({task: taskData, status: 'success'});
         } catch (error) {
@@ -29,8 +29,8 @@ class BonusController {
 
     async getAllBonusesByUserIdForWeek(req, res, next) {
         try {
-            const bonus = bonusModel.find(user)
-            return res.json(bonus);
+            const bonuses = await bonusService.getAllBonusesByUserIdForWeek(req.params.id)
+            return res.json(bonuses);
             // return res.json({task: taskData, status: 'success'});
         } catch (error) {
             console.log(error);
@@ -40,11 +40,6 @@ class BonusController {
 
     async deleteBonus(req, res, next) {
 
-    }
-
-    getWeekDay(date) {
-        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        return days[date.getDay()]
     }
 
 }
