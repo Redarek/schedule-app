@@ -7,6 +7,7 @@ import {IUser} from "../../types/IUser";
 import TasksService from "../../services/TaskService";
 import UserService from "../../services/UserService";
 import {ITask} from "../../types/ITasks";
+import BonusService from "../../services/BonusService";
 
 interface LoginObject {
     email: string;
@@ -216,3 +217,29 @@ export const completeTask = createAsyncThunk(
         }
     }
 )
+
+export const fetchBonuses = createAsyncThunk(
+    '/bonuses/:id',
+    async (id:string, thunkAPI) => {
+        try {
+            const response = await BonusService.getAllBonuses(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось получить награды")
+        }
+    }
+)
+
+export const fetchWeekBonuses = createAsyncThunk(
+    '/bonuses-week/:id',
+    async (id:string, thunkAPI) => {
+        try {
+            const response = await BonusService.getWeekBonuses(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось получить награды")
+        }
+    }
+)
+
+

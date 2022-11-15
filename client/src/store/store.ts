@@ -5,12 +5,14 @@ import authSlice from './reducers/authSlice'
 import navbarSlice from "./reducers/navbarSlice";
 import employeeSlice from "./reducers/EmployeeSlice";
 import taskSlice from "./reducers/taskSlice";
+import bonusesSlice from "./reducers/bonusesSlice";
 
 const rootReducer = combineReducers({
     taskSlice,
     authSlice,
     navbarSlice,
     employeeSlice,
+    bonusesSlice,
 })
 
 const persistConfig = {

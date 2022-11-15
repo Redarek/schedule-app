@@ -3,11 +3,12 @@ import './App.css';
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
-import {checkAuth} from './store/reducers/ActionCreators';
+import {checkAuth, fetchBonuses, fetchWeekBonuses} from './store/reducers/ActionCreators';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import {CSSTransition} from "react-transition-group";
 import TaskEditPage from "./pages/TaskEditPage";
+import {changeUserId} from "./store/reducers/bonusesSlice";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -20,6 +21,13 @@ function App() {
             dispatch(checkAuth());
         }
     }, [])
+
+    useEffect(() => {
+        if (user.user)
+            if (token && user.user._id !== '') {
+                dispatch(changeUserId(user.user._id))
+            }
+    }, [isAuth])
     return (
         <div className="App">
             <BrowserRouter>

@@ -9,4 +9,6 @@ export interface IUser {
     balance: number;
     icon: string;
     latinName: string;
+    allTimeBalance: number
+    weekBalance: number;
 }

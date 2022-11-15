@@ -5,7 +5,7 @@ import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import {IUser} from "../types/IUser";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {changeEmployee} from "../store/reducers/EmployeeSlice";
-import {updateEmployee} from "../store/reducers/ActionCreators";
+import {fetchBonuses, fetchWeekBonuses, updateEmployee} from "../store/reducers/ActionCreators";
 import {editUser} from "../store/reducers/authSlice";
 import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
@@ -18,12 +18,19 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
+    const {isLoading, employeeAllBonuses} = useAppSelector(state => state.bonusesSlice)
 
     useEffect(() => {
         setEmail(employee.email);
         setName(employee.name);
         setSpec(employee.spec)
+        if (employee._id) dispatch(fetchBonuses(employee._id))
+        if (employee._id) dispatch(fetchWeekBonuses(employee._id))
     }, [employee])
+
+    // useEffect(() => {
+    //     dispatch(employeeBonuses({week: employeeWeekBonuses, all: employeeAllBonuses}))
+    // }, [employeeWeekBonuses])
 
     const [editMenuIsShow, setEditMenuIsShow] = useState<boolean>(false)
 
@@ -118,6 +125,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         <div className={cl.infoText}>Email: <span>{employee.email}</span></div>
                         <div className={cl.infoText}>Имя: <span>{employee.name}</span></div>
                         <div className={cl.infoText}>Специализация: <span>{employee.spec}</span></div>
+                        <div className={cl.infoText}>Все бонусы:<span>{isLoading? 'loading' :employeeAllBonuses}</span></div>
                     </div>
                 }
             </div>

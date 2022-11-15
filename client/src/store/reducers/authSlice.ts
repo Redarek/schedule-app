@@ -3,6 +3,7 @@ import {AuthResponse} from "../../types/AuthResponse";
 import {checkAuth, login, logout} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
 import {IUser} from "../../types/IUser";
+import {IBonuses} from "../../types/IBonus";
 
 interface UserState {
     user: AuthResponse;
@@ -23,6 +24,10 @@ const authSlice = createSlice({
     reducers: {
         editUser: (state, action: PayloadAction<IUser>) => {
             state.user.user = action.payload
+        },
+        userBonuses: (state, action:PayloadAction<IBonuses>) => {
+            state.user.user.allTimeBalance = action.payload.all
+            state.user.user.weekBalance = action.payload.week
         }
     },
 
@@ -33,6 +38,7 @@ const authSlice = createSlice({
                 state.user = action.payload
                 state.isAuth = true;
                 state.user.user.latinName = translit(state.user.user.name)
+                state.user.user.balance = 0;
             }
             state.error = '';
             state.isLoading = false;
@@ -77,5 +83,5 @@ const authSlice = createSlice({
         },
     }
 })
-export const {editUser} = authSlice.actions;
+export const {editUser, userBonuses} = authSlice.actions;
 export default authSlice.reducer;
