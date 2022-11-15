@@ -4,11 +4,12 @@
     align-items: center;
     justify-content: center;
     margin-top: 2%;
+    height: 89vh;
 }
 
 .wrap {
     width: 80%;
-    height: 94vh;
+    height: 92vh;
 }
 
 .inputWrap {
@@ -56,12 +57,14 @@
     padding-top: 10px;
     overflow-x: hidden;
     min-width: 300px;
+    overflow-y: auto;
+    max-height: 32vh;
 }
 
 .textarea {
     max-width: 630px;
     max-height: 38.5vh;
-    overflow-y: auto;
+    overflow: hidden;
     padding: 5px;
     resize: none;
     min-height: 20vh;

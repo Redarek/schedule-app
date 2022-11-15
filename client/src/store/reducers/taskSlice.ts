@@ -15,6 +15,8 @@ interface TaskState {
     tasks: ITasks[];
     task: ITask;
     isLoading: boolean;
+    isLoadingCreate: boolean;
+    isLoadingDelete: boolean;
     error: string;
 }
 
@@ -22,6 +24,8 @@ const initialState: TaskState = {
     tasks: [] as ITasks[],
     task: {} as ITask,
     isLoading: false,
+    isLoadingCreate: false,
+    isLoadingDelete: false,
     error: 'null',
 }
 
@@ -114,23 +118,25 @@ const taskSlice = createSlice({
                 start: new Date(date.start),
                 firstEnd: new Date(date.firstEnd),
                 secondEnd: new Date(date.firstEnd),
-            }
-            ]
+            }]
             state.error = ''
-            state.isLoading = false;
+            state.isLoadingCreate = state.isLoadingCreate != state.isLoadingCreate;
+            state.isLoading = true
         },
         [createTask.pending.type]: (state) => {
-            state.isLoading = true;
+            state.isLoading = false
         },
         [createTask.rejected.type]: (state, action: PayloadAction<string>) => {
             state.error = action.payload
+            state.isLoadingCreate = !state.isLoadingCreate;
             state.isLoading = false;
         },
 
         [deleteTask.fulfilled.type]: (state, action: PayloadAction<ITask>) => {
             state.tasks = state.tasks.filter(obj => obj._id !== action.payload._id)
             state.error = ''
-            state.isLoading = false;
+            state.isLoadingCreate = !state.isLoadingDelete;
+            state.isLoading = true;
         },
         [deleteTask.pending.type]: (state) => {
             state.isLoading = true;

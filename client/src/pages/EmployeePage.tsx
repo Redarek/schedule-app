@@ -14,7 +14,7 @@ const EmployeePage: FC = () => {
 
     const [userCardIsShow, setUserCardIsShow] = useState<boolean>(true)
     const {employee, employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
-    const {tasks} = useAppSelector(state => state.taskSlice)
+    const {tasks, isLoadingCreate, isLoadingDelete} = useAppSelector(state => state.taskSlice)
 
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const EmployeePage: FC = () => {
         if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
         // if (employee._id) dispatch(fetchBonuses(employee._id))
         // if (employee._id) dispatch(fetchWeekBonuses(employee._id))
-    }, [employee])
+    }, [employee, isLoadingCreate, isLoadingDelete])
 
 
     return (
