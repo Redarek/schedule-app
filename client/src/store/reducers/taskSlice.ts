@@ -145,7 +145,16 @@ const taskSlice = createSlice({
             state.error = action.payload
             state.isLoading = false;
         },
-        [completeTask.fulfilled.type]: (state, action: PayloadAction<string>) => {
+        [completeTask.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
+            const taskId = action.payload._id
+            console.log(taskId)
+            const taskInd = state.tasks.findIndex(tas => tas._id === taskId)
+            console.log(taskInd)
+            console.log(action.payload.complete)
+            state.tasks[taskInd] = {
+                ...state.tasks[taskInd],
+                complete: !action.payload.complete,
+            }
             state.error = ''
             state.isLoading = false;
         },

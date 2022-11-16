@@ -3,7 +3,7 @@ import cl from './TasckCard.module.css'
 import {ITasks} from "../../types/ITasks";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {completeTask, deleteTask} from "../../store/reducers/ActionCreators";
+import {completeTask, deleteTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 
 interface TaskCardProps {
     task: ITasks;
@@ -12,6 +12,7 @@ interface TaskCardProps {
 
 const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
     const {error, isLoading} = useAppSelector(state => state.taskSlice)
+    const {employee} = useAppSelector(state => state.employeeSlice)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
@@ -24,24 +25,25 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
         dispatch(completeTask(task._id))
         if (error === '') setIsModalVisible(false)
     }
-
+    const date = new Date()
     return (
         <div className={cl.wrap}>
             <div className={cl.cardBtns}>
-                {task.complete
+                {task.complete && task.firstEnd < date
                     ? <div style={{marginLeft: 'auto'}}></div>
-                    : <div className={cl.btn}>
-                        <div className={cl.completeBtn} onClick={() => handleCompleteTask()}><span></span><span></span>
-                        </div>
+                    :
+                <div className={cl.btn}>
+                        <div className={cl.completeBtn} onClick={() => handleCompleteTask()}><span></span><span></span></div>
                     </div>
 
                 }
-                {task.complete
-                    ? ''
-                    : <div className={cl.btn} onClick={() => navigate(`/task-edit/${task._id}`)}>
+                {/*{task.complete*/}
+                {/*    ? ''*/}
+                {/*    : */}
+                <div className={cl.btn} onClick={() => navigate(`/task-edit/${task._id}`)}>
                         <img src='/images/editIcon.png' alt="edit"/>
                     </div>
-                }
+                {/*}*/}
                 <div className={cl.btn} onClick={() => handleDelete()}><img src='/images/binIcon.png' alt="bin"/></div>
             </div>
             <div className={cl.errorMess}>

@@ -1,0 +1,41 @@
+.list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 3%;
+    min-width: 250px;
+    position: relative;
+}
+
+.task {
+    margin-top: 2%;
+    cursor: pointer;
+    width: 100%;
+    padding: 3px;
+    background-color: rgb(121, 134, 203);
+    border-radius: 5px;
+}
+
+.task:hover {
+    opacity: .9;
+}
+
+.weekday {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.date {
+    color: black;
+    font-size: 22px;
+}
+
+.taskCard {
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    position: absolute;
+    padding: 30px;
+    width: 270px;
+    top: 150px;
+}

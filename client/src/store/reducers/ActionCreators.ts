@@ -211,7 +211,7 @@ export const completeTask = createAsyncThunk(
     async (id:string, thunkAPI) => {
         try {
             const response = await TasksService.completeTask(id)
-            return id;
+            return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось завершить")
         }

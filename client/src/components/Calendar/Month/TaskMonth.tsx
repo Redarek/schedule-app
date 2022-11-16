@@ -56,7 +56,6 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
     };
 
     widthCalculation();
-
     return (
         <div className={cl.taskWrapper} style={{width: `${changedWidth}`}}>
             <ModalFullScreen visible={isModalVisible}
