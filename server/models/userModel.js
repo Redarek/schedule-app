@@ -17,17 +17,17 @@ const userSchema =  new Schema({
     activationLink: {
         type: String
     },
-    role: {
+    roles: [{
         type: String,
-        default: "user"
-    },
+        ref: "Role"
+    }],
     name: {
         type: String,
-        default: "unknown"
+        default: "noname"
     },
     spec: {
         type: String,
-        default: "employee"
+        default: "no spec"
     },
     balance: {
         type: Number,

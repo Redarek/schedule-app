@@ -1,4 +1,3 @@
-const { updateTask } = require('../controllers/taskController');
 const taskModel = require('../models/taskModel');
 const bonusService = require('./bonusService');
 

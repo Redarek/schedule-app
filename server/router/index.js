@@ -6,6 +6,9 @@ const {body} = require('express-validator');
 const authMiddleware = require('../middlewares/authMiddleware');
 const bonusController = require('../controllers/bonusController');
 const userModel = require('../models/userModel');
+const userService = require('../service/userService');
+const roleMiddleware = require('../middlewares/roleMiddleware');
+const roleController = require('../controllers/roleController');
 //user
 router.post('/registration',
     body('email').isEmail(),
@@ -22,7 +25,7 @@ router.put('/user/:id', authMiddleware, userController.updateUser);
 //task
 router.post('/create-task', authMiddleware, taskController.createTask);
 router.get('/task/:id', authMiddleware, taskController.getTaskById);
-router.get('/tasks', authMiddleware, taskController.getAllTasks);
+router.get('/tasks', authMiddleware, roleMiddleware(['user']), taskController.getAllTasks);
 router.get('/tasks/:employeeId', authMiddleware, taskController.getAllTasksByEmployeeId);
 router.put('/task/:id', authMiddleware, taskController.updateTask);
 router.delete('/task/:id', authMiddleware, taskController.deleteTask);
@@ -30,6 +33,9 @@ router.put('/complete-task/:id', authMiddleware, taskController.completeTask);
 // bonus
 router.get('/bonuses/:id', authMiddleware, bonusController.getAllBonusesByUserId)
 router.get('/bonuses-week/:id', authMiddleware, bonusController.getAllBonusesByUserIdForWeek);
+// roles
+router.post('/role/create',authMiddleware, roleMiddleware(['admin']), roleController.createRole);
+router.delete('/role/delete/:role',authMiddleware, roleMiddleware(['admin']), roleController.deleteRole);
 
 
 

@@ -1,4 +1,3 @@
-const ApiError = require('../exceptions/ApiError');
 const bonusModel = require('../models/bonusModel');
 const taskModel = require('../models/taskModel');
 const mongoose = require('mongoose');

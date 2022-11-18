@@ -14,8 +14,6 @@ class TokenService {
     validateAccessToken(token) {
         try {
             const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-            console.log('access token валидирован')
-            console.log(userData);
             return userData;
         } catch (error) {
             return null;
@@ -49,6 +47,21 @@ class TokenService {
     async findToken(refreshToken) {
         const tokenData = await tokenModel.findOne({refreshToken});
         return tokenData;
+    }
+
+    validateRole(token, roles) {
+        try {
+            const {roles: userRoles} = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+            let hasRole = false
+            userRoles.forEach(role => {
+                if(roles.includes(role)) { //проверяем, содержит ли массив ролей пользователя, хотя бы одну роль, которая разрешена для данной функции
+                    hasRole = true
+                }
+            })
+            return hasRole;
+        } catch (error) {
+            return null;
+        }
     }
 
 }

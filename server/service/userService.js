@@ -5,6 +5,7 @@ const mailService = require('./mailService');
 const tokenService = require('./tokenService');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/ApiError');
+const roleModel = require('../models/roleModel');
 
 class UserService {
     async registration(email, password, name, spec) {

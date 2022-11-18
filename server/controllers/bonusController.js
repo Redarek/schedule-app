@@ -1,6 +1,5 @@
 const bonusService = require('../service/bonusService');
 const bonusModel = require('../models/bonusModel');
-const { deleteBonus } = require('../service/bonusService');
 
 class BonusController {
     async addBonus(req, res, next) {

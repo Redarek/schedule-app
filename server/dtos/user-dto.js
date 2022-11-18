@@ -2,7 +2,7 @@ module.exports = class UserDto {
     email;
     _id;
     isActivated;
-    role;
+    roles;
     name;
     spec;
     balance;
@@ -11,7 +11,7 @@ module.exports = class UserDto {
         this.email = model.email;
         this._id = model._id;
         this.isActivated = model.isActivated;
-        this.role = model.role;
+        this.roles = model.roles;
         this.name = model.name;
         this.spec = model.spec;
         this.balance = model.balance;
