@@ -32,7 +32,6 @@ class BonusController {
             return res.json(bonuses);
             // return res.json({task: taskData, status: 'success'});
         } catch (error) {
-            console.log(error);
             next(error);
         }
     }
