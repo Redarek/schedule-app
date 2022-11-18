@@ -3,7 +3,7 @@ import cl from './TasckCard.module.css'
 import {ITasks} from "../../types/ITasks";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {deleteTask} from "../../store/reducers/ActionCreators";
+import {completeTask, deleteTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 
 interface TaskCardProps {
     task: ITasks;
@@ -12,27 +12,39 @@ interface TaskCardProps {
 
 const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
     const {error, isLoading} = useAppSelector(state => state.taskSlice)
+    const {employee} = useAppSelector(state => state.employeeSlice)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-
-    // const [error, setError] = useState<string>(errorTask)
-    //@todo Добавить новые пунткы в taskSlice
-    // useEffect(() => {
-    //     setError(errorTask)
-    // }, [errorTask])
 
     const handleDelete = () => {
         dispatch(deleteTask(task._id))
         if (error === '') setIsModalVisible(false)
     }
 
+    const handleCompleteTask = () => {
+        dispatch(completeTask(task._id))
+        if (error === '') setIsModalVisible(false)
+    }
+    const date = new Date()
     return (
         <div className={cl.wrap}>
             <div className={cl.cardBtns}>
-                <div className={cl.btn} onClick={() => navigate(`/task-edit/${task._id}`)}><img
-                    src='/images/editIcon.png' alt="edit"/></div>
+                {task.complete && task.firstEnd < date
+                    ? <div style={{marginLeft: 'auto'}}></div>
+                    :
+                <div className={cl.btn}>
+                        <div className={cl.completeBtn} onClick={() => handleCompleteTask()}><span></span><span></span></div>
+                    </div>
+
+                }
+                {/*{task.complete*/}
+                {/*    ? ''*/}
+                {/*    : */}
+                <div className={cl.btn} onClick={() => navigate(`/task-edit/${task._id}`)}>
+                        <img src='/images/editIcon.png' alt="edit"/>
+                    </div>
+                {/*}*/}
                 <div className={cl.btn} onClick={() => handleDelete()}><img src='/images/binIcon.png' alt="bin"/></div>
-                <div className={cl.btn}><span></span><span></span></div>
             </div>
             <div className={cl.errorMess}>
                 {error !== '' && error !== 'null'
@@ -47,8 +59,20 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
                     <div className={cl.taskReward}>Штраф: {task.penalty}</div>
                 </div>
                 <div className={cl.taskTerms}>
-                    <div className={cl.taskTerm}>Начало: {task.start.toLocaleString('RUS', {day: 'numeric', month: 'long'})} {task.start.getFullYear()}, {task.start.toLocaleString('RUS', {hour:'numeric', minute: 'numeric'})}</div>
-                    <div className={cl.taskTerm}>Конец: {task.firstEnd.toLocaleString('RUS', {day: 'numeric', month: 'long'})} {task.start.getFullYear()}, {task.firstEnd.toLocaleString('RUS', {hour:'numeric', minute: 'numeric'})}</div>
+                    <div className={cl.taskTerm}>Начало: {task.start.toLocaleString('RUS', {
+                        day: 'numeric',
+                        month: 'long'
+                    })} {task.start.getFullYear()}, {task.start.toLocaleString('RUS', {
+                        hour: 'numeric',
+                        minute: 'numeric'
+                    })}</div>
+                    <div className={cl.taskTerm}>Конец: {task.firstEnd.toLocaleString('RUS', {
+                        day: 'numeric',
+                        month: 'long'
+                    })} {task.start.getFullYear()}, {task.firstEnd.toLocaleString('RUS', {
+                        hour: 'numeric',
+                        minute: 'numeric'
+                    })}</div>
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ import {IUser} from "../../types/IUser";
 import TasksService from "../../services/TaskService";
 import UserService from "../../services/UserService";
 import {ITask} from "../../types/ITasks";
+import BonusService from "../../services/BonusService";
 
 interface LoginObject {
     email: string;
@@ -170,7 +171,7 @@ interface EditedTask {
 }
 
 export const editTask = createAsyncThunk(
-    'task/edit',
+    'task/edit/:id',
     async (updateTask: EditedTask, thunkAPI) => {
         try {
             const response = await TasksService.editTask(updateTask.id, updateTask.task,)
@@ -204,3 +205,41 @@ export const deleteTask = createAsyncThunk(
         }
     }
 )
+
+export const completeTask = createAsyncThunk(
+    '/complete-task/:id',
+    async (id:string, thunkAPI) => {
+        try {
+            const response = await TasksService.completeTask(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось завершить")
+        }
+    }
+)
+
+export const fetchBonuses = createAsyncThunk(
+    '/bonuses/:id',
+    async (id:string, thunkAPI) => {
+        try {
+            const response = await BonusService.getAllBonuses(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось получить награды")
+        }
+    }
+)
+
+export const fetchWeekBonuses = createAsyncThunk(
+    '/bonuses-week/:id',
+    async (id:string, thunkAPI) => {
+        try {
+            const response = await BonusService.getWeekBonuses(id)
+            return response.data;
+        } catch (e) {
+            return thunkAPI.rejectWithValue("Не удалось получить награды")
+        }
+    }
+)
+
+

@@ -5,10 +5,10 @@ import cl from './CreateNewTask.module.css'
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {createTask, fetchEmployees} from "../../store/reducers/ActionCreators";
+import {createTask, fetchEmployees, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 
 interface CreateNewTaskProps {
-    setModalVisible: (isShow: boolean) => void
+    setModalVisible: (isShow: boolean) => void;
 }
 
 const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
@@ -16,7 +16,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
     const [spec, setSpec] = useState<string>('')
-    const [employee, setEmployee] = useState<string>('')
+    const [employeeName, setEmployeeName] = useState<string>('')
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)
@@ -25,7 +25,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
     const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
 
-    const {employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
+    const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
 
     useEffect(() => {
         if (employees.length === 0) {
@@ -35,7 +35,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
 
     const handleCreate = (e: any) => {
         e.preventDefault()
-        if (employee === ''
+        if (employeeName === ''
             || spec === ''
             || title === ''
             || text === ''
@@ -46,7 +46,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
         } else {
             const task: ITask = {
                 _id: '',
-                employee: employee,
+                employee: employeeName,
                 spec: spec,
                 title: title,
                 text: text,
@@ -58,7 +58,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                 secondEnd: secondEnd
             }
             dispatch(createTask(task))
-            setEmployee('')
+            setEmployeeName('')
             setSpec('')
             setTitle('')
             setText('')
@@ -130,8 +130,8 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                     menuType={'employees'}
                     title={'Сотрудник...'}
                     menuItems={employees}
-                    dropMenuItem={employee}
-                    setDropMenuItem={setEmployee}
+                    dropMenuItem={employeeName}
+                    setDropMenuItem={setEmployeeName}
                     viewMode={"bottom"}
                 />
             </div>

@@ -13,7 +13,6 @@
 }
 
 .btn {
-    margin-left: 3%;
     width: 32px;
     height: 32px;
     cursor: pointer;
@@ -35,8 +34,47 @@
 
 
 .btn:first-child {
-    margin-left: auto;
+    margin-right: auto;
 }
+.btn:last-child {
+    margin-right: 5%;
+}
+
+
+
+.completeBtn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+    border: 1px solid #c9c8c8;
+    background-color: #0078D4;
+    position: relative;
+}
+
+.completeBtn span {
+    position: absolute;
+    border-radius: 2px;
+    height: 12px;
+    width: 1px;
+    background-color: #000000;
+}
+
+.completeBtn:hover {
+    background-color: #4dfc57;
+}
+
+
+.completeBtn span:first-child {
+    top: 6px;
+    left: 12px;
+   transform: rotate(30deg);
+}
+.completeBtn span:last-child {
+    top: 6px;
+    left: 7px;
+    transform: rotate(-30deg);
+}
+
 
 .taskInfo {
     padding-top: 10px;

@@ -26,4 +26,7 @@ export default class TasksService {
     static async deleteTask(taskId: string): Promise<AxiosResponse<string>> {
         return $api.delete<string>(`/task/${taskId}`)
     }
+    static async completeTask(taskId: string): Promise<AxiosResponse<string>> {
+        return $api.put<string>(`/complete-task/${taskId}`)
+    }
 }

@@ -1,9 +1,10 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {fetchEmployees, logout} from "../../store/reducers/ActionCreators";
+import {fetchBonuses, fetchEmployees, fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
 import {setNavbarVisible} from "../../store/reducers/navbarSlice";
 import {IUser} from "../../types/IUser";
+import {userBonuses} from "../../store/reducers/authSlice";
 
 interface HeaderProps {
     user: IUser
@@ -13,10 +14,27 @@ const Header: FC<HeaderProps> = ({user}) => {
     const dispatch = useAppDispatch()
     const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
     const {isAuth} = useAppSelector(state => state.authSlice)
+    const {userWeekBonuses, userAllBonuses, isLoading} = useAppSelector(state => state.bonusesSlice)
+    const {employee} = useAppSelector(state => state.employeeSlice)
 
+    //@todo !!!!!!!!!!!!!!
     useEffect(() => {
         dispatch(fetchEmployees())
+        dispatch(fetchBonuses(user._id))
+        dispatch(fetchWeekBonuses(user._id))
+        // dispatch(fetchWeekBonuses(user._id))
+        // dispatch(fetchBonuses(user._id))
     }, [isAuth])
+
+    // useEffect(() => {
+    //     // dispatch(setUserBonuses(user._id))
+    //     // dispatch(userBonuses({week: userWeekBonuses, all: userAllBonuses}))
+    // }, [])
+
+    useEffect(() => {
+        dispatch(userBonuses({week: userWeekBonuses, all: userAllBonuses}))
+    }, [userWeekBonuses])
+
 
     return (
         <header className={cl.header}>
@@ -37,7 +55,7 @@ const Header: FC<HeaderProps> = ({user}) => {
                         ? user.name
                         : 'Имя пользователя'
                     }
-                    <span>Баланс: {user.balance}</span>
+                    <span>Баланс: {userWeekBonuses}</span>
                 </div>
                 <div className={cl.settingsIcon} onClick={() => dispatch(logout())}>
                     <img src='/images/exitIcon.svg' alt="exit"/>
