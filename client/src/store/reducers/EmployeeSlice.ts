@@ -2,7 +2,6 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
 import {fetchEmployeeById, fetchEmployees, updateEmployee} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
-import {IBonuses} from "../../types/IBonus";
 
 
 interface EmployeeState {

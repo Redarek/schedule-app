@@ -50,7 +50,7 @@
     right: 0;
     width: 150px;
     z-index: 1;
-    background-color: rgba(192,224,253, 1);
+    background-color: rgba(192, 224, 253, 1);
 }
 
 .role {
@@ -59,12 +59,12 @@
     align-items: center;
     opacity: .9;
     padding-left: 20px;
-    border: 1px solid rgba(0,0,0, .8);
+    border: 1px solid rgba(0, 0, 0, .8);
     border-top: none;
 }
 
 .role:first-child {
-    border-top: 1px solid rgba(0,0,0, .8);
+    border-top: 1px solid rgba(0, 0, 0, .8);
 }
 
 .role:hover {
@@ -110,8 +110,8 @@
 .confBtn {
     cursor: pointer;
     position: absolute;
-    background-color: rgba(192,224,253, 1);
-    border: 1px solid rgba(0,0,0, .8);
+    background-color: rgba(192, 224, 253, 1);
+    border: 1px solid rgba(0, 0, 0, .8);
     border-right: none;
     left: -40px;
     width: 40px;

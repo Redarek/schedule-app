@@ -1,5 +1,5 @@
-import React, {FC, useEffect} from 'react';
-import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
+import React, {FC} from 'react';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {authRoutes, privateRoutes, publicRoutes} from "../router";
 import {useAppSelector} from "../hooks/redux";
 

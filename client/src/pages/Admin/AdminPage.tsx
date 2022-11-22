@@ -5,7 +5,6 @@ import EmployeeTr from "./EmployeeTr";
 
 const AdminPage: FC = () => {
     const {employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
-    // const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
     const [indexOfEmployee, setIndexOfEmployee] = useState<number>(-1)
     return (
         <div className={cl.wrapper}>

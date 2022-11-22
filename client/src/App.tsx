@@ -7,7 +7,6 @@ import {checkAuth, fetchBonuses, fetchWeekBonuses} from './store/reducers/Action
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import {CSSTransition} from "react-transition-group";
-import TaskEditPage from "./pages/TaskEditPage";
 import {changeUserId} from "./store/reducers/bonusesSlice";
 
 function App() {

@@ -3,7 +3,7 @@ import cl from '../styles/EmployeePage.module.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import CalendarComponent from "../components/CalendarComponent/CalendarComponent";
 import EmployeeCard from "../components/EmployeeCard";
-import {fetchBonuses, fetchEmployeeTasks, fetchWeekBonuses} from "../store/reducers/ActionCreators";
+import {fetchEmployeeTasks} from "../store/reducers/ActionCreators";
 import {useParams} from "react-router-dom";
 import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
 import {changeEmployee} from "../store/reducers/EmployeeSlice";

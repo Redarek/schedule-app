@@ -1,42 +1,47 @@
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
+
 .wrapper {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  width: 100vw;
-  position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100vw;
+    position: relative;
 }
 
 .navBar {
-  width: 30%;
+    width: 30%;
 }
+
 .navBar-exit-active {
-  animation: navBarOut 1200ms forwards;
+    animation: navBarOut 1200ms forwards;
 }
+
 .navBar-enter-active {
-  animation: navBarIn 600ms forwards;
+    animation: navBarIn 600ms forwards;
 }
+
 @keyframes navBarIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-300px);
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+    0% {
+        opacity: 0;
+        transform: translateX(-300px);
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
+
 @keyframes navBarOut {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-300px);
-  }
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-300px);
+    }
 }

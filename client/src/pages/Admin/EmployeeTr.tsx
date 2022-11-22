@@ -1,5 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
-import DropDownMenu from "../../components/UI/DropDownMenu/DropDownMenu";
+import React, {FC, useState} from 'react';
 import {IUser} from "../../types/IUser";
 import cl from './admin-styles/AdminPage.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";

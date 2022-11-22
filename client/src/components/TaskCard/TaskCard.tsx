@@ -1,9 +1,9 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC} from 'react';
 import cl from './TasckCard.module.css'
 import {ITasks} from "../../types/ITasks";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {completeTask, deleteTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
+import {completeTask, deleteTask} from "../../store/reducers/ActionCreators";
 
 interface TaskCardProps {
     task: ITasks;

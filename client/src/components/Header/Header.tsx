@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {fetchBonuses, fetchEmployees, fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";

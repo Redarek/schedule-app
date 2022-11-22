@@ -1,6 +1,6 @@
 import React, {FC, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {login, logout} from "../store/reducers/ActionCreators";
+import {login} from "../store/reducers/ActionCreators";
 import cl from "../styles/RegistrationForm.module.css";
 import cx from "classnames";
 import {useNavigate} from "react-router-dom";

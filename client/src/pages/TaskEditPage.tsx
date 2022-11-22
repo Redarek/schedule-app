@@ -17,7 +17,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     const {employees, employee} = useAppSelector(state => state.employeeSlice)
     const {taskId} = useParams()
     const dispatch = useAppDispatch()
-    useEffect( () => {
+    useEffect(() => {
         dispatch(fetchTaskById(`${taskId}`))
         dispatch(fetchTaskById(`${taskId}`))
         dispatch(fetchTaskById(`${taskId}`))
