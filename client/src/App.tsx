@@ -35,23 +35,28 @@ function App() {
                         ? 'Loader will be soon...'
                         : token
                             ? isAuth
-                                ? <div className="isAuth">
-                                    <Header user={user.user}/>
-                                    <div className="wrapper">
-                                        <CSSTransition
-                                            in={navbarIsVisible}
-                                            classNames={'navBar'}
-                                            timeout={600}
-                                            mountOnEnter
-                                            unmountOnExit
-                                        >
-                                            <div className={'navBar'}>
-                                                <Navbar/>
-                                            </div>
-                                        </CSSTransition>
+                                ? user.user.roles[0] === 'guest' || user.user.roles.length === 0
+                                    ? <div className="isAuth">
+                                        <Header user={user.user}/>
                                         <AppRouter/>
                                     </div>
-                                </div>
+                                    : <div className="isAuth">
+                                        <Header user={user.user}/>
+                                        <div className="wrapper">
+                                            <CSSTransition
+                                                in={navbarIsVisible}
+                                                classNames={'navBar'}
+                                                timeout={600}
+                                                mountOnEnter
+                                                unmountOnExit
+                                            >
+                                                <div className={'navBar'}>
+                                                    <Navbar/>
+                                                </div>
+                                            </CSSTransition>
+                                            <AppRouter/>
+                                        </div>
+                                    </div>
                                 : ''
                             : <AppRouter/>
                     }

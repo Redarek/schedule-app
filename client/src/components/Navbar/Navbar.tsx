@@ -33,7 +33,7 @@ const Navbar: FC<NavbarProps> = () => {
             items: employeesItems
         },
     ]
-    if (user.roles.filter((role) => role === "admin")) {
+    if (user.roles.findIndex((role) => role === "admin") !== -1) {
         lists.push({
             listTitle: 'Админ',
             items: [{link: `/admin/${user.latinName}`, title: 'Настройка ролей'}],
