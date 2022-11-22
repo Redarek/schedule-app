@@ -6,12 +6,14 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {updateEmployee} from "../../store/reducers/ActionCreators";
 import {useNavigate} from "react-router-dom";
 import {changeEmployee} from "../../store/reducers/EmployeeSlice";
+import Button from "../../components/UI/Button/Button";
+import CheckBox from "../../components/UI/CheckBox/CheckBox";
 
 interface EmployeeTrProps {
     employee: IUser;
-    indexOfMenu?: string;
-    indexOfOpenMenu?: string;
-    setIndexOfOpenMenu?: (index: string) => void;
+    indexOfOpenMenu: number;
+    indexOfMenu: number;
+    setIndexOfOpenMenu: (index: number) => void;
 }
 
 
@@ -22,29 +24,41 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
                                              setIndexOfOpenMenu
                                          }) => {
 
-    const [role, setRole] = useState<string>(employee.role)
-    const {user} = useAppSelector(state => state.authSlice.user)
-
     const navigate = useNavigate()
-
     const dispatch = useAppDispatch()
+    const {user} = useAppSelector(state => state.authSlice.user)
+    const [rolesList, setRolesList] = useState(["admin", "guest", "user"])
+
+
+    const [visibleRolesMenu, setVisibleRolesMenu] = useState<boolean>(false)
+    if (indexOfMenu !== indexOfOpenMenu && visibleRolesMenu) setVisibleRolesMenu(false)
+
+    const [employeeRoles, setEmployeeRoles] = useState([...employee.roles])
+
+    const handleChangeRoles = (selectedRole: string) => {
+        const ind = employeeRoles.findIndex(role => role === selectedRole)
+        if (ind === -1) setEmployeeRoles([...employeeRoles, selectedRole])
+        else {
+            setEmployeeRoles(employeeRoles.filter(role => role !== selectedRole))
+        }
+
+    }
 
     const handleUpdateRole = () => {
-        if (employee.role !== role && employee._id !== user._id) {
-            const changedUser: IUser = {
-                ...employee,
-                role: role
-            }
-            dispatch(changeEmployee(changedUser))
-            dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+        const changedUser: IUser = {
+            ...employee,
+            roles: employeeRoles
         }
+        dispatch(changeEmployee(changedUser))
+        dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
     }
+
     const st = (index: number) => {
         if (index === 0) {
-            if (employee._id === user._id) return {backgroundColor: '#0078D4'}
+            if (employee._id === user._id) return {backgroundColor: 'rgba(0,120,212, .5)'}
         }
         if (index === 1) {
-            if (role === employee.role) return {opacity: '.4'}
+            if (employee._id === user._id) return {opacity: '.4'}
         }
     }
 
@@ -63,24 +77,31 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
                 }
             </td>
             <td className={cl.roleTd}>
-                <DropDownMenu
-                    menuType={'role'}
-                    title={'Роль'}
-                    menuItems={[]}
-                    dropMenuItem={role}
-                    setDropMenuItem={setRole}
-                    viewMode={'bottom'}
-                    indexOfMenu={indexOfMenu}
-                    setIndexOfOpenMenu={setIndexOfOpenMenu}
-                    indexOfOpenMenu={indexOfOpenMenu}
-                />
+                <Button
+                    onClick={() => {
+                        if (employee._id !== user._id) {
+                            setVisibleRolesMenu(!visibleRolesMenu);
+                            setIndexOfOpenMenu(indexOfMenu)
+                        }
+                    }}><p style={st(1)}>Роли</p></Button>
             </td>
-            {employee._id === user._id
-                ? ''
-                : <td className={cl.confBtn} style={st(1)} onClick={() => handleUpdateRole()}>
-                    <span></span>
-                    <span></span>
+            {visibleRolesMenu
+                ? <td className={cl.rolePicker}>
+                    <div className={cl.confBtn} onClick={() => handleUpdateRole()}>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    {rolesList.map(role =>
+                        <div key={role} className={cl.role}>
+                            <CheckBox
+                                label={role}
+                                value={employeeRoles[employeeRoles.findIndex(r => r === role)]}
+                                action={handleChangeRoles}
+                            />
+                        </div>
+                    )}
                 </td>
+                : ''
             }
         </tr>
     );

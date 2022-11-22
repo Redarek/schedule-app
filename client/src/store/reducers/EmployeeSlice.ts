@@ -24,8 +24,8 @@ const employeeSlice = createSlice({
     reducers: {
         changeEmployee: (state, action: PayloadAction<IUser>) => {
             const ind = state.employees.findIndex(emp => emp._id === action.payload._id)
-            state.employee = state.employees[ind]
             state.employees[ind] = action.payload
+            state.employee = state.employees[ind]
 
         },
         // employeeBonuses: (state, action:PayloadAction<IBonuses>)=> {

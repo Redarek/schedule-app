@@ -24,7 +24,7 @@ const AppRouter: FC = () => {
                 )
             }
             {isAuth
-                ? user.user.role === 'admin'
+                ? user.user.roles.filter((role) => role === "admin")
                     ? privateRoutes.map(route =>
                         <Route
                             key={route.path}

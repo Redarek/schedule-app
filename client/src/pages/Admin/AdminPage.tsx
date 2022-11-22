@@ -5,7 +5,8 @@ import EmployeeTr from "./EmployeeTr";
 
 const AdminPage: FC = () => {
     const {employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
-    const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
+    // const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
+    const [indexOfEmployee, setIndexOfEmployee] = useState<number>(-1)
     return (
         <div className={cl.wrapper}>
             {isLoading
@@ -33,9 +34,9 @@ const AdminPage: FC = () => {
                             <EmployeeTr
                                 key={employee._id}
                                 employee={employee}
-                                setIndexOfOpenMenu={setIndexOfOpenMenu}
-                                indexOfOpenMenu={indexOfOpenMenu}
-                                indexOfMenu={`${index}`}
+                                setIndexOfOpenMenu={setIndexOfEmployee}
+                                indexOfOpenMenu={indexOfEmployee}
+                                indexOfMenu={index}
                             />
                         )}
                         </tbody>

@@ -1,8 +1,11 @@
 .wrapper {
+    min-width: 678px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 94vh;
+    overflow-x: auto;
 }
 
 .employeesTable {
@@ -41,6 +44,33 @@
     border-right: none;
 }
 
+.rolePicker {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 150px;
+    z-index: 1;
+    background-color: rgba(192,224,253, 1);
+}
+
+.role {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    opacity: .9;
+    padding-left: 20px;
+    border: 1px solid rgba(0,0,0, .8);
+    border-top: none;
+}
+
+.role:first-child {
+    border-top: 1px solid rgba(0,0,0, .8);
+}
+
+.role:hover {
+    border: 1px solid rgb(255, 98, 98);
+}
+
 .thr {
     border: 1px solid #000000;
 }
@@ -70,15 +100,24 @@
     border-right: none;
 }
 
+
 .empTr {
     border: 1px solid #000000;
+    height: 40px;
+    position: relative;
 }
 
 .confBtn {
     cursor: pointer;
-    position: relative;
+    position: absolute;
+    background-color: rgba(192,224,253, 1);
+    border: 1px solid rgba(0,0,0, .8);
+    border-right: none;
+    left: -40px;
     width: 40px;
+    height: 40px;
 }
+
 
 .confBtn span {
     position: absolute;
@@ -86,15 +125,15 @@
     width: 20px;
     background-color: #0191ff;
     border-radius: 2px;
-    top: 16px;
+    top: 17px;
 }
 
 .confBtn span:first-child {
-    left: 3px;
+    left: 6px;
     transform: rotate(65deg);
 }
 
 .confBtn span:last-child {
-    left: 11px;
+    left: 14px;
     transform: rotate(-65deg);
 }
