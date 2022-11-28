@@ -4,4 +4,14 @@
     padding-left: 5px;
     margin-bottom: 2%;
     margin-left: 5%;
+    cursor: pointer;
+    position: relative;
+}
+
+.task:hover {
+    opacity: .9;
+}
+
+.task:first-child {
+    margin-top: 10px;
 }

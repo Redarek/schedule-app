@@ -17,7 +17,6 @@ const Header: FC<HeaderProps> = ({user}) => {
     const {userWeekBonuses, userAllBonuses, isLoading} = useAppSelector(state => state.bonusesSlice)
     const {employee} = useAppSelector(state => state.employeeSlice)
 
-    //@todo !!!!!!!!!!!!!!
     useEffect(() => {
         dispatch(fetchEmployees())
         dispatch(fetchBonuses(user._id))

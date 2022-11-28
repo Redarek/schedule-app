@@ -1,6 +1,8 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {ITasks} from "../../../types/ITasks";
 import cl from "./DayTaskWeek.module.css";
+import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
+import TaskCard from "../../TaskCard/TaskCard";
 
 interface DayTaskOnWeekProps {
     task: ITasks,
@@ -45,8 +47,27 @@ const DayTaskWeek: FC<DayTaskOnWeekProps> = ({task, date}) => {
         }
         return {height: `${height}px`, marginTop: `${margin}px`};
     };
+
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+
     return (
-        <div className={cl.task} style={taskPosition(task)} >{task.title}</div>
+        <div className={cl.task} style={taskPosition(task)} onClick={() => setIsModalVisible(!isModalVisible)}>
+            {isModalVisible
+                ? <ModalFullScreen visible={isModalVisible}
+                                   setVisible={setIsModalVisible}
+                                   exitBtn={true}
+                                   exitBackground={true}
+                >
+                    <TaskCard task={task} setIsModalVisible={setIsModalVisible}/>
+                </ModalFullScreen>
+                : ''
+            }
+            <div>
+                {task.title}
+            </div>
+        </div>
+
+
     );
 };
 

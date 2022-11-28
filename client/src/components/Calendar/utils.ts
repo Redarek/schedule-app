@@ -58,32 +58,32 @@ export const weeks = (datesInTheMonth: IDate[]) => {
         {
             startTime: datesInTheMonth[0].date,
             endTime: datesInTheMonth[6].date,
-            counter: 0
+            firstDayOfNextWeek: datesInTheMonth[7].date
         },
         {
             startTime: datesInTheMonth[7].date,
             endTime: datesInTheMonth[13].date,
-            counter: 0
+            firstDayOfNextWeek: datesInTheMonth[14].date.getTime()
         },
         {
             startTime: datesInTheMonth[14].date,
             endTime: datesInTheMonth[20].date,
-            counter: 0
+            firstDayOfNextWeek: datesInTheMonth[21].date.getTime()
         },
         {
             startTime: datesInTheMonth[21].date,
             endTime: datesInTheMonth[27].date,
-            counter: 0
+            firstDayOfNextWeek: datesInTheMonth[28].date.getTime()
         },
         {
             startTime: datesInTheMonth[28].date,
             endTime: datesInTheMonth[34].date,
-            counter: 0
+            firstDayOfNextWeek: datesInTheMonth[35].date.getTime()
         },
         {
             startTime: datesInTheMonth[35].date,
             endTime: datesInTheMonth[41].date,
-            counter: 0
+            firstDayOfNextWeek: datesInTheMonth[41].date.getTime() + 1000*3600*24
         }
 
     ]

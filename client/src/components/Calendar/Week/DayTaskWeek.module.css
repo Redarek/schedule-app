@@ -2,5 +2,11 @@
     background-color: rgb(121, 134, 203);
     width: 100%;
     margin: 0 3%;
-    border-radius: 5px
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.task:hover {
+    opacity: .9;
 }

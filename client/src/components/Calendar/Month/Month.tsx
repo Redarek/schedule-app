@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {useState} from "react";
 import cl from './Month.module.css';
 import {
@@ -132,7 +132,8 @@ const Month: FC<MonthProps> = ({tasks}) => {
                         <Button onClick={() => handleChangeMonth('prev')}>Предыдущий</Button>
                     </div>
                     <div className={cl.btn}>
-                        <Button onClick={() => handleChangeMonth('today')}>{dateNow.toLocaleString('default', {month: 'long'})}</Button>
+                        <Button
+                            onClick={() => handleChangeMonth('today')}>{dateNow.toLocaleString('default', {month: 'long'})}</Button>
 
                     </div>
                     <div className={cl.btn}><Button onClick={() => handleChangeMonth('next')}>Следующий</Button>
@@ -182,7 +183,9 @@ const Month: FC<MonthProps> = ({tasks}) => {
                                             }</div>
                                         }
                                         {tasksListIsVisible
-                                            ?  <ModalFullScreen visible={tasksListIsVisible} setVisible={setTasksListIsVisible} exitBtn={true} exitBackground={true}>
+                                            ? <ModalFullScreen visible={tasksListIsVisible}
+                                                               setVisible={setTasksListIsVisible} exitBtn={true}
+                                                               exitBackground={true}>
                                                 <TasksListCalendar date={date.date} tasks={date.dayTasks}/>
                                             </ModalFullScreen>
                                             : ''
