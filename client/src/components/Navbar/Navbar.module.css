@@ -1,5 +1,16 @@
 .navWrap {
-    height: 94vh;
+    height: calc(100vh - 45px);
     background-color: #E6E6E6;
-    width: 100%;
+    min-width: 230px;
+    max-width: 290px;
+    /*width: 80%;*/
+}
+
+@media (max-width: 768px) {
+    .navWrap {
+        /*min-width: none;*/
+        /*max-width: none;*/
+        /*min-width: 100px;*/
+        min-width: 180px;
+    }
 }

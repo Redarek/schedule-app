@@ -38,6 +38,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const [name, setName] = useState<string>(employee.name);
     const [spec, setSpec] = useState<string>(employee.spec)
 
+    const [viewMode, setViewMode] = useState<"right"| "bottom">('right')
+    useEffect(()=> {
+       if (window.screen.width<768)  setViewMode("bottom")
+    },[])
     const handleEditInfo = () => {
         setEditMenuIsShow(!editMenuIsShow)
         const changedUser: IUser = {
@@ -93,6 +97,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                     ?
                     <div className={cl.infoContainer}>
                         <div className={cl.infoText}>
+                            <div className={cl.input}>
                             <Input
                                 id={'email'}
                                 name={'Email'}
@@ -101,8 +106,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                                 setValue={setEmail}
                                 type={"email"}
                             />
+                            </div>
                         </div>
                         <div className={cl.infoText}>
+                             <div className={cl.input}>
                             <Input
                                 id={'name'}
                                 name={'Name'}
@@ -111,14 +118,17 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                                 setValue={setName}
                                 type={"text"}
                             />
+                            </div>
                         </div>
                         <div className={cl.infoText}>
+                             <div className={cl.input}>
                             <DropDownMenu menuItems={[]} menuType={'spec'}
                                           dropMenuItem={spec}
                                           setDropMenuItem={setSpec}
-                                          viewMode={"right"}
+                                          viewMode={viewMode}
                                           title={"Специализация"}
                             />
+                            </div>
                         </div>
                     </div>
                     : <div className={cl.infoContainer}>

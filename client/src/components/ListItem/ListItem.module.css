@@ -1,6 +1,5 @@
 .listItemWrap {
-    width: 75%;
-    margin-left: 25%;
+    margin-left: 50px;
     padding: 2px 0;
     cursor: pointer;
     margin-bottom: 1%;
@@ -19,11 +18,12 @@
     background-color: #0078D4;
     width: 1.5%;
     height: 2vw;
+    min-height: 15px;
     border-radius: 5px;
 }
 
 .itemTitle {
-    margin-left: 10%;
+    margin-left: 10px;
 }
 
 .itemLink {

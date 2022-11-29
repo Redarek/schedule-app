@@ -5,8 +5,11 @@
 .navList {
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
+    /*justify-content: center;*/
     padding: 5px;
     cursor: pointer;
+    height: 50px;
 }
 
 .icon {
@@ -51,5 +54,9 @@
     justify-content: center;
 }
 
-
+@media (max-width: 768px) {
+    .navList {
+        height: 30px;
+    }
+}
 

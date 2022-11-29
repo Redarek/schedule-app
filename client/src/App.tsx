@@ -8,6 +8,7 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import {CSSTransition} from "react-transition-group";
 import {changeUserId} from "./store/reducers/bonusesSlice";
+import {setNavbarVisible} from "./store/reducers/navbarSlice";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -50,11 +51,13 @@ function App() {
                                                 mountOnEnter
                                                 unmountOnExit
                                             >
-                                                <div className={'navBar'}>
+                                                <div className={'navBar'} onClick={()=> {dispatch(setNavbarVisible(true))}}>
                                                     <Navbar/>
                                                 </div>
                                             </CSSTransition>
+                                            <div className="content">
                                             <AppRouter/>
+                                            </div>
                                         </div>
                                     </div>
                                 : ''

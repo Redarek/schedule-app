@@ -38,8 +38,9 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
         if (taskWidth === 0) taskWidth = 95
     }
 
-    const minStrLength = 12;
+    let minStrLength = 12;
     useEffect(() => {
+        if (window.screen.width < 768 ) minStrLength = 6
         if (((taskWidth + 5) / 100) * minStrLength < taskTitle.length) {
             setTaskTitle(taskTitle.substring(0, ((taskWidth + 5) / 100) * minStrLength) + '...')
         }
