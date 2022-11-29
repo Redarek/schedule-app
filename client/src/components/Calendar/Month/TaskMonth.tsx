@@ -40,7 +40,9 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
 
     const minStrLength = 12;
     useEffect(() => {
-        setTaskTitle(taskTitle.substring(0, ((taskWidth + 5) / 100) * minStrLength) + '...')
+        if (((taskWidth + 5) / 100) * minStrLength < taskTitle.length) {
+            setTaskTitle(taskTitle.substring(0, ((taskWidth + 5) / 100) * minStrLength) + '...')
+        }
     }, [])
 
     return (

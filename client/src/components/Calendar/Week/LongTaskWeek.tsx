@@ -41,7 +41,9 @@ const LongTaskWeek: FC<TaskWeekProps> = ({days, task, date, onClick}) => {
     const [taskTitle, setTaskTitle] = useState(task.title)
     const minStrLength = 12;
     useEffect(() => {
-        // setTaskTitle(taskTitle.substring(0, ((taskWidth + 5) / 100) * minStrLength) + '...')
+        if (((taskWidth + 5) / 100) * minStrLength < taskTitle.length) {
+            setTaskTitle(taskTitle.substring(0, ((taskWidth + 5) / 100) * minStrLength)+ '...')
+        }
     }, [])
 
     return (
