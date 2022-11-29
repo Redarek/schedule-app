@@ -37,6 +37,8 @@ const Month: FC<MonthProps> = ({tasks}) => {
 
     const [tasksListIsVisible, setTasksListIsVisible] = useState<boolean>(false)
 
+    const [dayDate, setDayDate] = useState({} as IDate)
+
     const fillingPreviousMonth = () => {
         let number = numberOfTheFirstDayOfTheMonth;
         if (number === 0) {
@@ -173,7 +175,10 @@ const Month: FC<MonthProps> = ({tasks}) => {
                             <div className={cl.dayTaskCountWrapper}>
                                 {getIndexOfDay(date)
                                     ? <div className={cl.dayTaskCount}
-                                           onClick={() => setTasksListIsVisible(!tasksListIsVisible)}>
+                                           onClick={() => {
+                                               setTasksListIsVisible(!tasksListIsVisible);
+                                               setDayDate(date)
+                                           }}>
                                         {date.dayTasks.length - 3 === -1
                                             ? <div className={cl.nested}>Ещё: 2</div>
                                             : <div className={cl.nested}>{
@@ -182,20 +187,21 @@ const Month: FC<MonthProps> = ({tasks}) => {
                                                     : <div className={cl.nested}>Ещё: {date.dayTasks.length}</div>
                                             }</div>
                                         }
-                                        {tasksListIsVisible
-                                            ? <ModalFullScreen visible={tasksListIsVisible}
-                                                               setVisible={setTasksListIsVisible} exitBtn={true}
-                                                               exitBackground={true}>
-                                                <TasksListCalendar date={date.date} tasks={date.dayTasks}/>
-                                            </ModalFullScreen>
-                                            : ''
-                                        }
                                     </div>
                                     : ''
                                 }
                             </div>
                         </div>
                     ))}
+                    {tasksListIsVisible
+                        ? <ModalFullScreen visible={tasksListIsVisible}
+                                           setVisible={setTasksListIsVisible}
+                                           exitBtn={true}
+                                           exitBackground={true}>
+                            <TasksListCalendar date={dayDate.date} tasks={dayDate.dayTasks}/>
+                        </ModalFullScreen>
+                        : ''
+                    }
                 </div>
             </div>
         </div>

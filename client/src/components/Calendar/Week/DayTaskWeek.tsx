@@ -7,10 +7,11 @@ import TaskCard from "../../TaskCard/TaskCard";
 interface DayTaskOnWeekProps {
     task: ITasks,
     date: Date,
+    onClick: () => void
     key?: number
 }
 
-const DayTaskWeek: FC<DayTaskOnWeekProps> = ({task, date}) => {
+const DayTaskWeek: FC<DayTaskOnWeekProps> = ({task, date, onClick}) => {
     const taskPosition = (task: ITasks) => {
         let margin = task.start.getHours() * 50 + 50;
         let height = -(task.start.getHours() - task.firstEnd.getHours()) * 50;
@@ -51,17 +52,7 @@ const DayTaskWeek: FC<DayTaskOnWeekProps> = ({task, date}) => {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
 
     return (
-        <div className={cl.task} style={taskPosition(task)} onClick={() => setIsModalVisible(!isModalVisible)}>
-            {isModalVisible
-                ? <ModalFullScreen visible={isModalVisible}
-                                   setVisible={setIsModalVisible}
-                                   exitBtn={true}
-                                   exitBackground={true}
-                >
-                    <TaskCard task={task} setIsModalVisible={setIsModalVisible}/>
-                </ModalFullScreen>
-                : ''
-            }
+        <div className={cl.task} style={taskPosition(task)} onClick={() => onClick()}>
             <div>
                 {task.title}
             </div>
