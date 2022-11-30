@@ -1,11 +1,12 @@
 .btn {
-    min-height: 32px;
+    height: 32px;
     width: 100%;
     background-color: #0078D4;
     border: none;
     border-radius: 2px;
     color: #fff;
-    font-size: 14px;
+    /*font-size: 14px;*/
+    text-align: center;
     line-height: 20px;
     padding: 0;
     cursor: pointer;

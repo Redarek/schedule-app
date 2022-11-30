@@ -73,7 +73,7 @@
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
-    height: 70vh;
+    height: 80vh;
 }
 
 .calendarHeaderDay {
@@ -148,7 +148,6 @@
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
-    height: 11.5vh;
     position: relative;
 }
 
@@ -164,6 +163,7 @@
     border-width: 0 1px 1px 0;
     border-color: darkgrey;
     width: calc(100% / 7);
+    height: 13vh;
 }
 
 .longTermTasks {
@@ -176,11 +176,12 @@
 
 .emptyDiv {
     height: 18px;
-    margin-bottom: 2%
+    margin-top: 5px;
+    /*margin-bottom: 5px*/
 }
 
 .dayTaskCount {
-    margin-top: 2%;
+    margin-top: 5px;
     margin-left: auto;
     border-radius: 5px;
     padding-left: 5px;

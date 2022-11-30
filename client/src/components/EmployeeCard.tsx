@@ -38,6 +38,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const [name, setName] = useState<string>(employee.name);
     const [spec, setSpec] = useState<string>(employee.spec)
 
+    const [viewMode, setViewMode] = useState<"right" | "bottom">('right')
+    useEffect(() => {
+        if (window.screen.width < 768) setViewMode("bottom")
+    }, [])
     const handleEditInfo = () => {
         setEditMenuIsShow(!editMenuIsShow)
         const changedUser: IUser = {
@@ -93,39 +97,48 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                     ?
                     <div className={cl.infoContainer}>
                         <div className={cl.infoText}>
-                            <Input
-                                id={'email'}
-                                name={'Email'}
-                                placeholder={`${email}`}
-                                value={email}
-                                setValue={setEmail}
-                                type={"email"}
-                            />
+                            <div className={cl.input}>
+                                <Input
+                                    id={'email'}
+                                    name={'Email'}
+                                    placeholder={`${email}`}
+                                    value={email}
+                                    setValue={setEmail}
+                                    type={"email"}
+                                />
+                            </div>
                         </div>
                         <div className={cl.infoText}>
-                            <Input
-                                id={'name'}
-                                name={'Name'}
-                                placeholder={`${name}`}
-                                value={name}
-                                setValue={setName}
-                                type={"text"}
-                            />
+                            <div className={cl.input}>
+                                <Input
+                                    id={'name'}
+                                    name={'Name'}
+                                    placeholder={`${name}`}
+                                    value={name}
+                                    setValue={setName}
+                                    type={"text"}
+                                />
+                            </div>
                         </div>
                         <div className={cl.infoText}>
-                            <DropDownMenu menuItems={[]} menuType={'spec'}
-                                          dropMenuItem={spec}
-                                          setDropMenuItem={setSpec}
-                                          viewMode={"right"}
-                                          title={"Специализация"}
-                            />
+                            <div className={cl.input}>
+                                <DropDownMenu menuItems={[]} menuType={'spec'}
+                                              dropMenuItem={spec}
+                                              setDropMenuItem={setSpec}
+                                              viewMode={viewMode}
+                                              title={"Специализация"}
+                                />
+                            </div>
                         </div>
                     </div>
                     : <div className={cl.infoContainer}>
-                        <div className={cl.infoText}>Email: <span>{employee.email}</span></div>
+                        <div className={cl.infoText}
+                             onClick={() => navigator.clipboard.writeText(`${employee.email}`)}>Email: <span>{employee.email}</span>
+                        </div>
                         <div className={cl.infoText}>Имя: <span>{employee.name}</span></div>
                         <div className={cl.infoText}>Специализация: <span>{employee.spec}</span></div>
-                        <div className={cl.infoText}>Все бонусы:<span>{isLoading? 'loading' :employeeAllBonuses}</span></div>
+                        <div className={cl.infoText}>Все
+                            бонусы:<span>{isLoading ? 'loading' : employeeAllBonuses}</span></div>
                     </div>
                 }
             </div>

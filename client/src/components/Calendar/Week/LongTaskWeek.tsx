@@ -1,37 +1,65 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {IDate} from "../../../types/IDate";
 import cl from './LongTaskWeek.module.css'
 import {ITasks} from "../../../types/ITasks";
+import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
+import TaskCard from "../../TaskCard/TaskCard";
 
 interface TaskWeekProps {
     days: IDate[];
     task: ITasks;
     date: IDate;
+    onClick: () => void;
 }
 
-const LongTaskWeek: FC<TaskWeekProps> = ({days, task, date}) => {
-    const taskStyle = () => {
-        let width = 95
-        if (task.firstEnd.getDate() <= days[6].date.getDate()) {
-            width = 100 * (task.firstEnd.getDate() - task.start.getDate() + 1) - 5
-        }
-        if (task.firstEnd.getDate() >= days[6].date.getDate()) {
-            width = 695
-        }
-        if (task.start.getDate() >= days[0].date.getDate()) {
-            if (task.firstEnd.getDate() <= days[6].date.getDate()) {
-                width = 100 * (task.firstEnd.getDate() - task.start.getDate() + 1) - 5
-            } else width = 695
-        }
-        return {width: `${width}%`}
+const LongTaskWeek: FC<TaskWeekProps> = ({days, task, date, onClick}) => {
+    let taskWidth = 100
+    let taskStart = task.start.getTime()
+    let taskEnd = task.firstEnd.getTime()
+    let weekStart = days[0].date.getTime()
+    let nextWeekStart = days[6].date.getTime() + 1000 * 3600 * 24
+
+
+    if (taskStart < weekStart) taskStart = weekStart;
+
+    if (taskEnd >= nextWeekStart) {
+        taskWidth = Math.floor(((nextWeekStart - taskStart) / 1000 / 3600 / 24 * 100) / 100) - 5;
+        // if (taskWidth < 695) taskWidth = taskWidth + 100
     }
+
+    if (taskEnd < nextWeekStart) {
+        taskWidth = 100 * Math.floor(((taskEnd - taskStart) / 1000 / 3600 / 24 * 100) / 100) + 95;
+        if (taskWidth === 0) taskWidth = 95
+    }
+
+
+    let taskCompleteStyle = 'none';
+    if (task.complete) {
+        taskCompleteStyle = 'line-through'
+    }
+
+    const [taskTitle, setTaskTitle] = useState(task.title)
+    const minStrLength = 12;
+    useEffect(() => {
+        if (((taskWidth + 5) / 100) * minStrLength < taskTitle.length) {
+            setTaskTitle(taskTitle.substring(0, ((taskWidth + 5) / 100) * minStrLength)+ '...')
+        }
+    }, [])
+
     return (
-        <div>
-            {-task.start.getDate() + task.firstEnd.getDate() !== 0 && task.start.getDate() !== task.firstEnd.getDate()
+        <div style={{width: `${taskWidth}%`}} className={cl.task} onClick={() => onClick()}>
+            {task
                 ? <div>
-                    {date.date.getDate() === task.start.getDate()
-                    || (date.date.getDay() === 1 && task.start.getDate() <= days[0].date.getDate())
-                        ? <div style={taskStyle()} className={cl.task}>{task.title}</div>
+                    {task.start.getDate() === date.date.getDate()
+                        ? <div className={cl.taskTitle} style={{
+                            textDecoration: `${taskCompleteStyle}`
+                        }}>{taskTitle}</div>
+                        : ''
+                    }
+                    {date.date.getDay() === 1 && task.firstEnd.getTime() >= date.date.getTime()
+                        ? <div className={cl.taskTitle} style={{
+                            textDecoration: `${taskCompleteStyle}`
+                        }}>{taskTitle}</div>
                         : ''
                     }
                 </div>

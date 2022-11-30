@@ -2,7 +2,6 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../types/IUser";
 import {fetchEmployeeById, fetchEmployees, updateEmployee} from "./ActionCreators";
 import {translit} from "../../utils/transliter";
-import {IBonuses} from "../../types/IBonus";
 
 
 interface EmployeeState {
@@ -24,8 +23,8 @@ const employeeSlice = createSlice({
     reducers: {
         changeEmployee: (state, action: PayloadAction<IUser>) => {
             const ind = state.employees.findIndex(emp => emp._id === action.payload._id)
-            state.employee = state.employees[ind]
             state.employees[ind] = action.payload
+            state.employee = state.employees[ind]
 
         },
         // employeeBonuses: (state, action:PayloadAction<IBonuses>)=> {

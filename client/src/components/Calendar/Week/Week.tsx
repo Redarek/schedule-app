@@ -14,6 +14,9 @@ import {ITasks} from "../../../types/ITasks";
 import LongTaskWeek from "./LongTaskWeek";
 import DayTaskWeek from "./DayTaskWeek";
 import Button from "../../UI/Button/Button";
+import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
+import TaskCard from "../../TaskCard/TaskCard";
+import TasksListCalendar from "../../tasksListCalendar/TasksListCalendar";
 
 interface IHour {
     time: number;
@@ -25,6 +28,11 @@ interface WeekProps {
 }
 
 const Week: FC<WeekProps> = ({tasks}) => {
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+    const [tasksListIsVisible, setTasksListIsVisible] = useState<boolean>(false)
+    const [taskInModal, setTaskInModal] = useState<ITasks>({} as ITasks)
+    const [dayDate, setDayDate] = useState<IDate>({} as IDate)
+
     const [dateNow, setDateNow] = useState(new Date(initialDate));
 
     const lastDayOfThePrevMonth = getLastDayOfMonth(dateNow.getMonth(), dateNow.getFullYear());
@@ -66,7 +74,7 @@ const Week: FC<WeekProps> = ({tasks}) => {
         for (let i = 0; i < 7; i++) {
             daysOfTheNextMonth[i] = {
                 day: i + 1,
-                date: new Date(dateNow.getFullYear(), dateNow.getMonth(), i + 1),
+                date: new Date(dateNow.getFullYear(), dateNow.getMonth() + 1, i + 1),
                 dayTasks: []
             };
         }
@@ -113,15 +121,15 @@ const Week: FC<WeekProps> = ({tasks}) => {
     const handleChangeWeek = (param: string) => {
         if (param === 'next') {
             setDateNow(new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 7));
-            fillingOption = 0;
+            // fillingOption = 0;
         }
         if (param === 'prev') {
             setDateNow(new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() - 7));
-            fillingOption = 0;
+            // fillingOption = 0;
         }
         if (param === 'today') {
             setDateNow(new Date(initialDate));
-            fillingOption = 0;
+            // fillingOption = 0;
         }
     };
 
@@ -167,12 +175,34 @@ const Week: FC<WeekProps> = ({tasks}) => {
         if (task.start.getDate() === date.getDate()
             && task.firstEnd.getDate() === date.getDate()
         ) {
-            return <DayTaskWeek task={task} date={date} key={index}/>
+            return <DayTaskWeek task={task} date={date} key={index} onClick={() => {
+                setIsModalVisible(true);
+                setTaskInModal(task)
+            }}/>
         }
     }
 
     return (
         <div className="calendarWeek">
+            {isModalVisible
+                ? <ModalFullScreen visible={isModalVisible}
+                                   setVisible={setIsModalVisible}
+                                   exitBtn={true}
+                                   exitBackground={true}
+                >
+                    <TaskCard task={taskInModal} setIsModalVisible={setIsModalVisible}/>
+                </ModalFullScreen>
+                : ''
+            }
+            {tasksListIsVisible
+                ? <ModalFullScreen visible={tasksListIsVisible}
+                                   setVisible={setTasksListIsVisible}
+                                   exitBtn={true}
+                                   exitBackground={true}>
+                    <TasksListCalendar date={dayDate.date} tasks={dayDate.dayTasks}/>
+                </ModalFullScreen>
+                : ''
+            }
             <div className={cl.wrapper}>
                 <div className={cl.calendarHeader}>
                     <div className={cl.calendarMenu}>
@@ -198,13 +228,6 @@ const Week: FC<WeekProps> = ({tasks}) => {
                         )}
                     </div>
                 </div>
-                {/*<div className={cl.calendarHeader}>*/}
-                {/*    {daysOfTheWeek.map(day =>*/}
-                {/*        <div className={cl.calendarHeaderDay} style={currentDayStyle(day)} key={day.day}>*/}
-                {/*            {day.day}*/}
-                {/*        </div>*/}
-                {/*    )}*/}
-                {/*</div>*/}
                 <div className={cl.longTermWrapper}>
                     <div className={cl.longTerm}></div>
                     {daysOfTheWeek.map(day =>
@@ -213,7 +236,14 @@ const Week: FC<WeekProps> = ({tasks}) => {
                                 <div key={index}>
                                     {checkIndex(index)
                                         ? <div>
-                                            <LongTaskWeek days={daysOfTheWeek} task={task} date={day}/>
+                                            {task.start.getDate() === task.firstEnd.getDate() && task.start.getMonth() === task.firstEnd.getMonth()
+                                                ? ''
+                                                : <LongTaskWeek days={daysOfTheWeek} task={task} date={day}
+                                                                onClick={() => {
+                                                                    setIsModalVisible(true);
+                                                                    setTaskInModal(task)
+                                                                }}/>
+                                            }
                                             {task.start.getDate() !== day.date.getDate() && day.date.getDay() !== 1
                                             && day.date.getTime() <= task.firstEnd.getTime()
                                                 ? <div className={cl.emptyDiv}></div>
@@ -227,7 +257,10 @@ const Week: FC<WeekProps> = ({tasks}) => {
                             <div className={cl.dayTaskCountWrapper}>
                                 {getIndexOfDay(day)
                                     ? <div className={cl.dayTaskCount}
-                                           onClick={() => console.log(day.dayTasks)}>
+                                           onClick={() => {
+                                               setTasksListIsVisible(true);
+                                               setDayDate(day)
+                                           }}>
                                         {day.dayTasks.length - 3 === -1
                                             ? <div className={cl.nested}>Ещё: 2</div>
                                             : <div className={cl.nested}>{

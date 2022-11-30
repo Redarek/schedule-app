@@ -1,0 +1,10 @@
+.input {
+    margin-right: 10px;
+    transform: scale(1.4);
+}
+
+label {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+}

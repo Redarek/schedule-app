@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {fetchBonuses, fetchEmployees, fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
@@ -17,7 +17,6 @@ const Header: FC<HeaderProps> = ({user}) => {
     const {userWeekBonuses, userAllBonuses, isLoading} = useAppSelector(state => state.bonusesSlice)
     const {employee} = useAppSelector(state => state.employeeSlice)
 
-    //@todo !!!!!!!!!!!!!!
     useEffect(() => {
         dispatch(fetchEmployees())
         dispatch(fetchBonuses(user._id))
@@ -35,10 +34,18 @@ const Header: FC<HeaderProps> = ({user}) => {
         dispatch(userBonuses({week: userWeekBonuses, all: userAllBonuses}))
     }, [userWeekBonuses])
 
+    const wrapper = document.querySelector('.wrapper')
+    const showNavbar = () => {
+        // if (navbarIsVisible && window.screen.width < 768 && wrapper) {
+        // wrapper.scrollBy({left: -1000, behavior: "smooth"})
+        dispatch(setNavbarVisible(navbarIsVisible))
+        // } else dispatch(setNavbarVisible(navbarIsVisible))
+    }
 
     return (
         <header className={cl.header}>
-            <div className={cl.menuBtn} onClick={() => dispatch(setNavbarVisible(navbarIsVisible))}>
+            <div className={cl.menuBtn}
+                 onClick={() => showNavbar()}>
                 <span className={cl.burgerSpan}></span>
                 <span className={cl.burgerSpan}></span>
                 <span className={cl.burgerSpan}></span>

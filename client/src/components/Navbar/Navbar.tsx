@@ -33,7 +33,7 @@ const Navbar: FC<NavbarProps> = () => {
             items: employeesItems
         },
     ]
-    if (user.role === "admin") {
+    if (user.roles.findIndex((role) => role === "admin") !== -1) {
         lists.push({
             listTitle: 'Админ',
             items: [{link: `/admin/${user.latinName}`, title: 'Настройка ролей'}],
@@ -41,7 +41,7 @@ const Navbar: FC<NavbarProps> = () => {
     }
 
     return (
-        <nav className={cl.navWrap}>
+        <nav className={cl.navWrap} onClick={(e) => e.stopPropagation()}>
             {isLoading
                 ? 'Загрузка списков'
                 : lists.map(list =>

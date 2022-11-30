@@ -1,6 +1,8 @@
 import React, {FC} from 'react';
 import cl from "./ListItem.module.css";
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../hooks/redux";
+import {setNavbarVisible} from "../../store/reducers/navbarSlice";
 
 interface ListItemProps {
     title: string;
@@ -10,8 +12,10 @@ interface ListItemProps {
     setActiveItem: (index: number) => void;
 }
 
+const wrapper = document.querySelector(".wrapper")
 
 const ListItem: FC<ListItemProps> = ({title, index, activeItem, setActiveItem, link}) => {
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     return (
         <div className={cl.listItemWrap}
@@ -19,6 +23,8 @@ const ListItem: FC<ListItemProps> = ({title, index, activeItem, setActiveItem, l
                  setActiveItem(index);
                  navigate(link);
                  e.preventDefault()
+                 // if (window.screen.width < 768 && wrapper) wrapper.scrollBy({left: 1000, behavior: "smooth"})
+                 dispatch(setNavbarVisible(true))
              }}>
             {index === activeItem && link === window.location.pathname
                 ? <div className={cl.activeItem}></div>

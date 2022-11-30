@@ -4,20 +4,25 @@
 
 .calendarMenu {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     border: 1px solid #D9D9D9;
     border-radius: 3px;
     height: 6vh;
+    min-height: 45px;
     margin: 1%;
 }
 
 .createTaskBtn {
-    width: 30%;
-    margin-right: 10%;
+    max-width: 250px;
+    min-width: 80px;
+    width: 100%;
+    margin-left: 2.5%;
 }
 
 .calendarModeBtn {
-width: 20%;
-    margin-left: 10%;
+    max-width: 250px;
+    min-width: 80px;
+    width: 100%;
+    margin-right: 2.5%;
 }
