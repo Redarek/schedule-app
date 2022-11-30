@@ -23,6 +23,7 @@ const userSchema =  new Schema({
     }],
     name: {
         type: String,
+        unique: true,
         default: "noname"
     },
     spec: {
