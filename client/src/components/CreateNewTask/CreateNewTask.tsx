@@ -20,9 +20,11 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)
-    const [start, setStart] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
-    const [firstEnd, setFirstEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
-    const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
+    let date = `${initialDate.getDate()}`
+    if (date.length === 1) date = '0' + `${date}`
+    const [start, setStart] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T00:00`)
+    const [firstEnd, setFirstEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T01:00`)
+    const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T02:00`)
     const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
 
     const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
@@ -43,7 +45,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
             || penalty < 0
             || secondReward < 0
         ) {
-        } else {
+        } else if (start < firstEnd && start < secondEnd && firstEnd < secondEnd) {
             const task: ITask = {
                 _id: '',
                 employee: employeeName,

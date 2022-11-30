@@ -81,7 +81,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     }
 
     return (
-        <div className={cl.wrapper}>
+        <div className={cl.wrapper} onClick={() => setIndexOfOpenMenu('')}>
             <div className={cl.wrap}>
                 <div className={cl.titleEdit}>
                     <div className={cl.inputWrap}>

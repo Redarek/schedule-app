@@ -3,6 +3,7 @@
     display: flex;
     flex-wrap: nowrap;
     position: relative;
+    /*z-index: 1;*/
     margin-right: auto;
     user-select: none;
 }
@@ -36,8 +37,7 @@
     border-style: solid;
     transform: rotate(-45deg);
 }
-
-.menuListWrap {
+.menuList {
     z-index: 999;
     position: absolute;
     left: 75%;

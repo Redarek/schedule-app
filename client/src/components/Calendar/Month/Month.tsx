@@ -183,7 +183,7 @@ const Month: FC<MonthProps> = ({tasks}) => {
                                             ? <div className={cl.nested}>Ещё: 2</div>
                                             : <div className={cl.nested}>{
                                                 date.dayTasks.length > 3
-                                                    ? ''
+                                                    ? <div className={cl.nested}>Ещё: {date.dayTasks.length}</div>
                                                     : <div className={cl.nested}>Ещё: {date.dayTasks.length}</div>
                                             }</div>
                                         }
