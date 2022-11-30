@@ -17,6 +17,7 @@ interface TaskState {
     isLoading: boolean;
     isLoadingCreate: boolean;
     isLoadingDelete: boolean;
+    isLoadingUpdate: boolean
     error: string;
 }
 
@@ -26,6 +27,7 @@ const initialState: TaskState = {
     isLoading: false,
     isLoadingCreate: false,
     isLoadingDelete: false,
+    isLoadingUpdate: false,
     error: 'null',
 }
 
@@ -45,14 +47,14 @@ const taskSlice = createSlice({
                 secondEnd: new Date(date.firstEnd),
             }
             state.error = ''
-            state.isLoading = false;
+            state.isLoadingUpdate = false;
         },
         [editTask.pending.type]: (state) => {
-            state.isLoading = true;
+            state.isLoadingUpdate = true;
         },
         [editTask.rejected.type]: (state, action: PayloadAction<string>) => {
             state.error = action.payload
-            state.isLoading = false;
+            state.isLoadingUpdate = false;
         },
 
         [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITask>) => {

@@ -24,8 +24,6 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
         setEmail(employee.email);
         setName(employee.name);
         setSpec(employee.spec)
-        if (employee._id) dispatch(fetchBonuses(employee._id))
-        if (employee._id) dispatch(fetchWeekBonuses(employee._id))
     }, [employee])
 
     // useEffect(() => {

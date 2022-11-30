@@ -3,7 +3,7 @@ import cl from '../styles/EmployeePage.module.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import CalendarComponent from "../components/CalendarComponent/CalendarComponent";
 import EmployeeCard from "../components/EmployeeCard";
-import {fetchEmployeeTasks} from "../store/reducers/ActionCreators";
+import {fetchBonuses, fetchEmployeeTasks, fetchWeekBonuses} from "../store/reducers/ActionCreators";
 import {useParams} from "react-router-dom";
 import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
 import {changeEmployee} from "../store/reducers/EmployeeSlice";
@@ -14,7 +14,7 @@ const EmployeePage: FC = () => {
 
     const [userCardIsShow, setUserCardIsShow] = useState<boolean>(true)
     const {employee, employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
-    const {tasks, isLoadingCreate, isLoadingDelete} = useAppSelector(state => state.taskSlice)
+    const {tasks, isLoadingCreate, isLoadingDelete, isLoadingUpdate} = useAppSelector(state => state.taskSlice)
 
 
     useEffect(() => {
@@ -23,11 +23,12 @@ const EmployeePage: FC = () => {
         if (latinName) dispatch(setNavbarActiveItem(latinName))
     }, [latinName, employees])
 
+
     useEffect(() => {
         if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
-        // if (employee._id) dispatch(fetchBonuses(employee._id))
+        if (employee._id) dispatch(fetchBonuses(employee._id))
         // if (employee._id) dispatch(fetchWeekBonuses(employee._id))
-    }, [employee, isLoadingCreate, isLoadingDelete])
+    }, [employee, isLoadingCreate, isLoadingDelete, isLoadingUpdate])
 
 
     return (

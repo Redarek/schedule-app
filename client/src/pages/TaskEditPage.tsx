@@ -19,9 +19,6 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(fetchTaskById(`${taskId}`))
-        dispatch(fetchTaskById(`${taskId}`))
-        dispatch(fetchTaskById(`${taskId}`))
-        dispatch(fetchTaskById(`${taskId}`))
     }, [taskId])
 
     const [title, setTitle] = useState<string>('')
@@ -78,7 +75,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 }
             }
             dispatch(editTask(updateTask))
-            dispatch(fetchTaskById(employee._id))
+            // dispatch(fetchTaskById(employee._id))
             navigate('/')
         }
     }

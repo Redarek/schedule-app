@@ -19,10 +19,8 @@ const Header: FC<HeaderProps> = ({user}) => {
 
     useEffect(() => {
         dispatch(fetchEmployees())
-        dispatch(fetchBonuses(user._id))
-        dispatch(fetchWeekBonuses(user._id))
-        // dispatch(fetchWeekBonuses(user._id))
         // dispatch(fetchBonuses(user._id))
+        dispatch(fetchWeekBonuses(user._id))
     }, [isAuth])
 
     // useEffect(() => {

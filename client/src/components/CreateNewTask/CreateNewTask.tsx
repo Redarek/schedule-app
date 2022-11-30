@@ -29,7 +29,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
 
     useEffect(() => {
         if (employees.length === 0) {
-            dispatch(fetchEmployees())
+            // dispatch(fetchEmployees())
         }
     }, [])
 
@@ -87,7 +87,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                 <input id="start"
                        className={cl.input}
                        type="datetime-local"
-                       value={String(start)}
+                       value={start}
                        onChange={(e) => setStart(e.target.value)}
                 />
             </div>

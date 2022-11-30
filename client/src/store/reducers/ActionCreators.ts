@@ -71,6 +71,7 @@ export const checkAuth = createAsyncThunk(
             localStorage.setItem('token', response.data.accessToken);
             return response.data;
         } catch (e) {
+            localStorage.removeItem('token')
             //@ts-ignore
             console.log(e.response?.data?.message);
         }

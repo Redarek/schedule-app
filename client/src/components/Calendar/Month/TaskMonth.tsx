@@ -29,7 +29,7 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
 
     if (taskStart < weekStart) taskStart = weekStart;
     if (taskEnd >= nextWeekStart) {
-        taskWidth = 100 * Math.floor(((nextWeekStart - taskStart) / 1000 / 3600 / 24 * 100) / 100) - 5;
+        taskWidth = 100 * Math.floor(((nextWeekStart - taskStart) / 1000 / 3600 / 24 * 100) / 100) - 5 + 100;
         // if (taskWidth < 695) taskWidth = taskWidth
     }
 
