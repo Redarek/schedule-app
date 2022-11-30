@@ -40,17 +40,17 @@ const Navbar: FC<NavbarProps> = () => {
         })
     }
 
-        return (
-            <nav className={cl.navWrap} onClick={(e) => e.stopPropagation()}>
-                {isLoading
-                    ? 'Загрузка списков'
-                    : lists.map(list =>
-                        <NavList key={list.listTitle} list={list}/>
-                    )
-                }
+    return (
+        <nav className={cl.navWrap} onClick={(e) => e.stopPropagation()}>
+            {isLoading
+                ? 'Загрузка списков'
+                : lists.map(list =>
+                    <NavList key={list.listTitle} list={list}/>
+                )
+            }
 
-            </nav>
-        );
+        </nav>
+    );
 };
 
 export default Navbar;

@@ -155,6 +155,7 @@ img {
     /*padding-right: 40%;*/
     min-width: 180px;
     width: 100%;
+    overflow-x: auto;
     /*max-width: 500px;*/
 }
 

@@ -51,12 +51,14 @@ function App() {
                                                 mountOnEnter
                                                 unmountOnExit
                                             >
-                                                <div className={'navBar'} onClick={()=> {dispatch(setNavbarVisible(true))}}>
+                                                <div className={'navBar'} onClick={() => {
+                                                    dispatch(setNavbarVisible(true))
+                                                }}>
                                                     <Navbar/>
                                                 </div>
                                             </CSSTransition>
                                             <div className="content">
-                                            <AppRouter/>
+                                                <AppRouter/>
                                             </div>
                                         </div>
                                     </div>

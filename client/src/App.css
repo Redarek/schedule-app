@@ -12,6 +12,7 @@
     /*width: 100%;*/
     /*position: absolute;*/
 }
+
 .content {
     /*overflow-x: auto;*/
     width: 100%;
@@ -23,12 +24,12 @@
     }
 
     .navBar {
-    /*    position: absolute;*/
-    /*    width: 100%;*/
-    /*    !*overflow: hidden;*!*/
-    /*    left: 0;*/
-    /*    z-index: 1;*/
-    /*    max-width: 150px;*/
+        position: absolute;
+        width: 100%;
+        /*overflow: hidden;*/
+        left: 0;
+        z-index: 1;
+        /*    max-width: 150px;*/
     }
 }
 
