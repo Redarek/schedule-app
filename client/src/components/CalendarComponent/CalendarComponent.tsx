@@ -1,12 +1,12 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import Month from "../Calendar/Month/Month";
 import ModalFullScreen from "../UI/ModalFullScreen/ModalFullScreen";
 import CreateNewTask from "../CreateNewTask/CreateNewTask";
 import Week from "../Calendar/Week/Week";
 import cl from './Calendar.module.css'
 import Button from "../UI/Button/Button";
-import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import {ITasks} from "../../types/ITasks";
+import DropDownMenuV2 from "../UI/DropDownMenu/DropDownMenuV2";
 
 interface CalendarPageProps {
     tasks: ITasks[];
@@ -14,24 +14,22 @@ interface CalendarPageProps {
 
 const CalendarComponent: FC<CalendarPageProps> = ({tasks}) => {
     const [visible, setVisible] = useState<boolean>(false)
-    const [calendarDisplayMode, setCalendarDisplayMode] = useState('Месяц')
-    const [calendarModeIndex, setCalendarModeIndex] = useState(0)
-    //@todo сделать лоадер
+
+    const modeItems = ['Месяц', 'Неделя']
+    const [mode, setMode] = useState<string>(modeItems[0])
+    const [calendarModeIndex, setCalendarModeIndex] = useState<number>(0)
+
+    useEffect(() => {
+        setCalendarModeIndex(modeItems.findIndex(modeItem => modeItem === mode))
+    }, [mode])
+
     const calendarModes = [<Month tasks={tasks}/>, <Week tasks={tasks}/>]
 
     return (
         <div className={cl.wrapper}>
             <div className={cl.calendarMenu}>
                 <div className={cl.calendarModeBtn}>
-                    <DropDownMenu
-                        menuType={"other"}
-                        title={'Месяц'}
-                        menuItems={['Месяц', 'Неделя']}
-                        dropMenuItem={calendarDisplayMode}
-                        setDropMenuItem={setCalendarDisplayMode}
-                        viewMode={"bottom"}
-                        setIndexOfSelectElem={setCalendarModeIndex}
-                    />
+                    <DropDownMenuV2 selectItem={mode} setSelectItem={setMode} items={modeItems} type={"string"} position={"bottom"}/>
                 </div>
                 {visible
                     ? <ModalFullScreen visible={visible} exitBtn={true} setVisible={setVisible} exitBackground={false}>

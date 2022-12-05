@@ -23,8 +23,8 @@ const ListItem: FC<ListItemProps> = ({title, index, activeItem, setActiveItem, l
                  setActiveItem(index);
                  navigate(link);
                  e.preventDefault()
-                 // if (window.screen.width < 768 && wrapper) wrapper.scrollBy({left: 1000, behavior: "smooth"})
-                 dispatch(setNavbarVisible(true))
+                 if (window.screen.width < 768) dispatch(setNavbarVisible(true))
+                 // wrapper.scrollBy({left: 1000, behavior: "smooth"})
              }}>
             {index === activeItem && link === window.location.pathname
                 ? <div className={cl.activeItem}></div>

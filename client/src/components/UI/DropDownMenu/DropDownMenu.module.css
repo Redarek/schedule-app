@@ -3,7 +3,6 @@
     display: flex;
     flex-wrap: nowrap;
     position: relative;
-    /*z-index: 1;*/
     margin-right: auto;
     user-select: none;
 }
