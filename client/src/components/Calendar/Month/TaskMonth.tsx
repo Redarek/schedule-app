@@ -66,7 +66,7 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
                         }}>{taskTitle}</div>
                         : ''
                     }
-                    {date.getDay() === 1 && task.firstEnd.getTime() >= date.getTime()
+                    {date.getDay() === 1 && task.firstEnd.getTime() >= date.getTime() && task.start.getDate() !== date.getDate()
                         ? <div className={cl.taskTitle} style={{
                             textDecoration: `${taskCompleteStyle}`
                         }}>{taskTitle}</div>
