@@ -5,5 +5,4 @@
 4. Выполнить `npm start` в директории `server`, затем в директории `client`
 
 ### Данные для входа
-email: redarek4@yandex.ru
-password: redarek
+email: redarek4@yandex.ru<br>password: redarek
