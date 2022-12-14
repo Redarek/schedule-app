@@ -1,14 +1,15 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from "../styles/EmployeePage.module.css";
 import Input from "./UI/Input/Input";
-import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import {IUser} from "../types/IUser";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {changeEmployee} from "../store/reducers/EmployeeSlice";
-import {fetchBonuses, fetchWeekBonuses, updateEmployee} from "../store/reducers/ActionCreators";
+import {updateEmployee} from "../store/reducers/ActionCreators";
 import {editUser} from "../store/reducers/authSlice";
 import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
+import DropDownMenuV2 from "./UI/DropDownMenu/DropDownMenuV2";
+import {specialities} from "../utils/variables";
 
 interface EmployeeCardProps {
     employee: IUser
@@ -24,13 +25,8 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
         setEmail(employee.email);
         setName(employee.name);
         setSpec(employee.spec)
-        if (employee._id) dispatch(fetchBonuses(employee._id))
-        if (employee._id) dispatch(fetchWeekBonuses(employee._id))
     }, [employee])
 
-    // useEffect(() => {
-    //     dispatch(employeeBonuses({week: employeeWeekBonuses, all: employeeAllBonuses}))
-    // }, [employeeWeekBonuses])
 
     const [editMenuIsShow, setEditMenuIsShow] = useState<boolean>(false)
 
@@ -122,12 +118,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         </div>
                         <div className={cl.infoText}>
                             <div className={cl.input}>
-                                <DropDownMenu menuItems={[]} menuType={'spec'}
-                                              dropMenuItem={spec}
-                                              setDropMenuItem={setSpec}
-                                              viewMode={viewMode}
-                                              title={"Специализация"}
-                                />
+                                <DropDownMenuV2 type={"string"} position={viewMode} selectItem={spec} setSelectItem={setSpec} items={specialities}/>
                             </div>
                         </div>
                     </div>

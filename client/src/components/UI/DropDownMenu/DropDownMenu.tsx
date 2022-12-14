@@ -48,14 +48,14 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
     }
 
     const wrapStyle = {width: '75%'}
-    const menuListWrapStyle = {width: '240px', left: '75%', marginTop: '0'}
+    const menuListStyle = {width: '240px', left: '75%', marginTop: '0'}
 
     switch (viewMode) {
         case "bottom":
             wrapStyle.width = '100%'
-            menuListWrapStyle.width = '100%'
-            menuListWrapStyle.left = '0'
-            menuListWrapStyle.marginTop = '32px'
+            menuListStyle.width = '100%'
+            menuListStyle.left = '0'
+            menuListStyle.marginTop = '32px'
             break;
     }
 
@@ -85,9 +85,10 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
 
     return (
         <div className={cl.wrapper}>
-            <div className={cl.wrap} style={wrapStyle} onClick={() => {
+            <div className={cl.wrap} style={wrapStyle} onClick={(e) => {
                 checkSetOpenMenuTitle();
                 setVisible(!visible);
+                e.stopPropagation()
             }}>
                 <div
                     className={cl.menuTitle}>{dropMenuItem === '' ? title : items[items.findIndex(obj => obj === dropMenuItem)]}</div>
@@ -95,7 +96,8 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
             </div>
             {visible
                 ?
-                <div className={cl.menuListWrap} style={menuListWrapStyle}>
+
+                <div className={cl.menuList} style={menuListStyle}>
                     {items.map((item, index) =>
                         <div key={item} className={cl.menuItem} onClick={() => {
                             setDropMenuItem(item);

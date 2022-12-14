@@ -4,8 +4,9 @@ import cx from "classnames";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../hooks/redux";
 import {registration} from "../store/reducers/ActionCreators";
-import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import Input from "./UI/Input/Input";
+import DropDownMenuV2 from "./UI/DropDownMenu/DropDownMenuV2";
+import {specialities} from "../utils/variables";
 
 
 const RegistrationForm: FC = () => {
@@ -49,14 +50,8 @@ const RegistrationForm: FC = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
-                <DropDownMenu
-                    menuType={'spec'}
-                    title={'Специальность...'}
-                    menuItems={[]}
-                    dropMenuItem={spec}
-                    setDropMenuItem={setSpec}
-                    viewMode={'bottom'}
-                />
+                <DropDownMenuV2 type={"string"} position={"bottom"} selectItem={spec} setSelectItem={setSpec}
+                                items={specialities}/>
                 <button
                     className={cx(cl.auth__button, cl.auth__button_registration)}
                     onClick={(e) => {

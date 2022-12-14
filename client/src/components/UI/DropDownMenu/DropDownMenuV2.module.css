@@ -1,0 +1,45 @@
+.container {
+    position: relative;
+    width: 100%;
+    color: #FFFFFF;
+
+}
+.input {
+    width: inherit;
+    height: 32px;
+    background-color: #0078D4;
+    color: white;
+    padding-left: 20px;
+    font-size: inherit;
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.items {
+    z-index: 1;
+    position: absolute;
+    top: 32px;
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    font-size: inherit;
+    backdrop-filter: blur(10px);
+    background: rgba(166, 164, 164, 0.75);
+    overflow: auto;
+    border-radius: 2px;
+    color: black;
+}
+.item {
+    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    padding: 10px 15px;
+    border-bottom: 2px rgba(166, 164, 164, 0.75);
+    opacity: .7;
+    transition: all 200ms linear;
+}
+.item:hover {
+    opacity: 1;
+    border-bottom: 2px solid darkred;
+}

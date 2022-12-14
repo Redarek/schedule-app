@@ -2,10 +2,11 @@ import React, {FC, useEffect, useState} from 'react';
 import {initialDate} from "../Calendar/utils";
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
-import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createTask, fetchEmployees, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
+import DropDownMenuV2 from "../UI/DropDownMenu/DropDownMenuV2";
+import {specialities} from "../../utils/variables";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
@@ -15,21 +16,22 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
-    const [spec, setSpec] = useState<string>('')
-    const [employeeName, setEmployeeName] = useState<string>('')
+    const [spec, setSpec] = useState<string>('Специальность')
+    const [employeeName, setEmployeeName] = useState<string>('Сотрудник')
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)
-    const [start, setStart] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
-    const [firstEnd, setFirstEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
-    const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${initialDate.getDate()}T00:00`)
-    const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('0')
+    let date = `${initialDate.getDate()}`
+    if (date.length === 1) date = '0' + `${date}`
+    const [start, setStart] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T00:00`)
+    const [firstEnd, setFirstEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T01:00`)
+    const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T02:00`)
 
     const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
 
     useEffect(() => {
         if (employees.length === 0) {
-            dispatch(fetchEmployees())
+            // dispatch(fetchEmployees())
         }
     }, [])
 
@@ -43,7 +45,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
             || penalty < 0
             || secondReward < 0
         ) {
-        } else {
+        } else if (start < firstEnd && start < secondEnd && firstEnd < secondEnd) {
             const task: ITask = {
                 _id: '',
                 employee: employeeName,
@@ -87,7 +89,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                 <input id="start"
                        className={cl.input}
                        type="datetime-local"
-                       value={String(start)}
+                       value={start}
                        onChange={(e) => setStart(e.target.value)}
                 />
             </div>
@@ -110,30 +112,12 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                 />
             </div>
             <div className={cl.inputWrap}>
-                <DropDownMenu
-                    indexOfMenu={'0'}
-                    indexOfOpenMenu={indexOfOpenMenu}
-                    setIndexOfOpenMenu={setIndexOfOpenMenu}
-                    menuType={'spec'}
-                    title={'Специализация...'}
-                    menuItems={[]}
-                    dropMenuItem={spec}
-                    setDropMenuItem={setSpec}
-                    viewMode={"bottom"}
-                />
+                <DropDownMenuV2 selectItem={spec} setSelectItem={setSpec} items={specialities} type={"string"}
+                                position={"bottom"}/>
             </div>
             <div className={cl.inputWrap}>
-                <DropDownMenu
-                    indexOfMenu={'1'}
-                    indexOfOpenMenu={indexOfOpenMenu}
-                    setIndexOfOpenMenu={setIndexOfOpenMenu}
-                    menuType={'employees'}
-                    title={'Сотрудник...'}
-                    menuItems={employees}
-                    dropMenuItem={employeeName}
-                    setDropMenuItem={setEmployeeName}
-                    viewMode={"bottom"}
-                />
+                <DropDownMenuV2 selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
+                                type={"employees"} position={"bottom"}/>
             </div>
             <div className={cl.rewards}>
                 <div className={cl.rewardsInputWrap}>

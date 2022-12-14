@@ -19,9 +19,6 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(fetchTaskById(`${taskId}`))
-        dispatch(fetchTaskById(`${taskId}`))
-        dispatch(fetchTaskById(`${taskId}`))
-        dispatch(fetchTaskById(`${taskId}`))
     }, [taskId])
 
     const [title, setTitle] = useState<string>('')
@@ -78,13 +75,13 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 }
             }
             dispatch(editTask(updateTask))
-            dispatch(fetchTaskById(employee._id))
+            // dispatch(fetchTaskById(employee._id))
             navigate('/')
         }
     }
 
     return (
-        <div className={cl.wrapper}>
+        <div className={cl.wrapper} onClick={() => setIndexOfOpenMenu('')}>
             <div className={cl.wrap}>
                 <div className={cl.titleEdit}>
                     <div className={cl.inputWrap}>

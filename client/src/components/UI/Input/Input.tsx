@@ -10,20 +10,20 @@ interface InputProps {
     type: string;
     name: string
     value: any
-    setValue: (e: any) => void
+    setValue: (e: any) => void;
 }
 
 
 const Input: FC<InputProps> = ({
-                                  placeholder,
-                                  id,
-                                  type,
-                                  name,
-                                  value,
-                                  setValue,
-                                  showBtn,
-                                  classes
-                              }) => {
+                                   placeholder,
+                                   id,
+                                   type,
+                                   name,
+                                   value,
+                                   setValue,
+                                   showBtn,
+                                   classes,
+                               }) => {
     const [isShow, setIsShow] = useState(false)
     const [clStyles, setClStyles] = useState<any>([cl.inputWrap])
     useEffect(() => {
@@ -43,6 +43,7 @@ const Input: FC<InputProps> = ({
     function handleWindowSizeChange() {
         setWidth(window.innerWidth);
     }
+
     useEffect(() => {
         window.addEventListener('resize', handleWindowSizeChange);
         return () => {
@@ -64,10 +65,10 @@ const Input: FC<InputProps> = ({
                 onChange={(e) => setValue(e.target.value)}
             />
             {showBtn
-                ?<div>
+                ? <div>
                     {isMobile
                         ? <div className={cl.inputBtn}
-                               onClick={()=> showValue(!isShow)}>
+                               onClick={() => showValue(!isShow)}>
                             {isShow
                                 ? <img draggable={false} src="/images/eyeOpen.png" alt=""/>
                                 : <img draggable={false} src="images/eyeClose.png" alt=""/>
