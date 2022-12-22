@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {changeEmployee} from "../../store/reducers/EmployeeSlice";
 import Button from "../../components/UI/Button/Button";
 import CheckBox from "../../components/UI/CheckBox/CheckBox";
+import {Roles} from "../../types/Roles";
 
 interface EmployeeTrProps {
     employee: IUser;
@@ -26,7 +27,7 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
-    const [rolesList, setRolesList] = useState(["admin", "guest", "user"])
+    // const [rolesList, setRolesList] = useState(["admin", "guest", "user"])
 
 
     const [visibleRolesMenu, setVisibleRolesMenu] = useState<boolean>(false)
@@ -90,7 +91,7 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
                         <span></span>
                         <span></span>
                     </div>
-                    {rolesList.map(role =>
+                    {Object.values(Roles).map(role =>
                         <div key={role} className={cl.role}>
                             <CheckBox
                                 label={role}

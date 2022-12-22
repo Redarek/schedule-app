@@ -9,7 +9,7 @@ import {editUser} from "../store/reducers/authSlice";
 import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
 import DropDownMenuV2 from "./UI/DropDownMenu/DropDownMenuV2";
-import {specialities} from "../utils/variables";
+import {Specialities} from "../types/Specialities";
 
 interface EmployeeCardProps {
     employee: IUser
@@ -19,7 +19,9 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
+    const {updateEmployeeError} = useAppSelector(state => state.employeeSlice)
     const {isLoading, employeeAllBonuses} = useAppSelector(state => state.bonusesSlice)
+
 
     useEffect(() => {
         setEmail(employee.email);
@@ -35,11 +37,12 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const [spec, setSpec] = useState<string>(employee.spec)
 
     const [viewMode, setViewMode] = useState<"right" | "bottom">('right')
+
     useEffect(() => {
         if (window.screen.width < 768) setViewMode("bottom")
     }, [])
     const handleEditInfo = () => {
-        setEditMenuIsShow(!editMenuIsShow)
+        // setEditMenuIsShow(!editMenuIsShow)
         const changedUser: IUser = {
             ...employee,
             spec: spec,
@@ -47,12 +50,16 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
             name: name,
             latinName: translit(name),
         }
-        if (user._id === changedUser._id) {
-            dispatch(editUser(changedUser))
-        }
-        dispatch(changeEmployee(changedUser))
+
         dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
-        navigate(`/employee-page/${changedUser.latinName}`)
+        if (updateEmployeeError === '') {
+            if (user._id === changedUser._id) {
+                dispatch(editUser(changedUser))
+            }
+            dispatch(changeEmployee(changedUser))
+            navigate(`/employee-page/${changedUser.latinName}`)
+        }
+
     }
 
     return (
@@ -67,7 +74,8 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
             </div>
             <div className={cl.employeeInfo}>
                 <div className={cl.infoHeader}>
-                    Основная информация
+                    Основная информация <br/>
+                    {updateEmployeeError}
                     {editMenuIsShow
                         ? <div className={cl.updateBtnContainer} onClick={() => handleEditInfo()}>
                             <span className={cl.updateBtn}></span>
@@ -96,7 +104,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                             <div className={cl.input}>
                                 <Input
                                     id={'email'}
-                                    name={'Email'}
+                                    name={'email'}
                                     placeholder={`${email}`}
                                     value={email}
                                     setValue={setEmail}
@@ -108,7 +116,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                             <div className={cl.input}>
                                 <Input
                                     id={'name'}
-                                    name={'Name'}
+                                    name={'name'}
                                     placeholder={`${name}`}
                                     value={name}
                                     setValue={setName}
@@ -118,7 +126,8 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         </div>
                         <div className={cl.infoText}>
                             <div className={cl.input}>
-                                <DropDownMenuV2 type={"string"} position={viewMode} selectItem={spec} setSelectItem={setSpec} items={specialities}/>
+                                <DropDownMenuV2 type={"string"} position={viewMode} selectItem={spec}
+                                                setSelectItem={setSpec} items={Object.values(Specialities)}/>
                             </div>
                         </div>
                     </div>

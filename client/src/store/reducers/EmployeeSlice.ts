@@ -9,13 +9,15 @@ interface EmployeeState {
     employee: IUser;
     employees: IUser[];
     error: string;
+    updateEmployeeError: string | null;
 }
 
 const initialState: EmployeeState = {
     employee: {} as IUser,
     employees: [] as IUser[],
     isLoading: false,
-    error: ''
+    error: '',
+    updateEmployeeError: null
 }
 const employeeSlice = createSlice({
     name: 'employee',
@@ -69,15 +71,16 @@ const employeeSlice = createSlice({
             state.error = action.payload
         },
         [updateEmployee.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+            state.updateEmployeeError = '';
             state.isLoading = false;
-            state.error = '';
         },
         [updateEmployee.pending.type]: (state) => {
+            state.updateEmployeeError = null
             state.isLoading = true;
         },
         [updateEmployee.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.updateEmployeeError = action.payload
             state.isLoading = false;
-            state.error = action.payload
         }
     }
 })

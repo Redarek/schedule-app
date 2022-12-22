@@ -10,9 +10,26 @@
     width: 100%;
     height: 30px;
     border-radius: 2px;
-    padding: 0 0 0 12px
+    padding: 0 0 0 12px;
 
 }
+
+.error {
+    color: brown;
+    padding-left: 12px;
+    font-size: 12px;
+}
+
+.errorFlag {
+    position: absolute;
+    background-color: brown;
+    height: 26px;
+    width: 10px;
+    border-radius: 1px;
+    left: 2px;
+    top: 2px;
+}
+
 .inputBtn {
     user-select: none;
     position: absolute;

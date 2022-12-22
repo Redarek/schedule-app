@@ -6,7 +6,7 @@ import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createTask, fetchEmployees, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 import DropDownMenuV2 from "../UI/DropDownMenu/DropDownMenuV2";
-import {specialities} from "../../utils/variables";
+import {Specialities} from "../../types/Specialities";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
@@ -112,7 +112,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                 />
             </div>
             <div className={cl.inputWrap}>
-                <DropDownMenuV2 selectItem={spec} setSelectItem={setSpec} items={specialities} type={"string"}
+                <DropDownMenuV2 selectItem={spec} setSelectItem={setSpec} items={Object.values(Specialities)} type={"string"}
                                 position={"bottom"}/>
             </div>
             <div className={cl.inputWrap}>
