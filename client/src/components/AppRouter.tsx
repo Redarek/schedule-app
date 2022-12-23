@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {authRoutes, guestRoutes, privateRoutes, publicRoutes} from "../router";
 import {useAppSelector} from "../hooks/redux";
+import {Roles} from "../types/Roles";
 
 const AppRouter: FC = () => {
     const {user, isAuth} = useAppSelector(state => state.authSlice)
@@ -15,7 +16,7 @@ const AppRouter: FC = () => {
                         path={route.path}
                     />
                 )
-                : user.user.roles[0] === 'guest' || user.user.roles.length === 0
+                : user.user.roles[0] === Roles.GUEST || user.user.roles.length === 0
                     ? guestRoutes.map(route =>
                         <Route
                             key={route.path}
@@ -32,7 +33,7 @@ const AppRouter: FC = () => {
                     )
             }
             {isAuth
-                ? user.user.roles.findIndex((role) => role === "admin") !== -1
+                ? user.user.roles.findIndex((role) => role === Roles.ADMIN) !== -1
                     ? privateRoutes.map(route =>
                         <Route
                             key={route.path}
@@ -43,7 +44,7 @@ const AppRouter: FC = () => {
                 : ''
             }
             {isAuth
-                ? user.user.roles[0] === 'guest' || user.user.roles.length === 0
+                ? user.user.roles[0] === Roles.GUEST || user.user.roles.length === 0
                     ? <Route path="*" element={<Navigate replace to={`/contacts`}/>}/>
                     : <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
 

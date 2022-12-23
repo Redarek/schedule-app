@@ -11,22 +11,32 @@ const LoginForm: FC = () => {
     const [password, setPassword] = useState<string>("");
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {user, isAuth} = useAppSelector(state => state.authSlice);
+    const {error} = useAppSelector(state => state.authSlice);
+
+
+    const handleLogin = () => {
+        if (email !== '' && password !== '') {
+            dispatch(login({email: email, password: password}));
+            if (error === '') navigate(`/employee-page`)
+        } else {
+        }
+    }
 
     return (
         <div className={cl.auth}>
+            {error && <span className={cl.formError}>{error}</span>}
             <form className={cl.auth__form}>
                 <label htmlFor="login-email" className={cl.auth__label}>
                     Email
                 </label>
-                <input
-                    className={cx(cl.auth__input, cl.auth__input_email)}
+                <Input
+                    classes={cl.auth__input_email}
                     placeholder="Введите email"
                     name="email"
                     id="login-email"
-                    onChange={e => setEmail(e.target.value)}
+                    setValue={setEmail}
                     value={email}
-                    type='text'
+                    type='email'
                 />
                 <label htmlFor="login-password" className={cl.auth__label}>
                     Пароль
@@ -44,8 +54,7 @@ const LoginForm: FC = () => {
                 <button className={cx(cl.auth__button, cl.auth__button_login)}
                         onClick={(e) => {
                             e.preventDefault()
-                            dispatch(login({email: email, password: password}));
-                            navigate(`/employee-page`)
+                            handleLogin()
                         }
                         }
                 >Войти

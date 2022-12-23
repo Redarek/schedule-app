@@ -23,27 +23,27 @@ interface RegObject {
 
 export const login = createAsyncThunk(
     'user/login',
-    async (loginObject: LoginObject) => {
+    async (loginObject: LoginObject, thunkAPI) => {
         try {
             const response = await AuthService.login(loginObject.email, loginObject.password);
             // console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             return response.data;
-        } catch (e) {
-            console.log(e);
+        } catch (e: any) {
+            return thunkAPI.rejectWithValue(e.response.data.message)
         }
     }
 )
 
 export const registration = createAsyncThunk(
     'user/registration',
-    async (regObject: RegObject) => {
+    async (regObject: RegObject, thunkAPI) => {
         try {
             const response = await AuthService.registration(regObject.email, regObject.password, regObject.name, regObject.spec);
             localStorage.setItem('token', response.data.accessToken);
             return response.data;
-        } catch (e) {
-            console.log(e);
+        } catch (e: any) {
+            return thunkAPI.rejectWithValue(e.response.data.message)
         }
     }
 )
@@ -64,16 +64,17 @@ export const logout = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk(
     'user/auth',
-    async () => {
+    async (arg, thunkAPI) => {
         try {
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
             // console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             return response.data;
-        } catch (e) {
+        } catch (e: any) {
             localStorage.removeItem('token')
+            return thunkAPI.rejectWithValue(e.response.data.message)
             //@ts-ignore
-            console.log(e.response?.data?.message);
+            // console.log(e.response?.data?.message);
         }
     }
 )
@@ -125,8 +126,8 @@ export const updateEmployee = createAsyncThunk(
         try {
             const response = await UserService.updateEmployee(updateEmployee.user, updateEmployee.id)
             return response.data;
-        } catch (e) {
-            return thunkAPI.rejectWithValue("Не удалось обновить данные")
+        } catch (e: any) {
+            return thunkAPI.rejectWithValue(e.response.data.message)
         }
     }
 )
@@ -209,7 +210,7 @@ export const deleteTask = createAsyncThunk(
 
 export const completeTask = createAsyncThunk(
     '/complete-task/:id',
-    async (id:string, thunkAPI) => {
+    async (id: string, thunkAPI) => {
         try {
             const response = await TasksService.completeTask(id)
             return response.data;
@@ -221,7 +222,7 @@ export const completeTask = createAsyncThunk(
 
 export const fetchBonuses = createAsyncThunk(
     '/bonuses/:id',
-    async (id:string, thunkAPI) => {
+    async (id: string, thunkAPI) => {
         try {
             const response = await BonusService.getAllBonuses(id)
             return response.data;
@@ -233,7 +234,7 @@ export const fetchBonuses = createAsyncThunk(
 
 export const fetchWeekBonuses = createAsyncThunk(
     '/bonuses-week/:id',
-    async (id:string, thunkAPI) => {
+    async (id: string, thunkAPI) => {
         try {
             const response = await BonusService.getWeekBonuses(id)
             return response.data;
