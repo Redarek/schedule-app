@@ -2,9 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const session = require('express-session')
 const cookieParser = require('cookie-parser');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-
+const path = require('path');
 const User = require('./models/userModel');
 const Task = require('./models/taskModel');
 
