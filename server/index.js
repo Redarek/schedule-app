@@ -10,12 +10,25 @@ const Task = require('./models/taskModel');
 
 const router = require('./router/index.js');
 
+const CLIENT_URL = process.env.NODE_ENV === "production" ? process.env.PROD_CLIENT_URL : process.env.DEV_CLIENT_URL
+
 const app = express();
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || 'Super Secret rushools',
+        resave: true,
+        saveUninitialized: false,
+        // cookie: {
+        //     sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
+        //     secure: process.env.NODE_ENV === "production", // must be true if sameSite='none'
+        // }
+    })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: CLIENT_URL
 }));
 app.use('/api', router);
 app.use(errorMiddleware); // middleware ошибок всегда последний app.use

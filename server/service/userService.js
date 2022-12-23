@@ -6,7 +6,7 @@ const tokenService = require('./tokenService');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/ApiError');
 const roleModel = require('../models/roleModel');
-
+const API_URL = process.env.NODE_ENV === "production" ? 'https://schedule-app-58y8.onrender.com/api' : 'http://localhost:8080/api';
 class UserService {
     async registration(email, password, name, spec) {
         const candidateEmail = await userModel.findOne({email});
@@ -25,7 +25,7 @@ class UserService {
         const activationLink = uuid.v4(); // генерация ссылки активации для письма на email
 
         const user = await userModel.create({email, password: hashPassword, activationLink, name, spec}); // сохраняем польз-ля в БД
-        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
+        await mailService.sendActivationMail(email, `${API_URL}/activate/${activationLink}`);
 
         const userDto = new UserDto(user); //передаём все данные о пользователе в DTO (Data Transfer Object) dto получаем на клиенте и dto нужен для отправки email письма
         const tokens = tokenService.generateTokens({...userDto}); // генерируем JWT токены
