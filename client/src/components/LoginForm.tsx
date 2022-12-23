@@ -5,6 +5,8 @@ import cl from "../styles/RegistrationForm.module.css";
 import cx from "classnames";
 import {useNavigate} from "react-router-dom";
 import Input from "./UI/Input/Input";
+import {FormValidator} from "../utils/FormValidator";
+import {InputNames} from "../utils/InputValidator";
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -13,12 +15,13 @@ const LoginForm: FC = () => {
     const navigate = useNavigate();
     const {error} = useAppSelector(state => state.authSlice);
 
+    const inputs = [InputNames.EMAIL, InputNames.PASSWORD]
+    const formValidator = new FormValidator(inputs)
 
     const handleLogin = () => {
-        if (email !== '' && password !== '') {
+        if (!formValidator.getFormStatus()) {
             dispatch(login({email: email, password: password}));
             if (error === '') navigate(`/employee-page`)
-        } else {
         }
     }
 
@@ -30,6 +33,7 @@ const LoginForm: FC = () => {
                     Email
                 </label>
                 <Input
+                    inputValidator={formValidator.getInput(InputNames.EMAIL)}
                     classes={cl.auth__input_email}
                     placeholder="Введите email"
                     name="email"
@@ -42,6 +46,7 @@ const LoginForm: FC = () => {
                     Пароль
                 </label>
                 <Input
+                    inputValidator={formValidator.getInput(InputNames.PASSWORD)}
                     classes={cl.auth__input_password}
                     placeholder={"Введите пароль"}
                     type={'password'}

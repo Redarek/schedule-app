@@ -10,6 +10,8 @@ import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
 import DropDownMenuV2 from "./UI/DropDownMenu/DropDownMenuV2";
 import {Specialities} from "../types/Specialities";
+import {FormValidator} from "../utils/FormValidator";
+import {InputNames} from "../utils/InputValidator";
 
 interface EmployeeCardProps {
     employee: IUser
@@ -38,9 +40,17 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
 
     const [viewMode, setViewMode] = useState<"right" | "bottom">('right')
 
+    const inputs = [InputNames.EMAIL, InputNames.NAME]
+    const formValidator = new FormValidator(inputs)
+
+    const [changedUser, setChangedUser] = useState<IUser>({...employee})
+
     useEffect(() => {
         if (window.screen.width < 768) setViewMode("bottom")
+
     }, [])
+
+
     const handleEditInfo = () => {
         // setEditMenuIsShow(!editMenuIsShow)
         const changedUser: IUser = {
@@ -50,8 +60,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
             name: name,
             latinName: translit(name),
         }
-
-        dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+        setChangedUser(changedUser)
+        if (!formValidator.getFormStatus()) {
+            dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+        }
         if (updateEmployeeError === '') {
             if (user._id === changedUser._id) {
                 dispatch(editUser(changedUser))
@@ -103,6 +115,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         <div className={cl.infoText}>
                             <div className={cl.input}>
                                 <Input
+                                    inputValidator={formValidator.getInput(InputNames.EMAIL)}
                                     id={'email'}
                                     name={'email'}
                                     placeholder={`${email}`}
@@ -115,6 +128,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         <div className={cl.infoText}>
                             <div className={cl.input}>
                                 <Input
+                                    inputValidator={formValidator.getInput(InputNames.NAME)}
                                     id={'name'}
                                     name={'name'}
                                     placeholder={`${name}`}

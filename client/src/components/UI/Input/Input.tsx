@@ -1,7 +1,8 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import cl from './Input.module.css'
 import {useDebounce} from "../../../hooks/useDebounce";
-import {Validator} from "../../../utils/Validator";
+import {FormValidator} from "../../../utils/FormValidator";
+import {InputValidator} from "../../../utils/InputValidator";
 
 
 interface InputProps {
@@ -13,6 +14,8 @@ interface InputProps {
     name: string
     value: any
     setValue: (e: any) => void;
+    inputValidator: InputValidator;
+    // setInputValidators: (valid:InputValidator) => void
 }
 
 
@@ -25,22 +28,19 @@ const Input: FC<InputProps> = ({
                                    setValue,
                                    showBtn,
                                    classes,
+                                   inputValidator
+                                   // setInputValidators
                                }) => {
 
     const [width, setWidth] = useState<number>(window.innerWidth);
     const [inputType, setInputType] = useState(type)
     const isMobile = width <= 768;
 
+
     function handleWindowSizeChange() {
         setWidth(window.innerWidth);
     }
 
-    useEffect(() => {
-        window.addEventListener('resize', handleWindowSizeChange);
-        return () => {
-            window.removeEventListener('resize', handleWindowSizeChange);
-        }
-    }, []);
 
     const [isShow, setIsShow] = useState(false)
     const [clStyles, setClStyles] = useState<any>([cl.inputWrap])
@@ -49,7 +49,14 @@ const Input: FC<InputProps> = ({
         if (classes) {
             setClStyles([...clStyles, classes])
         }
-    }, [])
+
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+
+    }, []);
+
 
     const showValue = (show: boolean) => {
         setIsShow(show)
@@ -58,32 +65,14 @@ const Input: FC<InputProps> = ({
     }
 
 
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(inputValidator.getInputError())
     const debouncedValue = useDebounce(value, 1100)
-    const validator = new Validator()
+
+    inputValidator.checkInput(value)
 
     useEffect(() => {
         if (value !== '')
-            switch (name) {
-                case 'email':
-                    if (validator.checkMinLength(value, 5)) setError(`Минимальная длина 5 символов`)
-                    else if (validator.checkSymbols(value)) setError(`Недопустимые символы`)
-                    else if (validator.checkMaxLength(value, 50)) setError('Масимальная длина 50 символов')
-                    else if (validator.checkEmailSymbol(value)) setError("Пропушены символы @domain.com")
-                    else setError(null)
-                    break;
-                case'password':
-                    if (validator.checkMinLength(value, 5)) setError("Длинна пароля не менее 5 символов")
-                    else setError(null)
-                    break;
-                case'name':
-                    if (validator.checkMinLength(value, 3)) setError("Длинна имени не менее 3 символов")
-                    else setError(null)
-
-                    break;
-                default:
-                    setError(null)
-            }
+            setError(inputValidator.getInputError())
     }, [debouncedValue])
 
     return (

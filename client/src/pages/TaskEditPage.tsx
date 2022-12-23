@@ -6,6 +6,8 @@ import {editTask, fetchTaskById} from "../store/reducers/ActionCreators";
 import Input from "../components/UI/Input/Input";
 import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
 import Button from "../components/UI/Button/Button";
+import {FormValidator} from "../utils/FormValidator";
+import {InputNames} from "../utils/InputValidator";
 
 interface TaskEditPageProps {
 
@@ -80,6 +82,10 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
         }
     }
 
+    //@todo Сделать обработку инпутов
+    const inputs = [InputNames.NAME]
+    const formValidator = new FormValidator(inputs)
+
     return (
         <div className={cl.wrapper} onClick={() => setIndexOfOpenMenu('')}>
             <div className={cl.wrap}>
@@ -87,6 +93,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor="title" className={cl.label}>Заголовок:</label>
                         <Input
+                            inputValidator={formValidator.getInput(InputNames.NAME)}
                             type="text"
                             value={title}
                             name={title}
@@ -118,32 +125,38 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 <div className={cl.pointsEdit}>
                     <div className={cl.inputWrap}>
                         <label htmlFor="first-reward" className={cl.label}>Первая награда:</label>
-                        <Input id={'first-reward'}
-                               placeholder={'first-reward'}
-                               type={'number'}
-                               name={'first-reward'}
-                               value={firstReward}
-                               setValue={setFirstReward}
+                        <Input
+                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            id={'first-reward'}
+                            placeholder={'first-reward'}
+                            type={'number'}
+                            name={'first-reward'}
+                            value={firstReward}
+                            setValue={setFirstReward}
                         />
                     </div>
                     <div className={cl.inputWrap}>
                         <label htmlFor="second-reward" className={cl.label}>Вторая награда:</label>
-                        <Input id={'second-reward'}
-                               placeholder={'second-reward'}
-                               type={'number'}
-                               name={'second-reward'}
-                               value={secondReward}
-                               setValue={setSecondReward}
+                        <Input
+                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            id={'second-reward'}
+                            placeholder={'second-reward'}
+                            type={'number'}
+                            name={'second-reward'}
+                            value={secondReward}
+                            setValue={setSecondReward}
                         />
                     </div>
                     <div className={cl.inputWrap}>
                         <label htmlFor="penalty" className={cl.label}>Штраф:</label>
-                        <Input id={'penalty'}
-                               placeholder={'penalty'}
-                               type={'number'}
-                               name={'penalty'}
-                               value={penalty}
-                               setValue={setPenalty}
+                        <Input
+                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            id={'penalty'}
+                            placeholder={'penalty'}
+                            type={'number'}
+                            name={'penalty'}
+                            value={penalty}
+                            setValue={setPenalty}
                         />
                     </div>
                 </div>
@@ -151,6 +164,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor={'start'} className={cl.label}>Начало:</label>
                         <Input
+                            inputValidator={formValidator.getInput(InputNames.NAME)}
                             id={'start'}
                             placeholder={'start'}
                             type={'datetime-local'}
@@ -164,6 +178,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor={'firstEnd'} className={cl.label}>Конец:</label>
                         <Input
+                            inputValidator={formValidator.getInput(InputNames.NAME)}
                             id={'firstEnd'}
                             placeholder={'firstEnd'}
                             type={'datetime-local'}
@@ -177,6 +192,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor={'secondEnd'} className={cl.label}>Доп. дата:</label>
                         <Input
+                            inputValidator={formValidator.getInput(InputNames.NAME)}
                             id={'secondEnd'}
                             placeholder={'secondEnd'}
                             type={'datetime-local'}

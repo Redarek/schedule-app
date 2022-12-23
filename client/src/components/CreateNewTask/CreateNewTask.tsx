@@ -7,6 +7,8 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createTask, fetchEmployees, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 import DropDownMenuV2 from "../UI/DropDownMenu/DropDownMenuV2";
 import {Specialities} from "../../types/Specialities";
+import {FormValidator} from "../../utils/FormValidator";
+import {InputNames} from "../../utils/InputValidator";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
@@ -28,7 +30,6 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T02:00`)
 
     const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
-
     useEffect(() => {
         if (employees.length === 0) {
             // dispatch(fetchEmployees())
