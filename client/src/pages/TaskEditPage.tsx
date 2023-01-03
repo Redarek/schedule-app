@@ -4,10 +4,11 @@ import {useAppDispatch, useAppSelector,} from "../hooks/redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {editTask, fetchTaskById} from "../store/reducers/ActionCreators";
 import Input from "../components/UI/Input/Input";
-import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
 import Button from "../components/UI/Button/Button";
-import {FormValidator} from "../utils/FormValidator";
-import {InputNames} from "../utils/InputValidator";
+import {FormValidator} from "../models/FormValidator";
+import {InputNames} from "../models/InputValidator";
+import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
+import {Specialities} from "../types/Specialities";
 
 interface TaskEditPageProps {
 
@@ -30,11 +31,49 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     const [firstReward, setFirstReward] = useState<number>(Number(''))
     const [secondReward, setSecondReward] = useState<number>(Number(''))
     const [penalty, setPenalty] = useState<number>(Number(''))
-    const [start, setStart] = useState<string>('')
-    const [firstEnd, setFirstEnd] = useState<string>('')
-    const [secondEnd, setSecondEnd] = useState<string>('')
+    const [start, setStart] = useState<Date>()
+    const [firstEnd, setFirstEnd] = useState<Date>()
+    const [secondEnd, setSecondEnd] = useState<Date>()
     const [indexOfOpenMenu, setIndexOfOpenMenu] = useState<string>('')
 
+
+    const setDate = (index: 0 | 1 | 2, data: string) => {
+        const date = new Date(`${data}`)
+        if (date.getTime())
+            switch (index) {
+                case 0:
+                    setStart(date)
+                    break;
+                case 1:
+                    setFirstEnd(date)
+                    break;
+                case 2:
+                    setSecondEnd(date)
+                    break;
+            }
+    }
+
+    const getDate = (data: Date) => {
+
+        if (data !== undefined && typeof data !== "string") {
+            console.log(typeof data)
+            //@ts-ignore
+            let date = `${data.getDate()}`
+            let month = `${data.getMonth() + 1}`;
+            let year = `${data.getFullYear()}`;
+            let hours = `${data.getHours()}`;
+            let minutes = `${data.getMinutes()}`;
+            if (month.length === 1) month = `0${month}`
+            if (date.length === 1) date = `0${date}`
+            if (hours.length === 1) hours = `0${hours}`
+            if (minutes.length === 1) minutes = `0${minutes}`
+            if (year.length === 1) year = `000${year}`
+            if (year.length === 2) year = `00${year}`
+            if (year.length === 3) year = `0${year}`
+            return `${year}-${month}-${date}T${hours}:${minutes}`
+        }
+
+    }
     useEffect(() => {
         if (task._id) {
             setTitle(task.title)
@@ -44,9 +83,12 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
             setFirstReward(Number(task.firstReward))
             setSecondReward(Number(task.secondReward))
             setPenalty(Number(task.penalty))
-            setStart(task.start.slice(0, 23))
-            setFirstEnd(task.firstEnd.slice(0, 23))
-            setSecondEnd(task.secondEnd.slice(0, 23))
+            //@ts-ignore
+            setStart(getDate(task.start))
+            //@ts-ignore
+            setFirstEnd(getDate(task.firstEnd))
+            //@ts-ignore
+            setSecondEnd(getDate(task.secondEnd))
         }
     }, [task._id])
 
@@ -70,20 +112,22 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     firstReward: String(firstReward),
                     secondReward: String(secondReward),
                     penalty: String(penalty),
-                    start: start,
-                    firstEnd: firstEnd,
-                    secondEnd: secondEnd,
+                    start: start?.getTime(),
+                    firstEnd: firstEnd?.getTime(),
+                    secondEnd: secondEnd?.getTime(),
                     _id: taskId
                 }
             }
+            //@ts-ignore
             dispatch(editTask(updateTask))
             // dispatch(fetchTaskById(employee._id))
             navigate('/')
         }
     }
 
+
     //@todo Сделать обработку инпутов
-    const inputs = [InputNames.NAME]
+    const inputs = [InputNames.NAME, InputNames.DATE]
     const formValidator = new FormValidator(inputs)
 
     return (
@@ -110,23 +154,18 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label className={cl.label} htmlFor="spec">Специализация:</label>
                         <DropDownMenu
-                            title={"Специалилазция"}
-                            setDropMenuItem={setSpec}
-                            viewMode={'right'}
-                            dropMenuItem={spec}
-                            menuType={"spec"}
-                            menuItems={[]}
-                            indexOfMenu={'0'}
-                            setIndexOfOpenMenu={setIndexOfOpenMenu}
-                            indexOfOpenMenu={indexOfOpenMenu}
-                        />
+                            type={"string"}
+                            position={'bottom'}
+                            selectItem={spec}
+                            setSelectItem={setSpec}
+                            items={Object.values(Specialities)}/>
                     </div>
                 </div>
                 <div className={cl.pointsEdit}>
                     <div className={cl.inputWrap}>
                         <label htmlFor="first-reward" className={cl.label}>Первая награда:</label>
                         <Input
-                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            inputValidator={formValidator.getInput(InputNames.DATE)}
                             id={'first-reward'}
                             placeholder={'first-reward'}
                             type={'number'}
@@ -138,7 +177,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor="second-reward" className={cl.label}>Вторая награда:</label>
                         <Input
-                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            inputValidator={formValidator.getInput(InputNames.DATE)}
                             id={'second-reward'}
                             placeholder={'second-reward'}
                             type={'number'}
@@ -150,7 +189,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor="penalty" className={cl.label}>Штраф:</label>
                         <Input
-                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            inputValidator={formValidator.getInput(InputNames.DATE)}
                             id={'penalty'}
                             placeholder={'penalty'}
                             type={'number'}
@@ -164,12 +203,13 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor={'start'} className={cl.label}>Начало:</label>
                         <Input
-                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            inputValidator={formValidator.getInput(InputNames.DATE)}
                             id={'start'}
                             placeholder={'start'}
                             type={'datetime-local'}
                             name={'start'}
-                            value={start}
+                            //@ts-ignore
+                            value={getDate(start)}
                             setValue={setStart}
                         />
                     </div>
@@ -178,12 +218,13 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor={'firstEnd'} className={cl.label}>Конец:</label>
                         <Input
-                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            inputValidator={formValidator.getInput(InputNames.DATE)}
                             id={'firstEnd'}
                             placeholder={'firstEnd'}
                             type={'datetime-local'}
                             name={'firstEnd'}
-                            value={firstEnd}
+                            //@ts-ignore
+                            value={getDate(firstEnd)}
                             setValue={setFirstEnd}
                         />
                     </div>
@@ -192,12 +233,13 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor={'secondEnd'} className={cl.label}>Доп. дата:</label>
                         <Input
-                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            inputValidator={formValidator.getInput(InputNames.DATE)}
                             id={'secondEnd'}
                             placeholder={'secondEnd'}
                             type={'datetime-local'}
                             name={'secondEnd'}
-                            value={secondEnd}
+                            //@ts-ignore
+                            value={getDate(secondEnd)}
                             setValue={setSecondEnd}
                         />
                     </div>
@@ -207,15 +249,11 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                         <div className={cl.inputWrap}>
                             <label htmlFor="employee" className={cl.label}>Сотрудник:</label>
                             <DropDownMenu
-                                title={"Сотрудник"}
-                                setDropMenuItem={setEmpl}
-                                viewMode={'right'}
-                                dropMenuItem={empl}
-                                menuType={"employees"}
-                                menuItems={employees}
-                                indexOfMenu={'1'}
-                                setIndexOfOpenMenu={setIndexOfOpenMenu}
-                                indexOfOpenMenu={indexOfOpenMenu}
+                                setSelectItem={setEmpl}
+                                selectItem={empl}
+                                items={employees}
+                                position={'bottom'}
+                                type={'employees'}
                             />
                         </div>
                     </div>

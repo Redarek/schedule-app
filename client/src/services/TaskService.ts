@@ -19,7 +19,7 @@ export default class TasksService {
         return $api.get<ITask>(`/task/${taskId}`)
     }
 
-    static async editTask(taskId: string, task: ITask): Promise<AxiosResponse<ITask>> {
+    static async editTask(taskId: string, task: ITasks): Promise<AxiosResponse<ITask>> {
         return $api.put<ITask>(`/task/${taskId}`, task)
     }
 

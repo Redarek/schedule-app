@@ -3,12 +3,12 @@ import cl from './TasksListCalendar.module.css'
 import {ITasks} from "../../types/ITasks";
 import TaskCard from "../TaskCard/TaskCard";
 
-interface TasksListCalendarPRops {
+interface TasksListCalendarProps {
     tasks: ITasks[],
     date: Date
 }
 
-const TasksListCalendar: FC<TasksListCalendarPRops> = ({tasks, date}) => {
+const TasksListCalendar: FC<TasksListCalendarProps> = ({tasks, date}) => {
     const [isVisibleTaskCard, setIsVisibleTaskCard] = useState<boolean>(false)
     const [task, setTask] = useState<ITasks>({} as ITasks)
 

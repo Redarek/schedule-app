@@ -1,8 +1,8 @@
 import React, {FC, useState} from 'react';
-import {ITasks} from "../../../types/ITasks";
+import {ITasks} from "../../../../types/ITasks";
 import cl from "./DayTaskWeek.module.css";
-import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
-import TaskCard from "../../TaskCard/TaskCard";
+import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
+import TaskCard from "../../../TaskCard/TaskCard";
 
 interface DayTaskOnWeekProps {
     task: ITasks,

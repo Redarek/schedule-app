@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from './TaskMonth.module.css'
-import {IDate} from "../../../types/IDate";
-import {ITasks} from "../../../types/ITasks";
-import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
-import TaskCard from "../../TaskCard/TaskCard";
+import {IDate} from "../../../../types/IDate";
+import {ITasks} from "../../../../types/ITasks";
+import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
+import TaskCard from "../../../TaskCard/TaskCard";
 
 interface TaskMonthProps {
     task: ITasks;
@@ -29,18 +29,24 @@ const TaskMonth: FC<TaskMonthProps> = ({task, day, week}) => {
 
     if (taskStart < weekStart) taskStart = weekStart;
     if (taskEnd >= nextWeekStart) {
-        taskWidth = 100 * Math.floor(((nextWeekStart - taskStart) / 1000 / 3600 / 24 * 100) / 100) - 5 + 100;
-        // if (taskWidth < 695) taskWidth = taskWidth
+        // taskWidth = 100 * Math.floor(((nextWeekStart - taskStart) / 1000 / 3600 / 24 * 100) / 100) - 5;
+        taskWidth = 100 * Math.ceil((nextWeekStart - taskStart) / 1000 / 3600 / 24) - 5;
     }
 
+    // console.log((taskEnd - taskStart) / 1000 / 3600 / 24)
+
     if (taskEnd < nextWeekStart) {
-        taskWidth = 100 * Math.floor(((taskEnd - taskStart) / 1000 / 3600 / 24 * 100) / 100) + 95;
+        // taskWidth = 100 * Math.floor(((taskEnd - taskStart) / 1000 / 3600 / 24 * 100) / 100) + 95;
+        taskWidth = 100 * Math.ceil((taskEnd - taskStart) / 1000 / 3600 / 24) - 5;
+        if (task.start.getDate() + 2 === task.firstEnd.getDate() && taskWidth === 195)
+            taskWidth = taskWidth + 100;
+
         if (taskWidth === 0) taskWidth = 95
     }
 
     let minStrLength = 12;
     useEffect(() => {
-        if (window.screen.width < 768 ) minStrLength = 6
+        if (window.screen.width < 768) minStrLength = 6
         if (((taskWidth + 5) / 100) * minStrLength < taskTitle.length) {
             setTaskTitle(taskTitle.substring(0, ((taskWidth + 5) / 100) * minStrLength) + '...')
         }

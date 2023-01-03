@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useState} from 'react';
-import {IDate} from "../../../types/IDate";
+import {IDate} from "../../../../types/IDate";
 import cl from './LongTaskWeek.module.css'
-import {ITasks} from "../../../types/ITasks";
-import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
-import TaskCard from "../../TaskCard/TaskCard";
+import {ITasks} from "../../../../types/ITasks";
+import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
+import TaskCard from "../../../TaskCard/TaskCard";
 
 interface TaskWeekProps {
     days: IDate[];

@@ -13,7 +13,7 @@ import {ITask, ITasks} from "../../types/ITasks";
 
 interface TaskState {
     tasks: ITasks[];
-    task: ITask;
+    task: ITasks;
     isLoading: boolean;
     isLoadingCreate: boolean;
     isLoadingDelete: boolean;
@@ -23,7 +23,7 @@ interface TaskState {
 
 const initialState: TaskState = {
     tasks: [] as ITasks[],
-    task: {} as ITask,
+    task: {} as ITasks,
     isLoading: false,
     isLoadingCreate: false,
     isLoadingDelete: false,
@@ -42,9 +42,9 @@ const taskSlice = createSlice({
             const date = action.payload
             state.tasks[index] = {
                 ...date,
-                start: new Date(date.start),
-                firstEnd: new Date(date.firstEnd),
-                secondEnd: new Date(date.firstEnd),
+                start: new Date(Number(date.start)),
+                firstEnd: new Date(Number(date.firstEnd)),
+                secondEnd: new Date(Number(date.firstEnd)),
             }
             state.error = ''
             state.isLoadingUpdate = false;
@@ -57,8 +57,14 @@ const taskSlice = createSlice({
             state.isLoadingUpdate = false;
         },
 
-        [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITask>) => {
-            state.task = action.payload
+        [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
+            state.task = {
+                ...action.payload,
+                start: new Date(action.payload.start),
+                firstEnd: new Date(action.payload.firstEnd),
+                secondEnd: new Date(action.payload.firstEnd),
+            }
+            // state.task = action.payload
             state.error = ''
             state.isLoading = false;
         },

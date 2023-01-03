@@ -5,8 +5,8 @@ import cl from "../styles/RegistrationForm.module.css";
 import cx from "classnames";
 import {useNavigate} from "react-router-dom";
 import Input from "./UI/Input/Input";
-import {FormValidator} from "../utils/FormValidator";
-import {InputNames} from "../utils/InputValidator";
+import {FormValidator} from "../models/FormValidator";
+import {InputNames} from "../models/InputValidator";
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>("");

@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useMemo, useState} from 'react';
 import cl from './Input.module.css'
 import {useDebounce} from "../../../hooks/useDebounce";
-import {FormValidator} from "../../../utils/FormValidator";
-import {InputValidator} from "../../../utils/InputValidator";
+import {FormValidator} from "../../../models/FormValidator";
+import {InputValidator} from "../../../models/InputValidator";
 
 
 interface InputProps {

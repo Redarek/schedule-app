@@ -11,12 +11,12 @@ import {
     initialDate, weeks
 } from "../utils";
 
-import {IDate} from "../../../types/IDate";
+import {IDate} from "../../../../types/IDate";
 import TaskMonth from "./TaskMonth";
-import {ITasks} from "../../../types/ITasks";
-import Button from "../../UI/Button/Button";
-import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
-import TasksListCalendar from "../../tasksListCalendar/TasksListCalendar";
+import {ITasks} from "../../../../types/ITasks";
+import Button from "../../../UI/Button/Button";
+import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
+import TasksListCalendar from "../../../tasksListCalendar/TasksListCalendar";
 
 interface MonthProps {
     tasks: ITasks[]
@@ -114,8 +114,8 @@ const Month: FC<MonthProps> = ({tasks}) => {
         for (let i = 0; i < 6; i++) {
             if (date.date.getTime() >= weeksArr[i].startTime.getTime()
                 && date.date.getTime() <= weeksArr[i].endTime.getTime()
-                && date.date.getMonth() >= weeksArr[i].startTime.getMonth()
-                && date.date.getMonth() <= weeksArr[i].endTime.getMonth()
+                // && date.date.getMonth() >= weeksArr[i].startTime.getMonth()
+                // && date.date.getMonth() <= weeksArr[i].endTime.getMonth()
             ) {
                 return weeksArr[i];
             }

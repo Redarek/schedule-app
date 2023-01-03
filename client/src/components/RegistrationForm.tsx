@@ -4,11 +4,11 @@ import cx from "classnames";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import Input from "./UI/Input/Input";
-import DropDownMenuV2 from "./UI/DropDownMenu/DropDownMenuV2";
+import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import {Specialities} from "../types/Specialities";
 import {registration} from "../store/reducers/ActionCreators";
-import {FormValidator} from "../utils/FormValidator";
-import {InputNames} from "../utils/InputValidator";
+import {FormValidator} from "../models/FormValidator";
+import {InputNames} from "../models/InputValidator";
 
 
 const RegistrationForm: FC = () => {
@@ -72,7 +72,7 @@ const RegistrationForm: FC = () => {
                     setValue={setName}
                     // onChange={(e: any) => setName(e.target.value)}
                 />
-                <DropDownMenuV2
+                <DropDownMenu
                     type={"string"}
                     position={"bottom"}
                     selectItem={spec}

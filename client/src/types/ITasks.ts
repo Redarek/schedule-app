@@ -7,10 +7,11 @@ export interface ITask {
     firstReward: string;
     secondReward: string;
     penalty: string;
-    start: string;
-    firstEnd: string;
-    secondEnd: string;
+    start: number;
+    firstEnd: number;
+    secondEnd: number;
 }
+
 
 export interface ITasks {
     _id: string

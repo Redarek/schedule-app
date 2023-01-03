@@ -9,14 +9,14 @@ import {
     getNumberOfTheDayOfTheMonth,
     initialDate
 } from "../utils";
-import {IDate} from "../../../types/IDate";
-import {ITasks} from "../../../types/ITasks";
+import {IDate} from "../../../../types/IDate";
+import {ITasks} from "../../../../types/ITasks";
 import LongTaskWeek from "./LongTaskWeek";
 import DayTaskWeek from "./DayTaskWeek";
-import Button from "../../UI/Button/Button";
-import ModalFullScreen from "../../UI/ModalFullScreen/ModalFullScreen";
-import TaskCard from "../../TaskCard/TaskCard";
-import TasksListCalendar from "../../tasksListCalendar/TasksListCalendar";
+import Button from "../../../UI/Button/Button";
+import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
+import TaskCard from "../../../TaskCard/TaskCard";
+import TasksListCalendar from "../../../tasksListCalendar/TasksListCalendar";
 
 interface IHour {
     time: number;

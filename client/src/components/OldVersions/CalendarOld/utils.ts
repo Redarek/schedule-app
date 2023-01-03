@@ -1,5 +1,5 @@
-import {IDate} from "../../types/IDate";
-import {ITasks} from "../../types/ITasks";
+import {IDate} from "../../../types/IDate";
+import {ITasks} from "../../../types/ITasks";
 
 export const initialDate = new Date();
 export const dayName = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
@@ -52,6 +52,8 @@ export const checkIndex = (index: number) => {
         return true
     } else return false
 }
+
+
 
 export const weeks = (datesInTheMonth: IDate[]) => {
     return [

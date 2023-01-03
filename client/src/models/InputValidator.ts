@@ -9,7 +9,8 @@ enum Errors {
 export enum InputNames {
     EMAIL = 'email',
     PASSWORD = 'password',
-    NAME = 'name'
+    NAME = 'name',
+    DATE = 'date'
 }
 
 interface ErrorsStatus {
@@ -122,6 +123,8 @@ export class InputValidator {
             case InputNames.NAME:
                 this.checkMinLength(inputValue, 3);
                 break;
+            case InputNames.DATE:
+                break
             default:
                 break;
         }
@@ -146,7 +149,7 @@ export class InputValidator {
         return this.inputError;
     }
 
-    public getInputName():InputNames {
+    public getInputName(): InputNames {
         return this.inputName
     }
 }

@@ -8,10 +8,10 @@ import {updateEmployee} from "../store/reducers/ActionCreators";
 import {editUser} from "../store/reducers/authSlice";
 import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
-import DropDownMenuV2 from "./UI/DropDownMenu/DropDownMenuV2";
+import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import {Specialities} from "../types/Specialities";
-import {FormValidator} from "../utils/FormValidator";
-import {InputNames} from "../utils/InputValidator";
+import {FormValidator} from "../models/FormValidator";
+import {InputNames} from "../models/InputValidator";
 
 interface EmployeeCardProps {
     employee: IUser
@@ -140,8 +140,8 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         </div>
                         <div className={cl.infoText}>
                             <div className={cl.input}>
-                                <DropDownMenuV2 type={"string"} position={viewMode} selectItem={spec}
-                                                setSelectItem={setSpec} items={Object.values(Specialities)}/>
+                                <DropDownMenu type={"string"} position={viewMode} selectItem={spec}
+                                              setSelectItem={setSpec} items={Object.values(Specialities)}/>
                             </div>
                         </div>
                     </div>
