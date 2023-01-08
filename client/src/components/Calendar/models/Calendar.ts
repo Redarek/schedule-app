@@ -1,11 +1,12 @@
 import {Month} from "./Month";
 import {ITasks} from "../../../types/ITasks";
+import {Week} from "./Week";
 
 export enum CalendarModes {
     MONTH = "Месяц",
     WEEK = "Неделя",
 }
-
+//
 export enum Months {
     JANUARY = 'Январь',
     FEBRUARY = 'Февраль',
@@ -41,40 +42,28 @@ export enum WeekDays {
     SA = "СБ",
 }
 
+export interface IDay {
+    date: Date,
+    weekStart: Date,
+    weekEnd: Date,
+    tasks: ITasks[],
+}
+
 export class Calendar {
     private mode: CalendarModes;
-    private modeIndex: 0 | 1 | 2;
-    private firstDay: WeekDays.MON | WeekDays.SU
+    protected firstDay: WeekDays.MON | WeekDays.SU
     private indexOfFirstDay: 0 | 1
-    private month: Month;
+    protected month: Month;
+    protected week: Week;
 
 
-    constructor(firstDay: WeekDays.MON | WeekDays.SU, tasks: ITasks[]) {
-        this.mode = CalendarModes.MONTH;
-        this.modeIndex = 0;
+    constructor(mode: CalendarModes, firstDay: WeekDays.MON | WeekDays.SU, tasks: ITasks[]) {
+        this.mode = mode;
+        // this.modeIndex = 0;
         this.firstDay = firstDay;
         firstDay === WeekDays.MON ? this.indexOfFirstDay = 1 : this.indexOfFirstDay = 0;
         this.month = new Month(this.firstDay, tasks);
-    }
-
-    public setMode(mode: CalendarModes) {
-        this.mode = mode
-        switch (mode) {
-            case CalendarModes.MONTH:
-                this.modeIndex = 0;
-                break;
-            case CalendarModes.WEEK:
-                this.modeIndex = 1;
-                break;
-        }
-    }
-
-    public getMode(): CalendarModes {
-        return this.mode;
-    }
-
-    public getModeIndex(): number {
-        return this.modeIndex;
+        this.week = new Week(this.firstDay, tasks)
     }
 
     public getFirstDay(): WeekDays.MON | WeekDays.SU {
@@ -91,6 +80,10 @@ export class Calendar {
 
     public getMonth(): Month {
         return this.month
+    }
+
+    public getWeek(): Week {
+        return this.week
     }
 }
 

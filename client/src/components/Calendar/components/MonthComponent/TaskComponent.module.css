@@ -2,6 +2,7 @@
     cursor: pointer;
     position: relative;
     min-width: 90%;
+    color: black;
 }
 
 .task:hover {

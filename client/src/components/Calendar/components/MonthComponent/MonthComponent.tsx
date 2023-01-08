@@ -10,7 +10,7 @@ import {ITasks} from "../../../../types/ITasks";
 import TaskCard from "../../../TaskCard/TaskCard";
 
 interface MonthComponentProps {
-    calendarLocation: WeekDays.SU | WeekDays.MON,
+    firstDay: WeekDays.SU | WeekDays.MON,
     weekDays: WeekDays[],
     month: Month,
 }
@@ -22,13 +22,13 @@ interface TasksListData {
 }
 
 
-const MonthComponent: FC<MonthComponentProps> = ({calendarLocation, weekDays, month}) => {
+const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) => {
     const [monthDays, setMonthDays] = useState(month.getDaysInMonth())
     const [monthName, setMonthName] = useState(month.getMonthName())
 
     useEffect(() => {
         setMonthDays(month.getDaysInMonth())
-    }, [calendarLocation, month.getDaysInMonth()])
+    }, [firstDay, month.getDaysInMonth()])
 
 
     const handleChangeMonth = (param: "next" | 'prev' | 'today') => {
@@ -57,8 +57,8 @@ const MonthComponent: FC<MonthComponentProps> = ({calendarLocation, weekDays, mo
 
 
     return (
-        <div>
-            <div className={cl.calendarMenu}>
+        <div className={cl.month}>
+            <div className={cl.monthMenu}>
                 <div className={cl.btn}>
                     <Button onClick={() => handleChangeMonth('prev')}>Предыдущий</Button>
                 </div>
@@ -70,7 +70,7 @@ const MonthComponent: FC<MonthComponentProps> = ({calendarLocation, weekDays, mo
                 <div className={cl.btn}><Button onClick={() => handleChangeMonth('next')}>Следующий</Button>
                 </div>
             </div>
-            <div className={cl.calendarHeader}>
+            <div className={cl.monthHeader}>
                 {weekDays.map(obj =>
                     <div className={cl.weekDay} key={obj}>{obj}</div>
                 )}
@@ -89,9 +89,11 @@ const MonthComponent: FC<MonthComponentProps> = ({calendarLocation, weekDays, mo
                                     {index - 3 < 0
                                         ? (task.start.getDate() !== day.date.getDate()) && (day.date.getDay() !== indexOfFirstDay)
                                             ? <div className={cl.emptyDiv}></div>
-                                            : <TaskComponent day={day} task={task} month={month}
+                                            : <TaskComponent day={day} task={task} indexOfFirstDay={month.getIndexOfFirstDay()}
                                                              setSelectTask={setSelectTask}
-                                                             setTaskInfoIsVisible={setTaskInfoIsVisible}/>
+                                                             setTaskInfoIsVisible={setTaskInfoIsVisible}
+                                                             type={'month'}
+                                            />
                                         : ''
                                     }
                                 </Fragment>

@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react';
 import cl from './DropDownMenu.module.css'
+import {CalendarModes} from "../../Calendar/models/Calendar";
 
 interface DropDownMenuProps {
     type: "employees" | "string";
@@ -27,6 +28,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({selectItem, items, setSelectItem, 
             for (let i = 0; i < items.length; i++) {
                 itms.push(items[i].name)
             }
+            break;
     }
     return (
         <div className={cl.container}>
@@ -36,7 +38,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({selectItem, items, setSelectItem, 
             {visible
                 ? <div className={cl.items} style={itemsStyles}>
                     {itms.map(item =>
-                        <div className={cl.item} key={item} onClick={(e) => {
+                        <div className={cl.item} key={item} onClick={() => {
                             setSelectItem(item);
                             setVisible(false)
                         }}>{item}</div>

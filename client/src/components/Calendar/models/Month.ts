@@ -1,17 +1,11 @@
-import {Months, WeekDays} from "./Calendar";
+import {IDay, Months, WeekDays} from "./Calendar";
 import {ITasks} from "../../../types/ITasks";
 
-export interface Day {
-    date: Date,
-    weekStart: Date,
-    weekEnd: Date,
-    tasks: ITasks[],
-}
 
 export class Month {
     private currentMonth: number;
     private currentYear: number;
-    private daysInMonth: Day[];
+    private daysInMonth: IDay[];
     private firstDayInMonth: Date;
     private lastDayInMonth: Date;
     private lastDayOfPreviousMonth: Date;
@@ -40,23 +34,30 @@ export class Month {
         this.daysInCurrentMonth()
         this.daysInNextMonth()
         this.addWeeks()
+
         this.addTasks()
     }
 
     private addTasks() {
         for (let i = 0; i < this.tasks.length; i++) {
             for (let j = 0; j < this.daysInMonth.length; j++) {
-                if (
-                    this.tasks[i].start.getTime() - this.daysInMonth[j].date.getTime() > 0
-                    && this.tasks[i].start.getTime() - this.daysInMonth[j].date.getTime() < 86400000
-                ) {
-                    for (let k = j; k < this.daysInMonth.length; k++) {
-                        if (
-                            this.tasks[i].firstEnd.getTime() - this.daysInMonth[k].date.getTime() > 0
-                        ) {
-                            this.daysInMonth[k].tasks.push(this.tasks[i])
-                        }
-                    }
+                // if (
+                //     this.tasks[i].start.getTime() - this.daysInMonth[j].date.getTime() > 0
+                //     && this.tasks[i].start.getTime() - this.daysInMonth[j].date.getTime() < 86400000
+                // ) {
+                //     for (let k = j; k < this.daysInMonth.length; k++) {
+                //         if (
+                //             this.tasks[i].firstEnd.getTime() - this.daysInMonth[k].date.getTime() > 0
+                //         ) {
+                //             this.daysInMonth[k].tasks.push(this.tasks[i])
+                //         }
+                //     }
+                // }
+
+                if (this.tasks[i].firstEnd.getTime() - this.daysInMonth[j].date.getTime() > 0
+                    && this.daysInMonth[j].date.getTime() >= this.tasks[i].start.getTime() - 86400000) {
+                    if (!this.daysInMonth[j].tasks.includes(this.tasks[i]))
+                        this.daysInMonth[j].tasks.push(this.tasks[i])
                 }
             }
         }

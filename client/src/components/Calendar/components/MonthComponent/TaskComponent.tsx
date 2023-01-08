@@ -1,27 +1,35 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from "./TaskComponent.module.css";
-import {Day, Month} from "../../models/Month";
 import {ITasks} from "../../../../types/ITasks";
+import {IDay} from "../../models/Calendar";
 
 
 interface TaskComponentProps {
-    day: Day
+    day: IDay
     task: ITasks,
-    month: Month,
+    indexOfFirstDay: number,
     setSelectTask: (task: ITasks) => void;
-    setTaskInfoIsVisible: (bool: boolean) => void
+    setTaskInfoIsVisible: (bool: boolean) => void;
+    type: 'month' | 'week'
 }
 
-const TaskComponent: FC<TaskComponentProps> = ({day, task, month, setSelectTask, setTaskInfoIsVisible}) => {
+const TaskComponent: FC<TaskComponentProps> = ({
+                                                   type,
+                                                   day,
+                                                   task,
+                                                   indexOfFirstDay,
+                                                   setSelectTask,
+                                                   setTaskInfoIsVisible
+                                               }) => {
 
-    const index = month.getIndexOfFirstDay()
+    const index = indexOfFirstDay
     let width = 100
-
     if (task.firstEnd.getTime() <= day.weekEnd.getTime()) {    //Если заканчивается на этой неделе
         if (task.start.getTime() >= day.weekStart.getTime()) { // Если начинается на этой неделе
             width = (task.firstEnd.getDay() - task.start.getDay() + 1) * 100
         } else {    // Если начинается не на этой неделе
             width = task.firstEnd.getDay() * 100
+            if (task.firstEnd.getDay() === 0 && index === 1) width = 700
             if (index === 0) width += 100
         }
     } else {  //Если заканчивается не на этой неделе
