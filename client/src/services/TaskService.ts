@@ -19,13 +19,14 @@ export default class TasksService {
         return $api.get<ITask>(`/task/${taskId}`)
     }
 
-    static async editTask(taskId: string, task: ITasks): Promise<AxiosResponse<ITask>> {
+    static async editTask(taskId: string, task: ITask): Promise<AxiosResponse<ITask>> {
         return $api.put<ITask>(`/task/${taskId}`, task)
     }
 
     static async deleteTask(taskId: string): Promise<AxiosResponse<string>> {
         return $api.delete<string>(`/task/${taskId}`)
     }
+
     static async completeTask(taskId: string): Promise<AxiosResponse<string>> {
         return $api.put<string>(`/complete-task/${taskId}`)
     }

@@ -1,31 +1,52 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import cl from './Navbar.module.css'
 import NavList from "../NavList/NavList";
 import {IList} from "../../types/INavbar";
 import {useAppSelector} from "../../hooks/redux";
+import {Roles} from "../../types/Roles";
 
 
 interface NavbarProps {
 }
 
+interface EmployeesItems {
+    link: string;
+    title: string
+}
 
 const Navbar: FC<NavbarProps> = () => {
     const {employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const {user} = useAppSelector(state => state.authSlice.user)
-    const employeesItems: any = []
-    useEffect(() => {
-        if (employees.length === 0) {
+    // const [employeesItems, setEmployeesItems] = useState<EmployeesItems[]>([])
+    let employeesItems: EmployeesItems[] = []
+    // useEffect(() => {
+    //     console.log(employees)
+    // if (employees.length !== 0) {
+    //     for (let i = 0; i < employees.length; i++) {
+    // setEmployeesItems([...employeesItems, {
+    //     link: `/employee-page/${employees[i].latinName}`,
+    //     title: `${employees[i].name}`
+    // }])
+
+    // employeesItems.push({link: `/employee-page/${employees[i].latinName}`, title: `${employees[i].name}`})
+    // }
+    // }
+    // }, [employees])
+
+    if (employees.length !== 0) {
+        //Если есть роль User показываем только его страницу//
+        if (user.roles.includes(Roles.USER)) {
+            employeesItems = [{link: `/employee-page/${user.latinName}`, title: `${user.name}`}]
+        }
+
+        if (user.roles.includes(Roles.ADMIN)) {
+            employeesItems = []
             for (let i = 0; i < employees.length; i++) {
                 employeesItems.push({link: `/employee-page/${employees[i].latinName}`, title: `${employees[i].name}`})
             }
         }
-    }, [employees])
-
-    if (employees.length !== 0) {
-        for (let i = 0; i < employees.length; i++) {
-            employeesItems.push({link: `/employee-page/${employees[i].latinName}`, title: `${employees[i].name}`})
-        }
     }
+
 
     const lists: IList[] = [
         {
@@ -33,10 +54,13 @@ const Navbar: FC<NavbarProps> = () => {
             items: employeesItems
         },
     ]
-    if (user.roles.findIndex((role) => role === "admin") !== -1) {
+    if (user.roles.includes(Roles.ADMIN) || user.roles.includes(Roles.SUPER_ADMIN)) {
         lists.push({
-            listTitle: 'Админ',
-            items: [{link: `/admin/${user.latinName}`, title: 'Настройка ролей'}],
+            listTitle: 'Администратор',
+            items: [
+                {link: `/admin/${user.latinName}`, title: 'Администратор'},
+                {link: `/admin/${user.latinName}/roles`, title: 'Настройка ролей'}
+            ],
         })
     }
 

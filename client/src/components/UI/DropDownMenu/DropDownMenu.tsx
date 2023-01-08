@@ -1,6 +1,5 @@
 import React, {FC, useState} from 'react';
 import cl from './DropDownMenu.module.css'
-import {CalendarModes} from "../../Calendar/models/Calendar";
 
 interface DropDownMenuProps {
     type: "employees" | "string";
@@ -45,7 +44,6 @@ const DropDownMenu: FC<DropDownMenuProps> = ({selectItem, items, setSelectItem, 
                     )}
                 </div>
                 : ''
-
             }
         </div>
     );

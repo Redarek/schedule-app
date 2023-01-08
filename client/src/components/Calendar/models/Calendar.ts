@@ -6,7 +6,7 @@ export enum CalendarModes {
     MONTH = "Месяц",
     WEEK = "Неделя",
 }
-//
+
 export enum Months {
     JANUARY = 'Январь',
     FEBRUARY = 'Февраль',

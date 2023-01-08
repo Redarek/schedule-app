@@ -3,10 +3,11 @@ import cl from '../styles/EmployeePage.module.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import CalendarComponent from "../components/Calendar/components/CalendarComponent/CalendarComponent";
 import EmployeeCard from "../components/EmployeeCard";
-import {fetchBonuses, fetchEmployeeTasks} from "../store/reducers/ActionCreators";
+import {fetchBonuses, fetchEmployeeTasks, fetchWeekBonuses} from "../store/reducers/ActionCreators";
 import {useParams} from "react-router-dom";
 import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
 import {changeEmployee} from "../store/reducers/EmployeeSlice";
+import {Roles} from "../types/Roles";
 
 const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
@@ -14,6 +15,7 @@ const EmployeePage: FC = () => {
 
     const [userCardIsShow, setUserCardIsShow] = useState<boolean>(true)
     const {employee, employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
+    const {user} = useAppSelector(state => state.authSlice.user)
     const {tasks, isLoadingCreate, isLoadingDelete, isLoadingUpdate} = useAppSelector(state => state.taskSlice)
 
 
@@ -27,24 +29,30 @@ const EmployeePage: FC = () => {
     useEffect(() => {
         if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
         if (employee._id) dispatch(fetchBonuses(employee._id))
-        // if (employee._id) dispatch(fetchWeekBonuses(employee._id))
+        if (employee._id) dispatch(fetchWeekBonuses(employee._id))
     }, [employee, isLoadingCreate, isLoadingDelete, isLoadingUpdate])
-
 
     return (
         <div className={cl.wrapper}>
-            {!isLoading
-                ? <div className={cl.wrapper}>
-                    <div className={cl.chooseMenu}>
-                        <div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>Скрыть</div>
+            {!user.roles.includes(Roles.ADMIN) && latinName !== user.latinName
+                ? 'Вы не можете просмотреть этот профиль'
+                : !isLoading
+                    ? <div className={cl.wrapper}>
+                        <div className={cl.chooseMenu}>
+                            <div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>Скрыть
+                            </div>
+                        </div>
+                        {!userCardIsShow
+                            ? ''
+                            : <EmployeeCard employee={employee}/>
+                        }
+                        {user.roles && user.roles.includes(Roles.CALENDAR)
+                            ? <CalendarComponent tasks={tasks}/>
+                            : 'Для доступа к задачам обратитесь к администратору'
+
+                        }
                     </div>
-                    {!userCardIsShow
-                        ? ''
-                        : <EmployeeCard employee={employee}/>
-                    }
-                    <CalendarComponent tasks={tasks}/>
-                </div>
-                : "Загрузка страницы сотрудника"
+                    : "Загрузка страницы сотрудника"
             }
         </div>
     );

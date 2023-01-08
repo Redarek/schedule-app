@@ -32,8 +32,9 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
                 {task.complete && task.firstEnd < date
                     ? <div style={{marginLeft: 'auto'}}></div>
                     :
-                <div className={cl.btn}>
-                        <div className={cl.completeBtn} onClick={() => handleCompleteTask()}><span></span><span></span></div>
+                    <div className={cl.btn}>
+                        <div className={cl.completeBtn} onClick={() => handleCompleteTask()}><span></span><span></span>
+                        </div>
                     </div>
 
                 }
@@ -41,8 +42,8 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
                 {/*    ? ''*/}
                 {/*    : */}
                 <div className={cl.btn} onClick={() => navigate(`/task-edit/${task._id}`)}>
-                        <img src='/images/editIcon.png' alt="edit"/>
-                    </div>
+                    <img src='/images/editIcon.png' alt="edit"/>
+                </div>
                 {/*}*/}
                 <div className={cl.btn} onClick={() => handleDelete()}><img src='/images/binIcon.png' alt="bin"/></div>
             </div>

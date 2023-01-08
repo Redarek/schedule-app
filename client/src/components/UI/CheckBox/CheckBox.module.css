@@ -6,5 +6,17 @@
 label {
     display: flex;
     justify-content: left;
+    align-items: center;
+    /*justify-content: center;*/
     width: 100%;
+}
+
+.checkBox {
+
+}
+
+.box {
+    height: 10px;
+    width: 10px;
+    border: 1px solid black;
 }

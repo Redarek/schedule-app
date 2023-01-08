@@ -6,7 +6,7 @@ import {AuthResponse} from "../../types/AuthResponse";
 import {IUser} from "../../types/IUser";
 import TasksService from "../../services/TaskService";
 import UserService from "../../services/UserService";
-import {ITask, ITasks} from "../../types/ITasks";
+import {ITask} from "../../types/ITasks";
 import BonusService from "../../services/BonusService";
 
 interface LoginObject {
@@ -167,9 +167,9 @@ export const fetchTaskById = createAsyncThunk(
     }
 )
 
-interface EditedTask {
+export interface EditedTask {
     id: string;
-    task: ITasks;
+    task: ITask;
 }
 
 export const editTask = createAsyncThunk(

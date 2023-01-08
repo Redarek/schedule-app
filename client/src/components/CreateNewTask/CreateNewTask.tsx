@@ -1,13 +1,14 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {createTask} from "../../store/reducers/ActionCreators";
+import {createTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import {Specialities} from "../../types/Specialities";
 import {FormValidator} from "../../models/FormValidator";
 import {InputNames} from "../../models/InputValidator";
+import Input from "../UI/Input/Input";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
@@ -46,6 +47,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
         return `${year}-${month}-${date}T${hours}:${minutes}`
     }
 
+    const inputNames = [InputNames.TASK_TITLE]
+    const validator = new FormValidator(inputNames)
+
     const setDate = (index: 0 | 1 | 2, data: string) => {
         const date = new Date(`${data}`)
         if (date.getTime())
@@ -63,37 +67,39 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     }
 
     const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
-    // useEffect(() => {
-    //     if (employees.length === 0) {
-    //         dispatch(fetchEmployees())
-        // }
-    // }, [])
 
     const handleCreate = (e: any) => {
         e.preventDefault()
         if (employeeName === ''
             || spec === ''
-            || title === ''
+            || validator.getFormStatus()
             || text === ''
             || firstReward < 0
             || penalty < 0
             || secondReward < 0
         ) {
-        } else if (start < firstEnd && start < secondEnd && firstEnd < secondEnd && employeeName !== "Сотрудник" && spec !== 'Специальность') {
+        } else if (
+            start < firstEnd
+            && start < secondEnd
+            && firstEnd < secondEnd
+            && employeeName !== "Сотрудник"
+            && spec !== 'Специальность'
+        ) {
             const task: ITask = {
                 _id: '',
                 employee: employeeName,
                 spec: spec,
                 title: title,
                 text: text,
-                firstReward: String(firstReward),
-                secondReward: String(secondReward),
-                penalty: String(penalty),
+                firstReward: firstReward,
+                secondReward: secondReward,
+                penalty: penalty,
                 start: Number(start.getTime()),
                 firstEnd: Number(firstEnd.getTime()),
                 secondEnd: Number(secondEnd.getTime())
             }
             dispatch(createTask(task))
+            setTimeout(()=> {dispatch(fetchEmployeeTasks(employee._id))},700)
             setEmployeeName('')
             setSpec('')
             setTitle('')
@@ -109,13 +115,16 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
         <form className={cl.form}>
             <div className={cl.inputWrap}>
                 <label htmlFor="title">Заголовок: </label>
-                <input id="title"
-                       required
-                       className={cl.input}
+                <Input id="title"
+                    // required
+                       name={InputNames.TASK_TITLE}
+                       inputValidator={validator.getInput(InputNames.TASK_TITLE)}
+                       setValue={setTitle}
+                    // className={cl.input}
                        type="text"
                        placeholder={"Title"}
                        value={title}
-                       onChange={(e: any) => setTitle(e.target.value)}
+                    // onChange={(e: any) => setTitle(e.target.value)}
                 />
             </div>
             <div className={cl.inputWrap}>
@@ -207,7 +216,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
             </div>
 
             <div className={cl.inputWrap}>
-                <Button onClick={(e) => handleCreate(e)}>Создать</Button>
+                <div className={cl.submit}>
+                    <Button onClick={(e) => handleCreate(e)}>Создать</Button>
+                </div>
             </div>
         </form>
     );

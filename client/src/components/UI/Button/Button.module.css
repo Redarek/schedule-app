@@ -15,7 +15,8 @@
     align-items: center;
     justify-content: center;
 }
-.btn:hover{
+
+.btn:hover {
     opacity: .9;
     transition: opacity 0.3s ease-in-out;
 }

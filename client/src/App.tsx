@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Navbar";
 import {CSSTransition} from "react-transition-group";
 import {changeUserId} from "./store/reducers/bonusesSlice";
 import {setNavbarVisible} from "./store/reducers/navbarSlice";
+import {Roles} from "./types/Roles";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
@@ -36,7 +37,7 @@ function App() {
                         ? 'Loader will be soon...'
                         : token
                             ? isAuth
-                                ? user.user.roles[0] === 'guest' || user.user.roles.length === 0
+                                ? user.user.roles.length === 0 || (user.user.roles.includes(Roles.GUEST) && user.user.roles.length === 1)
                                     ? <div className="isAuth">
                                         <Header user={user.user}/>
                                         <AppRouter/>

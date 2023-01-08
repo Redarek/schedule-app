@@ -3,14 +3,15 @@ enum Errors {
     MIN_LENGTH_3_ERROR = 'Минимальная длина 3 символов',
     MAX_LENGTH_50_ERROR = 'Масимальная длина 50 символов',
     EMAIL_DOMAIN_ERROR = 'Пропушены символы @domain.com',
-    INVALID_VALUE_ERROR = 'Недопустимые символы'
+    INVALID_VALUE_ERROR = 'Недопустимые символы',
 }
 
 export enum InputNames {
     EMAIL = 'email',
     PASSWORD = 'password',
     NAME = 'name',
-    DATE = 'date'
+    DATE = 'date',
+    TASK_TITLE = 'taskTitle',
 }
 
 interface ErrorsStatus {
@@ -22,7 +23,7 @@ interface ErrorsStatus {
 }
 
 export class InputValidator {
-    private inputName: InputNames;
+    protected inputName: InputNames;
     private inputStatus: boolean;
     private errorsStatus: ErrorsStatus
     private inputError: string | null;
@@ -124,7 +125,10 @@ export class InputValidator {
                 this.checkMinLength(inputValue, 3);
                 break;
             case InputNames.DATE:
-                break
+                break;
+            case InputNames.TASK_TITLE:
+                this.checkMinLength(inputValue, 3);
+                break;
             default:
                 break;
         }

@@ -18,12 +18,19 @@
     width: 100%;
 }
 
+.input {
+    height: 32px;
+    padding-left: 5px;
+}
+
 .pointsEdit {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-top: 10px;
     max-width: 430px;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .titleEdit {
@@ -35,11 +42,15 @@
 .saveBtn {
     margin-top: auto;
     margin-left: 3%;
+    height: 32px;
+    width: 100px;
 }
 
 .specEdit {
-    width: 400px;
+    /*width: 400px;*/
+    width: 100%;
     padding-top: 10px;
+    max-width: 400px;
 
 }
 
@@ -49,14 +60,16 @@
 }
 
 .employeeEdit {
-    width: 400px;
+    /*width: 400px;*/
+    max-width: 400px;
+    width: 100%;
     padding-top: 10px;
 }
 
 .textEdit {
     padding-top: 10px;
     overflow-x: hidden;
-    min-width: 300px;
+    min-width: 220px;
     overflow-y: auto;
     max-height: 32vh;
 }
@@ -72,5 +85,7 @@
 }
 
 .dateWrap {
-    width: 330px;
+    /*width: 330px;*/
+    width: 100%;
+    max-width: 330px;
 }

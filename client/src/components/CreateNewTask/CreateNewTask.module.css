@@ -29,10 +29,15 @@
     margin: auto auto 0 auto;
     width: 25%;
 }
+
 .textarea {
     width: 100%;
     height: 15vw;
     resize: none;
     padding: 5px;
     border: 1px solid #0078D4;
+}
+
+.submit {
+    height: 32px;
 }

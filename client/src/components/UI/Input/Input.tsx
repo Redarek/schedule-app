@@ -1,7 +1,6 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import cl from './Input.module.css'
 import {useDebounce} from "../../../hooks/useDebounce";
-import {FormValidator} from "../../../models/FormValidator";
 import {InputValidator} from "../../../models/InputValidator";
 
 
@@ -15,7 +14,6 @@ interface InputProps {
     value: any
     setValue: (e: any) => void;
     inputValidator: InputValidator;
-    // setInputValidators: (valid:InputValidator) => void
 }
 
 
@@ -29,7 +27,6 @@ const Input: FC<InputProps> = ({
                                    showBtn,
                                    classes,
                                    inputValidator
-                                   // setInputValidators
                                }) => {
 
     const [width, setWidth] = useState<number>(window.innerWidth);

@@ -4,9 +4,9 @@ export interface ITask {
     spec: string;
     title: string;
     text: string;
-    firstReward: string;
-    secondReward: string;
-    penalty: string;
+    firstReward: number;
+    secondReward: number;
+    penalty: number;
     start: number;
     firstEnd: number;
     secondEnd: number;

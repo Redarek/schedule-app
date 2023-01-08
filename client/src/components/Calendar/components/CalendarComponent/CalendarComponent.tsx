@@ -1,5 +1,4 @@
 import React, {FC, useEffect, useState} from 'react';
-
 import cl from "./CalendarComponent.module.css";
 import DropDownMenu from "../../../UI/DropDownMenu/DropDownMenu";
 import MonthComponent from "../MonthComponent/MonthComponent";
@@ -22,7 +21,7 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
     const [firstDayFull, setFirstDayFull] = useState<WeekDaysFull.MONDAY | WeekDaysFull.SUNDAY>(WeekDaysFull.MONDAY);
     const [firstDay, setFirstDay] = useState<WeekDays.MON | WeekDays.SU>(WeekDays.MON);
 
-    const [calendarMode, setCalendarMode] = useState(Object.values(CalendarModes)[0])
+    const [calendarMode, setCalendarMode] = useState(CalendarModes.MONTH)
 
     const modes = ["Месяц", "Неделя"]
     const firstDays = ['Понедельник', 'Воскресенье']
@@ -35,7 +34,8 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
     }
 
     useEffect(() => {
-        if (tasks.length !== 0) setCalendar(new Calendar(calendarMode, firstDay, tasks))
+        // if (tasks.length !== 0)
+        setCalendar(new Calendar(calendarMode, firstDay, tasks))
 
         if (localStorage.getItem('CalendarMode')
             && calendarMode !== localStorage.getItem('CalendarMode')) {
@@ -65,7 +65,6 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
     }
 
     return (
-
         <div className={cl.wrapper}>
             <div className={cl.calendarMenu}>
                 <div className={cl.calendarModeBtn}>
@@ -73,7 +72,6 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                                   items={modes} type={"string"}
                                   position={"bottom"}/>
                 </div>
-
                 {createTaskWindowIsVisible
                     ? <ModalFullScreen visible={createTaskWindowIsVisible} exitBtn={true}
                                        setVisible={setCreateTaskWindowIsVisible} exitBackground={false}>
@@ -94,7 +92,6 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                 </div>
             </div>
             {calendarModes[Object.values(CalendarModes).findIndex(value => value === calendarMode)]}
-
         </div>
     );
 };

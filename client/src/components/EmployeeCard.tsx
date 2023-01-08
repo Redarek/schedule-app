@@ -22,7 +22,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
     const {updateEmployeeError} = useAppSelector(state => state.employeeSlice)
-    const {isLoading, employeeAllBonuses} = useAppSelector(state => state.bonusesSlice)
+    const {isLoading, employeeAllBonuses, employeeWeekBonuses} = useAppSelector(state => state.bonusesSlice)
 
 
     useEffect(() => {
@@ -151,8 +151,12 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         </div>
                         <div className={cl.infoText}>Имя: <span>{employee.name}</span></div>
                         <div className={cl.infoText}>Специализация: <span>{employee.spec}</span></div>
-                        <div className={cl.infoText}>Все
-                            бонусы:<span>{isLoading ? 'loading' : employeeAllBonuses}</span></div>
+                        <div className={cl.infoText}>
+                            Все бонусы:<span>{isLoading ? 'loading' : employeeAllBonuses}</span>
+                        </div>
+                        <div className={cl.infoText}>
+                            Бонусы за неделю: <span>{employeeWeekBonuses}</span>
+                        </div>
                     </div>
                 }
             </div>

@@ -4,7 +4,7 @@ import {InputNames, InputValidator} from "./InputValidator";
 export class FormValidator {
     formStatus: boolean;
 
-    private inputs: InputValidator[]
+    protected inputs: InputValidator[]
 
 
     constructor(inputs: InputNames[]) {
@@ -30,7 +30,7 @@ export class FormValidator {
         return this.inputs
     }
 
-    public getInput(inputName:InputNames):InputValidator {
+    public getInput(inputName: InputNames): InputValidator {
         let inputs = this.inputs;
         inputs = inputs.filter(input => input.getInputName() === inputName)
         //@ts-ignore

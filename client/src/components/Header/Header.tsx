@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {fetchBonuses, fetchEmployees, fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
+import {fetchEmployees, fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
 import {setNavbarVisible} from "../../store/reducers/navbarSlice";
 import {IUser} from "../../types/IUser";
 import {userBonuses} from "../../store/reducers/authSlice";

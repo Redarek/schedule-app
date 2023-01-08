@@ -16,7 +16,7 @@ const AppRouter: FC = () => {
                         path={route.path}
                     />
                 )
-                : user.user.roles[0] === Roles.GUEST || user.user.roles.length === 0
+                : user.user.roles.length === 0 || (user.user.roles.includes(Roles.GUEST) && user.user.roles.length === 1)
                     ? guestRoutes.map(route =>
                         <Route
                             key={route.path}
@@ -33,7 +33,7 @@ const AppRouter: FC = () => {
                     )
             }
             {isAuth
-                ? user.user.roles.findIndex((role) => role === Roles.ADMIN) !== -1
+                ? user.user.roles.includes(Roles.ADMIN) || user.user.roles.includes(Roles.SUPER_ADMIN)
                     ? privateRoutes.map(route =>
                         <Route
                             key={route.path}
@@ -44,7 +44,7 @@ const AppRouter: FC = () => {
                 : ''
             }
             {isAuth
-                ? user.user.roles[0] === Roles.GUEST || user.user.roles.length === 0
+                ? user.user.roles.length === 0 || (user.user.roles.includes(Roles.GUEST) && user.user.roles.length === 1)
                     ? <Route path="*" element={<Navigate replace to={`/contacts`}/>}/>
                     : <Route path="*" element={<Navigate replace to={`/employee-page/${user.user.latinName}`}/>}/>
 
