@@ -133,7 +133,6 @@ const WeekComponent: FC<WeekComponentProps> = ({weekDayNames, firstDay, week}) =
                                             ? <TaskComponent day={day} task={task} indexOfFirstDay={indexOfFirstDay}
                                                              setSelectTask={setSelectTask}
                                                              setTaskInfoIsVisible={setTaskInfoIsVisible}
-                                                             type={'week'}
                                             />
                                             : <div className={cl.emptyDiv}></div>
                                         : ''

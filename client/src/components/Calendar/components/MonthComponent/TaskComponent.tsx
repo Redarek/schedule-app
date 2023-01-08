@@ -10,11 +10,9 @@ interface TaskComponentProps {
     indexOfFirstDay: number,
     setSelectTask: (task: ITasks) => void;
     setTaskInfoIsVisible: (bool: boolean) => void;
-    type: 'month' | 'week'
 }
 
 const TaskComponent: FC<TaskComponentProps> = ({
-                                                   type,
                                                    day,
                                                    task,
                                                    indexOfFirstDay,

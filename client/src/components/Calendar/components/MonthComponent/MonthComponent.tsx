@@ -89,10 +89,10 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
                                     {index - 3 < 0
                                         ? (task.start.getDate() !== day.date.getDate()) && (day.date.getDay() !== indexOfFirstDay)
                                             ? <div className={cl.emptyDiv}></div>
-                                            : <TaskComponent day={day} task={task} indexOfFirstDay={month.getIndexOfFirstDay()}
+                                            : <TaskComponent day={day} task={task}
+                                                             indexOfFirstDay={month.getIndexOfFirstDay()}
                                                              setSelectTask={setSelectTask}
                                                              setTaskInfoIsVisible={setTaskInfoIsVisible}
-                                                             type={'month'}
                                             />
                                         : ''
                                     }
