@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from "./TaskComponent.module.css";
 import {ITasks} from "../../../../types/ITasks";
-import {IDay} from "../../models/Calendar";
+import {IDay} from "../../models/CalendarTypes";
 
 
 interface TaskComponentProps {

@@ -1,11 +1,11 @@
 import React, {FC, Fragment, useEffect, useState} from 'react';
 import {Month} from "../../models/Month";
-import {WeekDays} from "../../models/Calendar";
+import {WeekDays} from "../../models/CalendarTypes";
 import cl from './MonthComponent.module.css'
 import Button from "../../../UI/Button/Button";
 import TaskComponent from "./TaskComponent";
 import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
-import TasksListCalendar from "../../../tasksListCalendar/TasksListCalendar";
+import TasksListCalendar from "../../../TasksListCalendar/TasksListCalendar";
 import {ITasks} from "../../../../types/ITasks";
 import TaskCard from "../../../TaskCard/TaskCard";
 

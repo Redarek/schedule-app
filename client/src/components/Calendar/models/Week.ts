@@ -1,5 +1,5 @@
 import {ITasks} from "../../../types/ITasks";
-import {IDay, Months, WeekDays} from "./Calendar";
+import {IDay, Months, WeekDays} from "./CalendarTypes";
 
 export class Week {
     private dayMarker: number;

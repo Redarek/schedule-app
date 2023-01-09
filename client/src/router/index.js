@@ -17,8 +17,10 @@ export const privateRoutes = [
 ];
 export const authRoutes = [
     {path: '/employee-page/:latinName', element: <EmployeePage/>, exact: true},
+
     // {path: '/contacts', element: <ContactsPage/>, exact: true},
     {path: '/task-edit/:taskId', element: <TaskEditPage/>, exact: true},
+    {path: '/test', element: <AdminPage/>, exact: true},
 ];
 
 export const guestRoutes = [

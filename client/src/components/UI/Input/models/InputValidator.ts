@@ -1,17 +1,22 @@
-enum Errors {
+enum InputErrors {
     MIN_LENGTH_5_ERROR = 'Минимальная длина 5 символов',
     MIN_LENGTH_3_ERROR = 'Минимальная длина 3 символов',
     MAX_LENGTH_50_ERROR = 'Масимальная длина 50 символов',
     EMAIL_DOMAIN_ERROR = 'Пропушены символы @domain.com',
     INVALID_VALUE_ERROR = 'Недопустимые символы',
+    INVALID_DATE_ERROR = 'Дата не может быть меньше предыдущей',
+    MIN_VALUE = 'Минимум',
 }
 
 export enum InputNames {
     EMAIL = 'email',
     PASSWORD = 'password',
     NAME = 'name',
-    DATE = 'date',
     TASK_TITLE = 'taskTitle',
+    DATE_START = 'dateStart',
+    DATE_FIRST_END = 'dateFirstEnd',
+    DATE_SECOND_END = 'dateSecondEnd',
+    TASK_REWARD = 'taskReward',
 }
 
 interface ErrorsStatus {
@@ -20,16 +25,21 @@ interface ErrorsStatus {
     checkedMinLength3: boolean;
     checkedMinLength5: boolean;
     checkedMaxLength: boolean;
+    checkedDate: boolean;
+    checkedMinimumValue: boolean
 }
 
 export class InputValidator {
     protected inputName: InputNames;
+    private inputValue: string;
     private inputStatus: boolean;
     private errorsStatus: ErrorsStatus
     private inputError: string | null;
+    private minNumberValue: number
 
 
     constructor(inputName: InputNames) {
+        this.inputValue = ''
         this.inputStatus = true;
         this.inputName = inputName;
         this.errorsStatus = {
@@ -38,7 +48,10 @@ export class InputValidator {
             checkedMinLength3: false,
             checkedMinLength5: false,
             checkedMaxLength: false,
+            checkedDate: false,
+            checkedMinimumValue: false,
         }
+        this.minNumberValue = 0;
         this.inputError = null;
     }
 
@@ -90,27 +103,66 @@ export class InputValidator {
         }
     }
 
+    private checkMinValue(str: string) {
+        const value = Number(str)
+        if (value >= this.minNumberValue) {
+            this.errorsStatus.checkedMinimumValue = false
+        } else {
+            this.errorsStatus.checkedMinimumValue = true
+        }
+    }
+
+    private checkPreviousDate(inputValue: string, previousInputValue: string) {
+        const prevDate = new Date(previousInputValue)
+        const inputDate = new Date(inputValue)
+        switch (this.inputName) {
+            case InputNames.DATE_FIRST_END:
+                if (prevDate.getTime() < inputDate.getTime()) {
+                    this.errorsStatus.checkedDate = false;
+                } else {
+                    this.errorsStatus.checkedDate = true;
+                }
+                break;
+            case InputNames.DATE_SECOND_END:
+                if (prevDate.getTime() <= inputDate.getTime()) {
+                    this.errorsStatus.checkedDate = false;
+                } else {
+                    this.errorsStatus.checkedDate = true;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private setInputError() {
         this.inputError = null;
         if (this.errorsStatus.checkedEmailSymbol) {
-            this.inputError = Errors.EMAIL_DOMAIN_ERROR;
+            this.inputError = InputErrors.EMAIL_DOMAIN_ERROR;
         }
         if (this.errorsStatus.checkedMaxLength) {
-            this.inputError = Errors.MAX_LENGTH_50_ERROR
+            this.inputError = InputErrors.MAX_LENGTH_50_ERROR
         }
         if (this.errorsStatus.checkedMinLength3) {
-            this.inputError = Errors.MIN_LENGTH_3_ERROR
+            this.inputError = InputErrors.MIN_LENGTH_3_ERROR
         }
         if (this.errorsStatus.checkedMinLength5) {
-            this.inputError = Errors.MIN_LENGTH_5_ERROR
+            this.inputError = InputErrors.MIN_LENGTH_5_ERROR
         }
         if (this.errorsStatus.checkedSymbols) {
-            this.inputError = Errors.INVALID_VALUE_ERROR
+            this.inputError = InputErrors.INVALID_VALUE_ERROR
+        }
+        if (this.errorsStatus.checkedDate) {
+            this.inputError = InputErrors.INVALID_DATE_ERROR
+        }
+        if (this.errorsStatus.checkedMinimumValue) {
+            this.inputError = InputErrors.MIN_VALUE + ` ${this.minNumberValue}`
         }
 
     }
 
     public checkInput(inputValue: string) {
+        this.inputValue = inputValue
         switch (this.inputName) {
             case InputNames.EMAIL:
                 this.checkMinLength(inputValue, 5);
@@ -124,10 +176,30 @@ export class InputValidator {
             case InputNames.NAME:
                 this.checkMinLength(inputValue, 3);
                 break;
-            case InputNames.DATE:
-                break;
             case InputNames.TASK_TITLE:
                 this.checkMinLength(inputValue, 3);
+                break;
+            case InputNames.TASK_REWARD:
+                this.minNumberValue = 0
+                this.checkMinValue(inputValue)
+                break;
+            default:
+                break;
+        }
+        this.setInputError();
+        this.setInputStatus()
+    }
+
+    public checkDateInput(inputValue: string, previousInputValue: string) {
+        this.inputValue = inputValue;
+        switch (this.inputName) {
+            case InputNames.DATE_START:
+                break;
+            case InputNames.DATE_FIRST_END:
+                this.checkPreviousDate(inputValue, previousInputValue)
+                break;
+            case InputNames.DATE_SECOND_END:
+                this.checkPreviousDate(inputValue, previousInputValue)
                 break;
             default:
                 break;
@@ -143,6 +215,12 @@ export class InputValidator {
             || this.errorsStatus.checkedSymbols
             || this.errorsStatus.checkedMaxLength
             || this.errorsStatus.checkedEmailSymbol
+            || this.errorsStatus.checkedDate
+            || this.errorsStatus.checkedMinimumValue
+    }
+
+    public getInputValue(): string {
+        return this.inputValue;
     }
 
     public getInputStatus(): boolean {

@@ -1,4 +1,4 @@
-import {IDay, Months, WeekDays} from "./Calendar";
+import {IDay, Months, WeekDays} from "./CalendarTypes";
 import {ITasks} from "../../../types/ITasks";
 
 

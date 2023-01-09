@@ -1,6 +1,6 @@
 import React, {FC, Fragment, useEffect, useState} from 'react';
 import cl from './WeekComponent.module.css'
-import {WeekDays} from "../../models/Calendar";
+import {WeekDays} from "../../models/CalendarTypes";
 import {Week} from "../../models/Week";
 import Button from "../../../UI/Button/Button";
 import {ITasks} from "../../../../types/ITasks";

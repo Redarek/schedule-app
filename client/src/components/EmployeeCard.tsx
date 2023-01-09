@@ -10,8 +10,8 @@ import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
 import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import {Specialities} from "../types/Specialities";
-import {FormValidator} from "../models/FormValidator";
-import {InputNames} from "../models/InputValidator";
+import {FormValidator} from "./UI/Input/models/FormValidator";
+import {InputNames} from "./UI/Input/models/InputValidator";
 
 interface EmployeeCardProps {
     employee: IUser
@@ -115,9 +115,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         <div className={cl.infoText}>
                             <div className={cl.input}>
                                 <Input
-                                    inputValidator={formValidator.getInput(InputNames.EMAIL)}
+                                    indexInValidator={0}
+                                    formValidator={formValidator}
                                     id={'email'}
-                                    name={'email'}
+                                    name={InputNames.EMAIL}
                                     placeholder={`${email}`}
                                     value={email}
                                     setValue={setEmail}
@@ -128,9 +129,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         <div className={cl.infoText}>
                             <div className={cl.input}>
                                 <Input
-                                    inputValidator={formValidator.getInput(InputNames.NAME)}
+                                    indexInValidator={1}
+                                    formValidator={formValidator}
                                     id={'name'}
-                                    name={'name'}
+                                    name={InputNames.NAME}
                                     placeholder={`${name}`}
                                     value={name}
                                     setValue={setName}

@@ -5,8 +5,8 @@ import cl from "../styles/RegistrationForm.module.css";
 import cx from "classnames";
 import {useNavigate} from "react-router-dom";
 import Input from "./UI/Input/Input";
-import {FormValidator} from "../models/FormValidator";
-import {InputNames} from "../models/InputValidator";
+import {FormValidator} from "./UI/Input/models/FormValidator";
+import {InputNames} from "./UI/Input/models/InputValidator";
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -19,7 +19,8 @@ const LoginForm: FC = () => {
     const formValidator = new FormValidator(inputs)
 
     const handleLogin = () => {
-        if (!formValidator.getFormStatus()) {
+
+        if (formValidator.getFormStatus()) {
             dispatch(login({email: email, password: password}));
             if (error === '') navigate(`/employee-page`)
         }
@@ -33,10 +34,11 @@ const LoginForm: FC = () => {
                     Email
                 </label>
                 <Input
-                    inputValidator={formValidator.getInput(InputNames.EMAIL)}
+                    formValidator={formValidator}
                     classes={cl.auth__input_email}
                     placeholder="Введите email"
-                    name="email"
+                    name={InputNames.EMAIL}
+                    indexInValidator={0}
                     id="login-email"
                     setValue={setEmail}
                     value={email}
@@ -46,11 +48,12 @@ const LoginForm: FC = () => {
                     Пароль
                 </label>
                 <Input
-                    inputValidator={formValidator.getInput(InputNames.PASSWORD)}
                     classes={cl.auth__input_password}
+                    formValidator={formValidator}
                     placeholder={"Введите пароль"}
                     type={'password'}
-                    name={'password'}
+                    name={InputNames.PASSWORD}
+                    indexInValidator={1}
                     value={password}
                     setValue={setPassword}
                     showBtn={true}

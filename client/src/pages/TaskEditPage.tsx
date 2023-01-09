@@ -5,10 +5,11 @@ import {useNavigate, useParams} from "react-router-dom";
 import {EditedTask, editTask, fetchEmployeeTasks, fetchTaskById} from "../store/reducers/ActionCreators";
 import Input from "../components/UI/Input/Input";
 import Button from "../components/UI/Button/Button";
-import {FormValidator} from "../models/FormValidator";
-import {InputNames} from "../models/InputValidator";
+import {FormValidator} from "../components/UI/Input/models/FormValidator";
+import {InputNames} from "../components/UI/Input/models/InputValidator";
 import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
 import {Specialities} from "../types/Specialities";
+import {getInputDate} from "../components/UI/Input/inputDateFormat";
 
 interface TaskEditPageProps {
 
@@ -34,42 +35,25 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     const [secondReward, setSecondReward] = useState<number>(Number(''))
     const [penalty, setPenalty] = useState<number>(Number(''))
 
-    const [start, setStart] = useState<Date>(new Date())
-    const [firstEnd, setFirstEnd] = useState<Date>(new Date(new Date().getTime() + 1800000))
-    const [secondEnd, setSecondEnd] = useState<Date>(new Date(new Date().getTime() + 3600000))
-
-
-    const setDate = (index: 0 | 1 | 2, data: string) => {
+    const [start, setStart] = useState<string>(getInputDate(new Date()))
+    const setStartDate = (data: string) => {
         const date = new Date(`${data}`)
         if (date.getTime())
-            switch (index) {
-                case 0:
-                    setStart(date)
-                    break;
-                case 1:
-                    setFirstEnd(date)
-                    break;
-                case 2:
-                    setSecondEnd(date)
-                    break;
-            }
+            setStart(getInputDate(date))
     }
 
-    const getDate = (data: Date) => {
-        let date = `${data.getDate()}`
-        let month = `${data.getMonth() + 1}`;
-        let year = `${data.getFullYear()}`;
-        let hours = `${data.getHours()}`;
-        let minutes = `${data.getMinutes()}`;
-        if (month.length === 1) month = `0${month}`
-        if (date.length === 1) date = `0${date}`
-        if (hours.length === 1) hours = `0${hours}`
-        if (minutes.length === 1) minutes = `0${minutes}`
-        if (year.length === 1) year = `000${year}`
-        if (year.length === 2) year = `00${year}`
-        if (year.length === 3) year = `0${year}`
-        return `${year}-${month}-${date}T${hours}:${minutes}`
+    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 1800000)))
+    const setFirstEndDate = (data: string) => {
+        const date = new Date(`${data}`)
+        setFirstEnd(getInputDate(date))
     }
+
+    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 3600000)))
+    const setSecondEndDate = (data: string) => {
+        const date = new Date(`${data}`)
+        setSecondEnd(getInputDate(date))
+    }
+
 
     useEffect(() => {
         if (task._id) {
@@ -80,9 +64,9 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
             setFirstReward(Number(task.firstReward))
             setSecondReward(Number(task.secondReward))
             setPenalty(Number(task.penalty))
-            setStart(task.start)
-            setFirstEnd(task.firstEnd)
-            setSecondEnd(task.secondEnd)
+            setStart(getInputDate(task.start))
+            setFirstEnd(getInputDate(task.firstEnd))
+            setSecondEnd(getInputDate(task.secondEnd))
         }
     }, [isLoading])
 
@@ -101,6 +85,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
             const updateTask: EditedTask = {
                 id: taskId,
                 task: {
+                    _id: taskId,
                     title: title,
                     text: text,
                     spec: spec,
@@ -108,10 +93,9 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     firstReward: firstReward,
                     secondReward: secondReward,
                     penalty: penalty,
-                    start: start.getTime(),
-                    firstEnd: firstEnd.getTime(),
-                    secondEnd: secondEnd.getTime(),
-                    _id: taskId
+                    start: Number(new Date(start).getTime()),
+                    firstEnd: Number(new Date(firstEnd).getTime()),
+                    secondEnd: Number(new Date(secondEnd).getTime())
                 }
             }
             dispatch(editTask(updateTask))
@@ -128,9 +112,16 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     }
 
 
-    //@todo Сделать обработку инпутов
-    const inputs = [InputNames.NAME]
-    const formValidator = new FormValidator(inputs)
+    const inputNames = [
+        InputNames.TASK_TITLE,
+        InputNames.TASK_REWARD,
+        InputNames.TASK_REWARD,
+        InputNames.TASK_REWARD,
+        InputNames.DATE_START,
+        InputNames.DATE_FIRST_END,
+        InputNames.DATE_SECOND_END,
+    ]
+    const formValidator = new FormValidator(inputNames)
 
     return (
         <div className={cl.wrapper}>
@@ -139,10 +130,11 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     <div className={cl.inputWrap}>
                         <label htmlFor="title" className={cl.label}>Заголовок:</label>
                         <Input
-                            inputValidator={formValidator.getInput(InputNames.NAME)}
+                            formValidator={formValidator}
+                            indexInValidator={0}
                             type="text"
                             value={title}
-                            name={title}
+                            name={InputNames.TASK_TITLE}
                             id={"title"}
                             setValue={setTitle}
                             placeholder={"title"}
@@ -166,54 +158,59 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 <div className={cl.pointsEdit}>
                     <div className={cl.inputWrap}>
                         <label htmlFor="first-reward" className={cl.label}>Первая награда:</label>
-                        <input
+                        <Input
+                            formValidator={formValidator}
                             id={'first-reward'}
                             placeholder={'0'}
-                            className={cl.input}
                             type='number'
                             min={0}
-                            name={'first-reward'}
+                            name={InputNames.TASK_REWARD}
+                            setValue={setFirstReward}
+                            indexInValidator={1}
                             value={firstReward}
-                            onChange={(e: any) => setFirstReward(e.target.value)}
                         />
                     </div>
                     <div className={cl.inputWrap}>
                         <label htmlFor="second-reward" className={cl.label}>Вторая награда:</label>
-                        <input
+                        <Input
                             id={'second-reward'}
                             placeholder={'0'}
-                            className={cl.input}
+                            formValidator={formValidator}
+                            indexInValidator={2}
                             type={'number'}
                             min={0}
-                            name={'second-reward'}
+                            name={InputNames.TASK_REWARD}
                             value={secondReward}
-                            onChange={(e: any) => setSecondReward(e.target.value)}
+                            setValue={setSecondReward}
                         />
                     </div>
                     <div className={cl.inputWrap}>
                         <label htmlFor="penalty" className={cl.label}>Штраф:</label>
-
-                        <input
+                        <Input
+                            name={InputNames.TASK_REWARD}
+                            formValidator={formValidator}
+                            indexInValidator={3}
+                            setValue={setPenalty}
                             id={'penalty'}
-                            className={cl.input}
                             placeholder={'0'}
                             type={'number'}
-                            name={'penalty'}
                             value={penalty}
                             min={0}
-                            onChange={(e: any) => setPenalty(e.target.value)}
                         />
                     </div>
                 </div>
                 <div className={cl.dateWrap}>
                     <div className={cl.inputWrap}>
                         <label htmlFor={'start'} className={cl.label}>Начало:</label>
-                        <input
+                        <Input
                             id="start"
-                            className={cl.input}
                             type="datetime-local"
-                            value={getDate(start)}
-                            onChange={(e) => setDate(0, e.target.value)}
+                            value={start}
+                            placeholder={''}
+                            name={InputNames.DATE_START}
+                            formValidator={formValidator}
+                            indexInValidator={4}
+                            setValue={setStartDate}
                             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                         />
                     </div>
@@ -221,22 +218,15 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 <div className={cl.dateWrap}>
                     <div className={cl.inputWrap}>
                         <label htmlFor={'firstEnd'} className={cl.label}>Конец:</label>
-                        {/*<input*/}
-                        {/*    inputValidator={formValidator.getInput(InputNames.DATE)}*/}
-                        {/*    id={'firstEnd'}*/}
-                        {/*    placeholder={'firstEnd'}*/}
-                        {/*    type={'datetime-local'}*/}
-                        {/*    name={'firstEnd'}*/}
-                        {/*    //@ts-ignore*/}
-                        {/*    value={getDate(firstEnd)}*/}
-                        {/*    setValue={setFirstEnd}*/}
-                        {/*/>*/}
-                        <input
+                        <Input
                             id="firstEnd"
-                            className={cl.input}
+                            placeholder={''}
+                            name={InputNames.DATE_FIRST_END}
+                            formValidator={formValidator}
+                            indexInValidator={5}
+                            setValue={setFirstEndDate}
                             type="datetime-local"
-                            value={getDate(firstEnd)}
-                            onChange={(e) => setDate(1, e.target.value)}
+                            value={firstEnd}
                             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                         />
                     </div>
@@ -244,22 +234,15 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 <div className={cl.dateWrap}>
                     <div className={cl.inputWrap}>
                         <label htmlFor={'secondEnd'} className={cl.label}>Доп. дата:</label>
-                        {/*<input*/}
-                        {/*    inputValidator={formValidator.getInput(InputNames.DATE)}*/}
-                        {/*    id={'secondEnd'}*/}
-                        {/*    placeholder={'secondEnd'}*/}
-                        {/*    type={'datetime-local'}*/}
-                        {/*    name={'secondEnd'}*/}
-                        {/*    //@ts-ignore*/}
-                        {/*    value={getDate(secondEnd)}*/}
-                        {/*    setValue={setSecondEnd}*/}
-                        {/*/>*/}
-                        <input
+                        <Input
                             id="secondEnd"
-                            className={cl.input}
+                            placeholder={''}
+                            name={InputNames.DATE_SECOND_END}
+                            formValidator={formValidator}
+                            indexInValidator={6}
+                            setValue={setSecondEndDate}
                             type="datetime-local"
-                            value={getDate(secondEnd)}
-                            onChange={(e) => setDate(2, e.target.value)}
+                            value={secondEnd}
                             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                         />
                     </div>
