@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from './NavList.module.css'
-import './navlist.css'
 import ListItem from "../ListItem/ListItem";
 import {IList} from "../../types/INavbar";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";

@@ -1,47 +1,93 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {IUser} from "../../types/IUser";
-import cl from './admin-styles/AdminPage.module.css'
+import cl from './admin-styles/RolesPage.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {updateEmployee} from "../../store/reducers/ActionCreators";
+import {fetchEmployees, updateEmployee} from "../../store/reducers/ActionCreators";
 import {useNavigate} from "react-router-dom";
-import {changeEmployee} from "../../store/reducers/EmployeeSlice";
 import Button from "../../components/UI/Button/Button";
-import CheckBox from "../../components/UI/CheckBox/CheckBox";
 import {Roles} from "../../types/Roles";
+import ModalFullScreen from "../../components/UI/ModalFullScreen/ModalFullScreen";
 
 interface EmployeeTrProps {
     employee: IUser;
-    indexOfOpenMenu: number;
-    indexOfMenu: number;
-    setIndexOfOpenMenu: (index: number) => void;
 }
 
 
 const EmployeeTr: FC<EmployeeTrProps> = ({
                                              employee,
-                                             indexOfMenu,
-                                             indexOfOpenMenu,
-                                             setIndexOfOpenMenu
                                          }) => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
-    // const [rolesList, setRolesList] = useState(["admin", "guest", "user"])
 
 
     const [visibleRolesMenu, setVisibleRolesMenu] = useState<boolean>(false)
-    if (indexOfMenu !== indexOfOpenMenu && visibleRolesMenu) setVisibleRolesMenu(false)
+
+
+    useEffect(() => {
+        setEmployeeRoles([...employee.roles])
+        setOtherRoles([...Object.values(Roles).filter(role => !employeeRoles.includes(role))])
+    }, [visibleRolesMenu])
+
 
     const [employeeRoles, setEmployeeRoles] = useState([...employee.roles])
+    const [otherRoles, setOtherRoles] = useState([...Object.values(Roles).filter(role => !employeeRoles.includes(role))])
 
-    const handleChangeRoles = (selectedRole: string) => {
-        const ind = employeeRoles.findIndex(role => role === selectedRole)
-        if (ind === -1) setEmployeeRoles([...employeeRoles, selectedRole])
-        else {
-            setEmployeeRoles(employeeRoles.filter(role => role !== selectedRole))
+
+    const addRole = (role: Roles) => {
+        // if ((role === Roles.ADMIN_ROLES || role === Roles.SUPER_ADMIN)&& user.roles.includes()) {
+        //
+        // } else {
+        //
+        // }
+        // if (user.roles.includes(Roles.SUPER_ADMIN)) {
+        //     setEmployeeRoles([...employeeRoles, role])
+        //     setOtherRoles(otherRoles.filter(emplRole => emplRole !== role))
+        // } else {
+        //     if (role === Roles.ADMIN_ROLES || role === Roles.SUPER_ADMIN) {
+        //
+        //     } else {
+        //         setEmployeeRoles([...employeeRoles, role])
+        //         setOtherRoles(otherRoles.filter(emplRole => emplRole !== role))
+        //     }
+        //
+        // }
+
+        if (role !== Roles.SUPER_ADMIN) {
+            setEmployeeRoles([...employeeRoles, role])
+            setOtherRoles(otherRoles.filter(emplRole => emplRole !== role))
+        } else {
+            if (user.roles.includes(Roles.SUPER_ADMIN)) {
+                setEmployeeRoles([...employeeRoles, role])
+                setOtherRoles(otherRoles.filter(emplRole => emplRole !== role))
+            } else {
+
+            }
         }
 
+    }
+
+    const removeRole = (role: Roles) => {
+        // if (role === Roles.SUPER_ADMIN || role === Roles.ADMIN) {
+        //     if (employee._id === user._id) {
+        //
+        //     } else {
+        //         setEmployeeRoles(employeeRoles.filter(empRole => empRole !== role))
+        //         setOtherRoles([...otherRoles, role])
+        //     }
+        // } else {
+        //     setEmployeeRoles(employeeRoles.filter(empRole => empRole !== role))
+        //     setOtherRoles([...otherRoles, role])
+        // }
+        if (role === Roles.SUPER_ADMIN
+            && user._id === employee._id
+        ) {
+
+        } else {
+            setEmployeeRoles(employeeRoles.filter(empRole => empRole !== role))
+            setOtherRoles([...otherRoles, role])
+        }
     }
 
     const handleUpdateRole = () => {
@@ -49,8 +95,10 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
             ...employee,
             roles: employeeRoles
         }
-        dispatch(changeEmployee(changedUser))
         dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+        setTimeout(() => {
+            dispatch(fetchEmployees())
+        }, 1000)
     }
 
     const st = (index: number) => {
@@ -77,32 +125,41 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
                 }
             </td>
             <td className={cl.roleTd}>
-                <Button
-                    onClick={() => {
-                        if (employee._id !== user._id) {
-                            setVisibleRolesMenu(!visibleRolesMenu);
-                            setIndexOfOpenMenu(indexOfMenu)
-                        }
-                    }}><p style={st(1)}>Роли</p></Button>
+                <img src="/images/settingsIcon.svg" alt="" onClick={() => setVisibleRolesMenu(true)}/>
+                {/*{employee._id !== user._id*/}
+                {/*    ? employee.roles.includes(Roles.SUPER_ADMIN)*/}
+                {/*        ? ''*/}
+                {/*        : <img src="/images/settingsIcon.svg" alt="" onClick={() => setVisibleRolesMenu(true)}/>*/}
+                {/*    : employee.roles.includes(Roles.SUPER_ADMIN)*/}
+                {/*        ? <img src="/images/settingsIcon.svg" alt="" onClick={() => setVisibleRolesMenu(true)}/>*/}
+                {/*        : ''*/}
+                {/*}*/}
             </td>
-            {visibleRolesMenu
-                ? <td className={cl.rolePicker}>
-                    <div className={cl.confBtn} onClick={() => handleUpdateRole()}>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    {Object.values(Roles).map(role =>
-                        <div key={role} className={cl.role}>
-                            <CheckBox
-                                label={role}
-                                value={employeeRoles[employeeRoles.findIndex(r => r === role)]}
-                                action={handleChangeRoles}
-                            />
+            <td>
+                {visibleRolesMenu
+                    ? <ModalFullScreen visible={visibleRolesMenu} setVisible={setVisibleRolesMenu} exitBtn={true}
+                                       exitBackground={true}>
+                        Роли пользователя
+                        <div className={cl.employeeActiveRoles}>
+                            {employeeRoles.map(role =>
+                                <div className={cl.roleActive} key={role} onClick={() => removeRole(role)}>
+                                    {role}
+                                </div>
+                            )}
                         </div>
-                    )}
-                </td>
-                : ''
-            }
+                        Доступные роли
+                        <div className={cl.employeeInactiveRoles}>
+                            {otherRoles.map(role =>
+                                <div className={cl.roleInactive} key={role} onClick={() => addRole(role)}>
+                                    {role}
+                                </div>
+                            )}
+                        </div>
+                        <Button onClick={handleUpdateRole}>Обновить</Button>
+                    </ModalFullScreen>
+                    : ''
+                }
+            </td>
         </tr>
     );
 };

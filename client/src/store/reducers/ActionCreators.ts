@@ -167,7 +167,7 @@ export const fetchTaskById = createAsyncThunk(
     }
 )
 
-interface EditedTask {
+export interface EditedTask {
     id: string;
     task: ITask;
 }

@@ -8,12 +8,12 @@ import {
     fetchEmployeeTasks,
     fetchTaskById
 } from "./ActionCreators";
-import {ITask, ITasks} from "../../types/ITasks";
+import {ITasks} from "../../types/ITasks";
 
 
 interface TaskState {
     tasks: ITasks[];
-    task: ITask;
+    task: ITasks;
     isLoading: boolean;
     isLoadingCreate: boolean;
     isLoadingDelete: boolean;
@@ -23,7 +23,7 @@ interface TaskState {
 
 const initialState: TaskState = {
     tasks: [] as ITasks[],
-    task: {} as ITask,
+    task: {} as ITasks,
     isLoading: false,
     isLoadingCreate: false,
     isLoadingDelete: false,
@@ -42,9 +42,9 @@ const taskSlice = createSlice({
             const date = action.payload
             state.tasks[index] = {
                 ...date,
-                start: new Date(date.start),
-                firstEnd: new Date(date.firstEnd),
-                secondEnd: new Date(date.firstEnd),
+                start: new Date(Number(date.start)),
+                firstEnd: new Date(Number(date.firstEnd)),
+                secondEnd: new Date(Number(date.firstEnd)),
             }
             state.error = ''
             state.isLoadingUpdate = false;
@@ -57,8 +57,14 @@ const taskSlice = createSlice({
             state.isLoadingUpdate = false;
         },
 
-        [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITask>) => {
-            state.task = action.payload
+        [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
+            state.task = {
+                ...action.payload,
+                start: new Date(action.payload.start),
+                firstEnd: new Date(action.payload.firstEnd),
+                secondEnd: new Date(action.payload.firstEnd),
+            }
+            // state.task = action.payload
             state.error = ''
             state.isLoading = false;
         },
@@ -114,13 +120,13 @@ const taskSlice = createSlice({
         },
 
         [createTask.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
-            const date = action.payload
-            state.tasks = [...state.tasks, {
-                ...date,
-                start: new Date(date.start),
-                firstEnd: new Date(date.firstEnd),
-                secondEnd: new Date(date.firstEnd),
-            }]
+            // const date = action.payload
+            // state.tasks = [...state.tasks, {
+            //     ...date,
+            //     start: new Date(date.start),
+            //     firstEnd: new Date(date.firstEnd),
+            //     secondEnd: new Date(date.firstEnd),
+            // }]
             state.error = ''
             state.isLoadingCreate = state.isLoadingCreate != state.isLoadingCreate;
             state.isLoading = true
@@ -134,7 +140,7 @@ const taskSlice = createSlice({
             state.isLoading = false;
         },
 
-        [deleteTask.fulfilled.type]: (state, action: PayloadAction<ITask>) => {
+        [deleteTask.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
             state.tasks = state.tasks.filter(obj => obj._id !== action.payload._id)
             state.error = ''
             state.isLoadingCreate = !state.isLoadingDelete;

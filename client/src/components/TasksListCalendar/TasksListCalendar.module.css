@@ -1,15 +1,24 @@
 .list {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
-    margin-top: 3%;
-    min-width: 250px;
+    min-width: 230px;
     position: relative;
+    max-height: 300px;
+    gap: 5px;
+}
+
+.tasks {
+    max-height: 250px;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .task {
-    margin-top: 2%;
     cursor: pointer;
     width: 100%;
     padding: 3px;
@@ -31,11 +40,15 @@
     font-size: 22px;
 }
 
+.list span {
+    padding: 0;
+}
+
 .taskCard {
     background-color: #FFFFFF;
     border-radius: 30px;
     position: absolute;
     padding: 30px;
     width: 270px;
-    top: 150px;
+    bottom: -200px;
 }

@@ -1,12 +1,15 @@
-import React, {FC, useEffect, useState} from 'react';
-import {initialDate} from "../Calendar/utils";
+import React, {FC, useState} from 'react';
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {createTask, fetchEmployees, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
-import DropDownMenuV2 from "../UI/DropDownMenu/DropDownMenuV2";
+import {createTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
+import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
 import {Specialities} from "../../types/Specialities";
+import {FormValidator} from "../UI/Input/models/FormValidator";
+import {InputNames} from "../UI/Input/models/InputValidator";
+import Input from "../UI/Input/Input";
+import {getInputDate} from "../UI/Input/inputDateFormat";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
@@ -21,47 +24,69 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)
-    let date = `${initialDate.getDate()}`
-    if (date.length === 1) date = '0' + `${date}`
-    const [start, setStart] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T00:00`)
-    const [firstEnd, setFirstEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T01:00`)
-    const [secondEnd, setSecondEnd] = useState<string>(`${initialDate.getFullYear()}-${initialDate.getMonth() + 1}-${date}T02:00`)
+
+    const [start, setStart] = useState<string>(getInputDate(new Date()))
+    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 1800000)))
+    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 3600000)))
+
+
+    const setStartDate = (data: string) => {
+        const date = new Date(`${data}`)
+        if (date.getTime())
+            setStart(getInputDate(date))
+    }
+
+
+    const setFirstEndDate = (data: string) => {
+        const date = new Date(`${data}`)
+        setFirstEnd(getInputDate(date))
+    }
+
+    const setSecondEndDate = (data: string) => {
+        const date = new Date(`${data}`)
+        setSecondEnd(getInputDate(date))
+    }
+
+    const inputNames = [
+        InputNames.TASK_TITLE,
+        InputNames.DATE_START,
+        InputNames.DATE_FIRST_END,
+        InputNames.DATE_SECOND_END,
+        InputNames.TASK_REWARD,
+        InputNames.TASK_REWARD,
+        InputNames.TASK_REWARD,
+    ]
+    const formValidator = new FormValidator(inputNames)
 
     const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
 
-    useEffect(() => {
-        if (employees.length === 0) {
-            // dispatch(fetchEmployees())
-        }
-    }, [])
-
     const handleCreate = (e: any) => {
         e.preventDefault()
-        if (employeeName === ''
-            || spec === ''
-            || title === ''
-            || text === ''
-            || firstReward < 0
-            || penalty < 0
-            || secondReward < 0
+        if (
+            employeeName !== "Сотрудник"
+            && spec !== 'Специальность'
+            && text !== ''
+            && formValidator.getFormStatus()
         ) {
-        } else if (start < firstEnd && start < secondEnd && firstEnd < secondEnd) {
             const task: ITask = {
                 _id: '',
                 employee: employeeName,
                 spec: spec,
                 title: title,
                 text: text,
-                firstReward: String(firstReward),
-                secondReward: String(secondReward),
-                penalty: String(penalty),
-                start: start,
-                firstEnd: firstEnd,
-                secondEnd: secondEnd
+                firstReward: firstReward,
+                secondReward: secondReward,
+                penalty: penalty,
+                start: Number(new Date(start).getTime()),
+                firstEnd: Number(new Date(firstEnd).getTime()),
+                secondEnd: Number(new Date(secondEnd).getTime())
             }
             dispatch(createTask(task))
-            setEmployeeName('')
-            setSpec('')
+            setTimeout(() => {
+                dispatch(fetchEmployeeTasks(employee._id))
+            }, 700)
+            setEmployeeName('Сотрудник')
+            setSpec('Специальность')
             setTitle('')
             setText('')
             setFirstReward(0)
@@ -70,90 +95,106 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
             setModalVisible(false)
         }
     }
-
     return (
         <form className={cl.form}>
             <div className={cl.inputWrap}>
                 <label htmlFor="title">Заголовок: </label>
-                <input id="title"
-                       required
-                       className={cl.input}
+                <Input id="title"
+                       name={InputNames.TASK_TITLE}
+                       formValidator={formValidator}
+                       setValue={setTitle}
                        type="text"
                        placeholder={"Title"}
                        value={title}
-                       onChange={(e: any) => setTitle(e.target.value)}
+                       indexInValidator={0}
                 />
             </div>
             <div className={cl.inputWrap}>
                 <label htmlFor="start">Начало: </label>
-                <input id="start"
-                       className={cl.input}
+                <Input id="start"
+                       placeholder={''}
                        type="datetime-local"
                        value={start}
-                       onChange={(e) => setStart(e.target.value)}
+                       formValidator={formValidator}
+                       setValue={setStartDate}
+                       name={InputNames.DATE_START}
+                       indexInValidator={1}
+                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                 />
             </div>
             <div className={cl.inputWrap}>
                 <label htmlFor="firstEnd">Конец: </label>
-                <input id="firstEnd"
-                       className={cl.input}
+                <Input id="firstEnd"
+                       placeholder={''}
+                       name={InputNames.DATE_FIRST_END}
                        type="datetime-local"
                        value={firstEnd}
-                       onChange={(e) => setFirstEnd(e.target.value)}
+                       setValue={setFirstEndDate}
+                       formValidator={formValidator}
+                       indexInValidator={2}
+                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                 />
             </div>
             <div className={cl.inputWrap}>
                 <label htmlFor="secondEnd">Доп. конец: </label>
-                <input id="secondEnd"
-                       className={cl.input}
+                <Input id="secondEnd"
+                       placeholder={''}
+                       formValidator={formValidator}
+                       name={InputNames.DATE_SECOND_END}
+                       setValue={setSecondEndDate}
                        type="datetime-local"
                        value={secondEnd}
-                       onChange={(e) => setSecondEnd(e.target.value)}
+                       indexInValidator={3}
+                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                 />
             </div>
             <div className={cl.inputWrap}>
-                <DropDownMenuV2 selectItem={spec} setSelectItem={setSpec} items={Object.values(Specialities)} type={"string"}
-                                position={"bottom"}/>
+                <DropDownMenu selectItem={spec} setSelectItem={setSpec} items={Object.values(Specialities)}
+                              type={"string"}
+                              position={"bottom"}/>
             </div>
             <div className={cl.inputWrap}>
-                <DropDownMenuV2 selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
-                                type={"employees"} position={"bottom"}/>
+                <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
+                              type={"employees"} position={"bottom"}/>
             </div>
             <div className={cl.rewards}>
                 <div className={cl.rewardsInputWrap}>
                     <label htmlFor="firstReward">Первая награда: </label>
-                    <input id="firstReward"
-                           required
-                           className={cl.input}
+                    <Input id="firstReward"
+                           formValidator={formValidator}
+                           setValue={setFirstReward}
+                           indexInValidator={4}
+                           name={InputNames.TASK_REWARD}
                            type="number"
                            placeholder={"0"}
                            value={firstReward}
                            min={0}
-                           onChange={(e: any) => setFirstReward(e.target.value)}
                     />
                 </div>
                 <div className={cl.rewardsInputWrap}>
                     <label htmlFor="secondReward">Вторая награда: </label>
-                    <input id="secondReward"
-                           required
-                           className={cl.input}
+                    <Input id="secondReward"
+                           formValidator={formValidator}
+                           name={InputNames.TASK_REWARD}
+                           setValue={setSecondReward}
                            type="number"
                            placeholder={"0"}
+                           indexInValidator={5}
                            value={secondReward}
                            min={0}
-                           onChange={(e: any) => setSecondReward(e.target.value)}
                     />
                 </div>
                 <div className={cl.rewardsInputWrap}>
                     <label htmlFor="penalty">Штраф: </label>
-                    <input id="penalty"
-                           required
-                           className={cl.input}
+                    <Input id="penalty"
+                           formValidator={formValidator}
+                           name={InputNames.TASK_REWARD}
+                           setValue={setPenalty}
                            type="number"
                            placeholder={'0'}
+                           indexInValidator={6}
                            value={penalty}
                            min={0}
-                           onChange={(e: any) => setPenalty(e.target.value)}
                     />
                 </div>
             </div>
@@ -169,7 +210,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
             </div>
 
             <div className={cl.inputWrap}>
-                <Button onClick={(e) => handleCreate(e)}>Создать</Button>
+                <div className={cl.submit}>
+                    <Button onClick={(e) => handleCreate(e)}>Создать</Button>
+                </div>
             </div>
         </form>
     );

@@ -8,8 +8,10 @@ import {updateEmployee} from "../store/reducers/ActionCreators";
 import {editUser} from "../store/reducers/authSlice";
 import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
-import DropDownMenuV2 from "./UI/DropDownMenu/DropDownMenuV2";
+import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
 import {Specialities} from "../types/Specialities";
+import {FormValidator} from "./UI/Input/models/FormValidator";
+import {InputNames} from "./UI/Input/models/InputValidator";
 
 interface EmployeeCardProps {
     employee: IUser
@@ -20,7 +22,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.authSlice.user)
     const {updateEmployeeError} = useAppSelector(state => state.employeeSlice)
-    const {isLoading, employeeAllBonuses} = useAppSelector(state => state.bonusesSlice)
+    const {isLoading, employeeAllBonuses, employeeWeekBonuses} = useAppSelector(state => state.bonusesSlice)
 
 
     useEffect(() => {
@@ -38,9 +40,17 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
 
     const [viewMode, setViewMode] = useState<"right" | "bottom">('right')
 
+    const inputs = [InputNames.EMAIL, InputNames.NAME]
+    const formValidator = new FormValidator(inputs)
+
+    const [changedUser, setChangedUser] = useState<IUser>({...employee})
+
     useEffect(() => {
         if (window.screen.width < 768) setViewMode("bottom")
+
     }, [])
+
+
     const handleEditInfo = () => {
         // setEditMenuIsShow(!editMenuIsShow)
         const changedUser: IUser = {
@@ -50,8 +60,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
             name: name,
             latinName: translit(name),
         }
-
-        dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+        setChangedUser(changedUser)
+        if (!formValidator.getFormStatus()) {
+            dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+        }
         if (updateEmployeeError === '') {
             if (user._id === changedUser._id) {
                 dispatch(editUser(changedUser))
@@ -103,8 +115,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         <div className={cl.infoText}>
                             <div className={cl.input}>
                                 <Input
+                                    indexInValidator={0}
+                                    formValidator={formValidator}
                                     id={'email'}
-                                    name={'email'}
+                                    name={InputNames.EMAIL}
                                     placeholder={`${email}`}
                                     value={email}
                                     setValue={setEmail}
@@ -115,8 +129,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         <div className={cl.infoText}>
                             <div className={cl.input}>
                                 <Input
+                                    indexInValidator={1}
+                                    formValidator={formValidator}
                                     id={'name'}
-                                    name={'name'}
+                                    name={InputNames.NAME}
                                     placeholder={`${name}`}
                                     value={name}
                                     setValue={setName}
@@ -126,8 +142,8 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         </div>
                         <div className={cl.infoText}>
                             <div className={cl.input}>
-                                <DropDownMenuV2 type={"string"} position={viewMode} selectItem={spec}
-                                                setSelectItem={setSpec} items={Object.values(Specialities)}/>
+                                <DropDownMenu type={"string"} position={viewMode} selectItem={spec}
+                                              setSelectItem={setSpec} items={Object.values(Specialities)}/>
                             </div>
                         </div>
                     </div>
@@ -137,8 +153,12 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                         </div>
                         <div className={cl.infoText}>Имя: <span>{employee.name}</span></div>
                         <div className={cl.infoText}>Специализация: <span>{employee.spec}</span></div>
-                        <div className={cl.infoText}>Все
-                            бонусы:<span>{isLoading ? 'loading' : employeeAllBonuses}</span></div>
+                        <div className={cl.infoText}>
+                            Все бонусы:<span>{isLoading ? 'loading' : employeeAllBonuses}</span>
+                        </div>
+                        <div className={cl.infoText}>
+                            Бонусы за неделю: <span>{employeeWeekBonuses}</span>
+                        </div>
                     </div>
                 }
             </div>

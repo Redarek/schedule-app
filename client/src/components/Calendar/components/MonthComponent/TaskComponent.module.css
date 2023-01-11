@@ -1,0 +1,32 @@
+.task {
+    cursor: pointer;
+    position: relative;
+    min-width: 90%;
+    color: black;
+}
+
+.task:hover {
+    opacity: .9;
+}
+
+.taskInfo {
+    height: 18px;
+    background-color: rgb(121, 134, 203);
+    transition: all 500ms linear;
+    border-radius: 5px;
+    padding-left: 5px;
+    line-height: 18px;
+    margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+    .taskInfo {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .taskInfo {
+        padding-left: 2px;
+    }
+}

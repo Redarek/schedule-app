@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContactsPage = () => {
+const GuestPage = () => {
     return (
         <div>
             Contact your administrator for access
@@ -8,4 +8,4 @@ const ContactsPage = () => {
     );
 };
 
-export default ContactsPage;
+export default GuestPage;

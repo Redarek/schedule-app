@@ -56,3 +56,16 @@
 .exitBtn span:last-child {
     transform: rotate(45deg);
 }
+
+@media (max-width: 768px) {
+    .modalContent {
+        padding: 15px;
+    }
+    .exitBtn {
+        height: 23px;
+        width: 23px;
+    }
+    .exitBtn span {
+        right: 1px;
+    }
+}

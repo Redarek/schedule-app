@@ -36,10 +36,10 @@
 .btn:first-child {
     margin-right: auto;
 }
+
 .btn:last-child {
     margin-right: 5%;
 }
-
 
 
 .completeBtn {
@@ -67,8 +67,9 @@
 .completeBtn span:first-child {
     top: 6px;
     left: 12px;
-   transform: rotate(30deg);
+    transform: rotate(30deg);
 }
+
 .completeBtn span:last-child {
     top: 6px;
     left: 7px;

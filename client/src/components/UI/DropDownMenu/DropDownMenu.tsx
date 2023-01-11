@@ -1,111 +1,46 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import cl from './DropDownMenu.module.css'
 
 interface DropDownMenuProps {
-    menuType: 'spec' | 'other' | 'employees' | 'role';
-    title: string;
-    menuItems: any[];
-    dropMenuItem: string;
-    setDropMenuItem: (item: string) => void;
-    viewMode: 'right' | 'bottom'
-    setIndexOfSelectElem?: (index: number) => void;
-    indexOfMenu?: string;
-    indexOfOpenMenu?: string;
-    setIndexOfOpenMenu?: (index: string) => void;
+    type: "employees" | "string";
+    position: "bottom" | "right"
+    selectItem: any;
+    setSelectItem: (variable: any) => void;
+    items: any[];
 }
 
-const DropDownMenu: FC<DropDownMenuProps> = ({
-                                                 title,
-                                                 menuItems,
-                                                 dropMenuItem,
-                                                 setDropMenuItem,
-                                                 menuType,
-                                                 viewMode,
-                                                 setIndexOfSelectElem,
-                                                 indexOfMenu,
-                                                 indexOfOpenMenu,
-                                                 setIndexOfOpenMenu,
-                                             }) => {
-    //@todo Список specialities
-    const specialities = ['Backend', 'Frontend', 'Design'];
-    const roles = ['guest', 'user', 'admin'];
+const DropDownMenu: FC<DropDownMenuProps> = ({selectItem, items, setSelectItem, type, position}) => {
+    const [visible, setVisible] = useState(false)
 
-    let items: any[] = []
-    switch (menuType) {
-        case 'spec':
-            items = specialities;
-            break;
-        case 'other':
-            items = menuItems;
-            break;
+    let inputStyles = {}
+    let itemsStyles = {}
+
+    if (position === "right") {
+        itemsStyles = {left: '60%', width: '40%', top: '0'};
+        inputStyles = {width: '60%'};
+    }
+
+    let itms = items
+    switch (type) {
         case "employees":
-            for (let i = 0; i < menuItems.length; i++) {
-                items = [...items, menuItems[i].name]
+            itms = []
+            for (let i = 0; i < items.length; i++) {
+                itms.push(items[i].name)
             }
             break;
-        case "role":
-            items = roles
     }
-
-    const wrapStyle = {width: '75%'}
-    const menuListStyle = {width: '240px', left: '75%', marginTop: '0'}
-
-    switch (viewMode) {
-        case "bottom":
-            wrapStyle.width = '100%'
-            menuListStyle.width = '100%'
-            menuListStyle.left = '0'
-            menuListStyle.marginTop = '32px'
-            break;
-    }
-
-    const [visible, setVisible] = useState(false)
-    // console.log(numberOfMenu)
-    // console.log(numberOfOpenMenu)
-    useEffect(() => {
-        if (indexOfOpenMenu !== indexOfMenu) setVisible(false)
-    }, [indexOfOpenMenu])
-
-    const checkSetOpenMenuTitle = () => {
-        // console.log(indexOfOpenMenu)
-        // console.log(setIndexOfOpenMenu)
-        // console.log(indexOfMenu)
-        // console.log(indexOfMenu)
-        if (setIndexOfOpenMenu && indexOfMenu) {
-            setIndexOfOpenMenu(indexOfMenu);
-            // console.log(indexOfMenu)
-        }
-        // console.log(setNumberOfOpenMenu)
-        // console.log(numberOfOpenMenu)
-        // console.log(numberOfMenu)
-        // console.log(numberOfOpenMenu)
-        // console.log(numberOfMenu)
-        setVisible(!visible);
-    }
-
     return (
-        <div className={cl.wrapper}>
-            <div className={cl.wrap} style={wrapStyle} onClick={(e) => {
-                checkSetOpenMenuTitle();
-                setVisible(!visible);
-                e.stopPropagation()
-            }}>
-                <div
-                    className={cl.menuTitle}>{dropMenuItem === '' ? title : items[items.findIndex(obj => obj === dropMenuItem)]}</div>
-                <div className={cl.menuIcon}></div>
-            </div>
+        <div className={cl.container}>
+            <input style={inputStyles} className={cl.input} type="text" value={selectItem} readOnly={true}
+                   onFocus={() => setVisible(true)}
+                   onBlur={() => setTimeout(() => setVisible(false), 100)}/>
             {visible
-                ?
-
-                <div className={cl.menuList} style={menuListStyle}>
-                    {items.map((item, index) =>
-                        <div key={item} className={cl.menuItem} onClick={() => {
-                            setDropMenuItem(item);
-                            if (setIndexOfSelectElem) setIndexOfSelectElem(index)
+                ? <div className={cl.items} style={itemsStyles}>
+                    {itms.map(item =>
+                        <div className={cl.item} key={item} onClick={() => {
+                            setSelectItem(item);
                             setVisible(false)
-                        }}>
-                            {item}
-                        </div>
+                        }}>{item}</div>
                     )}
                 </div>
                 : ''

@@ -18,11 +18,17 @@
     min-width: 80px;
     width: 100%;
     margin-left: 2.5%;
+    height: 32px;
 }
 
 .calendarModeBtn {
     max-width: 250px;
     min-width: 80px;
     width: 100%;
+    margin-right: 2.5%;
+}
+
+.calendarSettingsBtn {
+    margin-left: 2.5%;
     margin-right: 2.5%;
 }

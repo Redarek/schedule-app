@@ -2,12 +2,12 @@ import React, {FC, useState} from 'react';
 import cl from "./CheckBox.module.css";
 
 interface CheckBoxProps {
-    label: string;
+    label: string
     action: (st: string) => void;
     value: string
 }
 
-const CheckBox: FC<CheckBoxProps> = ({label, value, action}) => {
+const CheckBox: FC<CheckBoxProps> = ({value, label, action}) => {
     const [checked, setChecked] = useState<boolean>(false)
 
     if (value === label && !checked) setChecked(true)
@@ -18,7 +18,7 @@ const CheckBox: FC<CheckBoxProps> = ({label, value, action}) => {
     }
 
     return (
-        <label>
+        <label className={cl.checkBox}>
             <input className={cl.input}
                    type="checkbox"
                    checked={checked}

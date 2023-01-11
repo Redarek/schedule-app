@@ -18,6 +18,7 @@ const initialState: EmployeeState = {
     isLoading: false,
     error: '',
     updateEmployeeError: null
+    // updateEmployeeLoading: null
 }
 const employeeSlice = createSlice({
     name: 'employee',
@@ -36,15 +37,16 @@ const employeeSlice = createSlice({
     },
     extraReducers: {
         [fetchEmployees.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
-            state.isLoading = false;
-            state.error = '';
             let users = action.payload
+            state.employees = []
             for (let i = 0; i < users.length; i++) {
                 state.employees[i] = {
                     ...users[i],
                     latinName: translit(users[i].name)
                 }
             }
+            state.error = '';
+            state.isLoading = false;
         },
         [fetchEmployees.pending.type]: (state) => {
             state.isLoading = true;
@@ -72,15 +74,15 @@ const employeeSlice = createSlice({
         },
         [updateEmployee.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
             state.updateEmployeeError = '';
-            state.isLoading = false;
+            // state.isLoading = false;
         },
         [updateEmployee.pending.type]: (state) => {
             state.updateEmployeeError = null
-            state.isLoading = true;
+            // state.isLoading = true;
         },
         [updateEmployee.rejected.type]: (state, action: PayloadAction<string>) => {
             state.updateEmployeeError = action.payload
-            state.isLoading = false;
+            // state.isLoading = false;
         }
     }
 })
