@@ -20,6 +20,7 @@ export const authRoutes = [
 
     // {path: '/contacts', element: <ContactsPage/>, exact: true},
     {path: '/task-edit/:taskId', element: <TaskEditPage/>, exact: true},
+    {path: '/test', element: <AdminPage/>, exact: true},
 ];
 
 export const guestRoutes = [

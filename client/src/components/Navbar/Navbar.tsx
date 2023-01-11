@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import cl from './Navbar.module.css'
-import NavList from "../NavList/NavList";
-import {IList} from "../../types/INavbar";
+import NavList from "./components/NavList/NavList";
+import {IList} from "./types/INavbar";
 import {useAppSelector} from "../../hooks/redux";
 import {Roles} from "../../types/Roles";
 
