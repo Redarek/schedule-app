@@ -7,6 +7,7 @@ import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
 import {FormValidator} from "../../../UI/Input/models/FormValidator";
 import {InputNames} from "../../../UI/Input/models/InputValidator";
+import DocViewerComponent from "../DocViewer/DocViewerComponent";
 
 
 const FileBrowserComponent = () => {
@@ -17,29 +18,29 @@ const FileBrowserComponent = () => {
         {
             name: 'Первая папка',
             type: ObjectType.DIRECTORY,
-            url: '',
+            uri: '',
             content: [
                 {
                     name: 'Папка в первой папке',
                     type: ObjectType.DIRECTORY,
-                    url: '',
+                    uri: '',
                     content: [
                         {
-                            name: 'file.txt',
+                            name: 'test-doc.pdf',
                             type: ObjectType.FILE,
                             content: [],
-                            url: '',
+                            uri: '/test-doc.pdf',
                         },
                         {
                             name: 'Папка а в ней папка а в ней папка',
                             type: ObjectType.DIRECTORY,
-                            url: '',
+                            uri: '',
                             content: [
                                 {
-                                    name: 'file в глубине.txt',
+                                    name: 'file в глубине.docx',
                                     type: ObjectType.FILE,
                                     content: [],
-                                    url: '',
+                                    uri: '/234.pdf',
                                 },
                             ]
                         }
@@ -48,28 +49,34 @@ const FileBrowserComponent = () => {
             ]
         },
         {
-            name: 'Файл в первой папке.txt',
+            name: 'test.txt',
             type: ObjectType.FILE,
             content: [],
-            url: '',
+            uri: "/test.txt",
         },
         {
             name: 'Вторая папка',
             type: ObjectType.DIRECTORY,
-            url: '',
+            uri: '',
             content: [
                 {
                     name: 'Папка во второй папке',
                     type: ObjectType.DIRECTORY,
-                    url: '',
+                    uri: '',
                     content: [
                         {
                             name: 'file.txt',
                             type: ObjectType.FILE,
                             content: [],
-                            url: '',
+                            uri: '',
                         }
                     ]
+                },
+                {
+                    name: 'test2.txt',
+                    type: ObjectType.FILE,
+                    content: [],
+                    uri: '/test2.txt',
                 },
             ]
         }
@@ -154,6 +161,7 @@ const FileBrowserComponent = () => {
                     setFileBrowser(new FileBrowser(object.content, newUrl))
                     break;
                 case ObjectType.FILE:
+                    setCurrentContextObject(object)
                     setEditMode(true)
                     break;
             }
@@ -212,10 +220,10 @@ const FileBrowserComponent = () => {
                 )}
             </div>
 
-            {/*{!editMode*/}
-            {/*    ? */}
-            <div className={cl.browserWorkSpace}
-                       onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.DIRECTORY)}>
+            {!editMode
+                ?
+                <div className={cl.browserWorkSpace} id={'work-space'}
+                     onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.DIRECTORY)}>
                     <div className={cl.browserContent}>
                         {fileBrowser.getContent().map((obj, index) =>
                             <div
@@ -238,8 +246,8 @@ const FileBrowserComponent = () => {
                     </div>
                 </div>
 
-                {/*: 'edit menu'*/}
-            {/*}*/}
+                : <DocViewerComponent doc={currentContextObject}/>
+            }
             {isShowContextMenu
                 ? <ContextMenu
                     event={event}

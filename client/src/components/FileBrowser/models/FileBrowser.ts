@@ -14,7 +14,7 @@ export enum FileBrowserVoids {
 export interface IObject {
     type: ObjectType
     name: string;
-    url: string;
+    uri: string;
     content: IObject[]
 }
 
@@ -58,7 +58,7 @@ export class FileBrowser {
                 this.content.push({
                     type: ObjectType.DIRECTORY,
                     name: name,
-                    url: '',
+                    uri: '',
                     content: []
                 })
             }
@@ -74,7 +74,7 @@ export class FileBrowser {
             this.content.push({
                 type: ObjectType.FILE,
                 name: name,
-                url: '',
+                uri: '',
                 content: [],
             })
         } else {

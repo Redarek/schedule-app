@@ -91,13 +91,19 @@ const ContextMenu: FC<ContextMenuProps> = ({event, type, optionClick, object}) =
         }
     }
 
+
+    //@ts-ignore
+    const parentDiv = document.querySelector('#work-space').getBoundingClientRect().left
+
     let left: string = `0`
     let flexDirection: 'row-reverse' | 'row' = 'row'
     if (event) {
-        left = `${event.clientX}`
-        if (window.innerWidth - event?.clientX < 405) left = `${event.clientX - 200}`
+        //@ts-ignore
+        left = `${event.clientX - parentDiv}`
+        // console.log(event)
+        if (window.innerWidth - event?.clientX < 405) left = `${event.clientX - 200 - parentDiv}`
         if (window.innerWidth - event.clientX < 405) flexDirection = 'row-reverse'
-        if (window.innerWidth - event.clientX < 405 && isShow) left = `${event.clientX - 405}`
+        if (window.innerWidth - event.clientX < 405 && isShow) left = `${event.clientX - 405 - parentDiv}`
     }
 
     return (
