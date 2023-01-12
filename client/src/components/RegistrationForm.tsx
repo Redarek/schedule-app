@@ -17,7 +17,7 @@ const RegistrationForm: FC = () => {
     const [name, setName] = useState<string>('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [spec, setSpec] = useState<string>('Специальность')
+    const [spec, setSpec] = useState<string>('Категория')
 
 
     const {registrationError} = useAppSelector(state => state.authSlice)
@@ -27,7 +27,7 @@ const RegistrationForm: FC = () => {
 
 
     const handleRegistration = () => {
-        if (formValidator.getFormStatus() && spec !== 'Специальность') {
+        if (formValidator.getFormStatus() && spec !== 'Категория') {
             dispatch(registration({email: email, password: password, name: name, spec: spec}))
             if (registrationError === '') navigate("/login");
         }

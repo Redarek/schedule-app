@@ -19,7 +19,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
-    const [spec, setSpec] = useState<string>('Специальность')
+    const [spec, setSpec] = useState<string>('Категория')
     const [employeeName, setEmployeeName] = useState<string>('Сотрудник')
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
@@ -64,7 +64,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
         e.preventDefault()
         if (
             employeeName !== "Сотрудник"
-            && spec !== 'Специальность'
+            && spec !== 'Категория'
             && text !== ''
             && formValidator.getFormStatus()
         ) {
