@@ -7,7 +7,7 @@ import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
 import {FormValidator} from "../../../UI/Input/models/FormValidator";
 import {InputNames} from "../../../UI/Input/models/InputValidator";
-import DocViewerComponent from "../DocViewer/DocViewerComponent";
+import TextEditorComponent from "../../../TextEditor/TextEditorComponent";
 
 
 const FileBrowserComponent = () => {
@@ -204,85 +204,86 @@ const FileBrowserComponent = () => {
     const [editMode, setEditMode] = useState(false)
 
     return (
-        <div className={cl.browser}
-             onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
-             onClick={() => setIsShowContextMenu(false)}>
-            <div className={cl.browserNav}>
-                {fileBrowser.getCurrentDirectoryAddress().map((directoryAdd) =>
-                    <Fragment key={directoryAdd}>
-                        <div
-                            onClick={() => handleNavigateToDirectory(directoryAdd)}
-                        >
-                            {directoryAdd}
-                        </div>
-                        /
-                    </Fragment>
-                )}
-            </div>
-
-            {!editMode
-                ?
-                <div className={cl.browserWorkSpace} id={'work-space'}
-                     onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.DIRECTORY)}>
-                    <div className={cl.browserContent}>
-                        {fileBrowser.getContent().map((obj, index) =>
+            <div className={cl.browser}
+                 onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
+                 onClick={() => setIsShowContextMenu(false)}>
+                <div className={cl.browserNav}>
+                    {fileBrowser.getCurrentDirectoryAddress().map((directoryAdd) =>
+                        <Fragment key={directoryAdd}>
                             <div
-                                key={index}
-                                className={cl.browserObject}
-                                onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.FILE, obj)}
-                                onClick={(e: React.MouseEvent) => handleClick(e, obj)}
+                                onClick={() => handleNavigateToDirectory(directoryAdd)}
                             >
-                                <div className={cl.objectImg}>
-                                    {obj.type === ObjectType.DIRECTORY
-                                        ? <img src="/images/folder.png" alt="img"/>
-                                        : <span>.{obj.name.split('.')[1]}</span>
-                                    }
-                                </div>
-                                <div className={cl.objectName}>
-                                    {obj.name}
-                                </div>
+                                {directoryAdd}
                             </div>
-                        )}
-                    </div>
+                            /
+                        </Fragment>
+                    )}
                 </div>
 
-                : <DocViewerComponent doc={currentContextObject}/>
-            }
-            {isShowContextMenu
-                ? <ContextMenu
-                    event={event}
-                    type={contextType}
-                    optionClick={handleClickOnOption}
-                    object={currentContextObject}
-                />
-                : ''
-            }
-            {isShowModal
-                ?
-                <ModalFullScreen visible={isShowModal} setVisible={setIsShowModal} exitBtn={true} exitBackground={true}>
-                    <form className={cl.createForm}>
-                        <Input
-                            id={'file-name'}
-                            type={'text'}
-                            name={InputNames.FILE_NAME}
-                            formValidator={formValidator}
-                            indexInValidator={0}
-                            value={nameOfObject}
-                            setValue={setNameOfObject}
-                            placeholder={'Название'}
-                        />
-                        <Button
-                            onClick={handleChangeContent}>
-                            {typeOfOption === FileBrowserVoids.RENAME
-                                ? 'Переименовать'
-                                : 'Создать'
-                            }
-                        </Button>
-                    </form>
-                </ModalFullScreen>
-                : ''
-            }
-        </div>
+                {!editMode
+                    ?
+                    <div className={cl.browserWorkSpace} id={'work-space'}
+                         onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.DIRECTORY)}>
+                        <div className={cl.browserContent}>
+                            {fileBrowser.getContent().map((obj, index) =>
+                                <div
+                                    key={index}
+                                    className={cl.browserObject}
+                                    onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.FILE, obj)}
+                                    onClick={(e: React.MouseEvent) => handleClick(e, obj)}
+                                >
+                                    <div className={cl.objectImg}>
+                                        {obj.type === ObjectType.DIRECTORY
+                                            ? <img src="/images/folder.png" alt="img"/>
+                                            : <span>.{obj.name.split('.')[1]}</span>
+                                        }
+                                    </div>
+                                    <div className={cl.objectName}>
+                                        {obj.name}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    : <TextEditorComponent/>
+                }
+                {isShowContextMenu
+                    ? <ContextMenu
+                        event={event}
+                        type={contextType}
+                        optionClick={handleClickOnOption}
+                        object={currentContextObject}
+                    />
+                    : ''
+                }
+                {isShowModal
+                    ?
+                    <ModalFullScreen visible={isShowModal} setVisible={setIsShowModal} exitBtn={true}
+                                     exitBackground={true}>
+                        <form className={cl.createForm}>
+                            <Input
+                                id={'file-name'}
+                                type={'text'}
+                                name={InputNames.FILE_NAME}
+                                formValidator={formValidator}
+                                indexInValidator={0}
+                                value={nameOfObject}
+                                setValue={setNameOfObject}
+                                placeholder={'Название'}
+                            />
+                            <Button
+                                onClick={handleChangeContent}>
+                                {typeOfOption === FileBrowserVoids.RENAME
+                                    ? 'Переименовать'
+                                    : 'Создать'
+                                }
+                            </Button>
+                        </form>
+                    </ModalFullScreen>
+                    : ''
+                }
+            </div>
     );
 };
 
