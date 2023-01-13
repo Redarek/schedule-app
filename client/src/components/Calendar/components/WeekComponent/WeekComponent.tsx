@@ -154,8 +154,13 @@ const WeekComponent: FC<WeekComponentProps> = ({weekDayNames, firstDay, week}) =
                 <div className={cl.weekDates}>
                     {weekDays.findIndex(day => day.date.getTime() === new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()) !== -1
                         ? <div
-                            style={{marginTop: `${timeMarkerMarginTop()}px`, marginLeft: `${timeMarkerMarginLeft()}%`}}
-                            className={cl.timeMarker}>
+                            className={cl.timeMarker}
+                            style={{
+                                marginTop: `${timeMarkerMarginTop()}px`,
+                                marginLeft: `${timeMarkerMarginLeft()}%`,
+                                zIndex: `999`
+                            }}
+                        >
                             <div className={cl.timeMarkerCircle}></div>
                         </div>
                         : ''
@@ -173,21 +178,18 @@ const WeekComponent: FC<WeekComponentProps> = ({weekDayNames, firstDay, week}) =
 
                         {weekDays.map(day =>
                             <div className={cl.tasksWrapper} key={day.date.getTime()}>
-                                {/*{new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime() === day.date.getTime()*/}
-                                {/*    ? <div style={{marginTop: `${timeMarkerMarginTop(day.date)}px`}}*/}
-                                {/*           className={cl.timeMarker}>*/}
-                                {/*        <div className={cl.timeMarkerCircle}></div>*/}
-                                {/*    </div>*/}
-                                {/*    : ''*/}
-                                {/*}*/}
 
                                 {day.tasks.map((task, index) =>
                                     task.start.getDate() === day.date.getDate()
                                     && task.firstEnd.getDate() === day.date.getDate()
-                                        ? <DayTaskWeek day={day.date} task={task} key={index} onClick={() => {
-                                            setTaskInfoIsVisible(true);
-                                            setSelectTask(task)
-                                        }}/>
+                                        ? <DayTaskWeek
+                                            day={day}
+                                            task={task}
+                                            key={index}
+                                            onClick={() => {
+                                                setTaskInfoIsVisible(true);
+                                                setSelectTask(task)
+                                            }}/>
                                         : ''
                                 )}
                             </div>

@@ -1,61 +1,49 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {ITasks} from "../../../../types/ITasks";
 import cl from "./DayTaskWeek.module.css";
+import {IDay} from "../../models/CalendarTypes";
 
 interface DayTaskOnWeekProps {
     task: ITasks,
-    day: Date,
+    day: IDay,
     onClick: () => void
     key?: number
 }
 
 const DayTaskWeek: FC<DayTaskOnWeekProps> = ({task, onClick, day}) => {
-    // const taskPosition = (task: ITasks) => {
-    //     let margin = task.start.getHours() * 50 + 50;
-    //     let height = -(task.start.getHours() - task.firstEnd.getHours()) * 50;
-    //     if (task.start.getMinutes() <= 15 && task.firstEnd.getMinutes() >= 8) {
-    //         margin = margin + 15
-    //         height = height - 15
-    //     }
-    //     if (task.start.getMinutes() > 15 && task.start.getMinutes() <= 30) {
-    //         margin = margin + 25
-    //         height = height - 25
-    //
-    //     }
-    //     if (task.start.getMinutes() > 30 && task.start.getMinutes() <= 45) {
-    //         margin = margin + 35
-    //         height = height - 35
-    //
-    //     }
-    //     if (task.start.getMinutes() > 45 && task.start.getMinutes() <= 59) {
-    //         margin = margin + 45
-    //         height = height - 45
-    //     }
-    //     if (task.firstEnd.getMinutes() <= 15 && task.firstEnd.getMinutes() >= 8) {
-    //         height = height + 15
-    //     }
-    //     if (task.firstEnd.getMinutes() > 15 && task.firstEnd.getMinutes() <= 30) {
-    //         height = height + 25
-    //     }
-    //     if (task.firstEnd.getMinutes() > 30 && task.firstEnd.getMinutes() <= 45) {
-    //         height = height + 35
-    //
-    //     }
-    //     if (task.firstEnd.getMinutes() > 45 && task.firstEnd.getMinutes() <= 59) {
-    //         height = height + 45
-    //     }
-    //     return {height: `${height}px`, marginTop: `${margin}px`};
-    // };
-
-
     const pxInMs = 1200 / 86400000
 
     function taskPosition() {
-        const timeStartInDay = -(day.getTime() - task.start.getTime())
+        const timeStartInDay = -(day.date.getTime() - task.start.getTime())
         const taskDuration = task.firstEnd.getTime() - task.start.getTime()
         let marginTop = pxInMs * timeStartInDay + 50
         let height = pxInMs * taskDuration
-        return {height: `${height}px`, marginTop: `${marginTop}px`};
+
+        let tasksForTheDay = day.tasks.filter(tas =>
+            tas.start.getDate() === day.date.getDate()
+            && task.firstEnd.getDate() === day.date.getDate())
+
+        let index = tasksForTheDay.findIndex(tas => tas._id === task._id)
+
+        let concurrentTasks: ITasks[] = []
+
+        for (let i = 0; i < index + 1; i++) {
+            if (task.start.getTime() <= tasksForTheDay[i].firstEnd.getTime()) {
+                concurrentTasks.push(tasksForTheDay[i])
+            }
+        }
+        let ind = concurrentTasks.findIndex(ta => ta._id === task._id)
+        let marginLeft = (100 / concurrentTasks.length) * ind;
+        let width = 100 / concurrentTasks.length;
+
+
+        return {
+            height: `${height}px`,
+            marginTop: `${marginTop}px`,
+            zIndex: `${index}`,
+            marginLeft: `${marginLeft}%`,
+            width: `calc(${width}% - 4px)`
+        };
     }
 
     let taskCompleteStyle = 'none';
@@ -69,8 +57,6 @@ const DayTaskWeek: FC<DayTaskOnWeekProps> = ({task, onClick, day}) => {
                 {task.title}
             </div>
         </div>
-
-
     );
 };
 

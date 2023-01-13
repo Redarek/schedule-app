@@ -142,8 +142,9 @@
 
 .tasksWrapper {
     width: 100%;
-    display: flex;
-    overflow-x: auto;
+    padding: 0 2px;
+    position: relative;
+    /*overflow-x: auto;*/
 }
 
 .timeMarker {
