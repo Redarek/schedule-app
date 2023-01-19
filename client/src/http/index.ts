@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {AuthResponse} from '../types/AuthResponse';
 
-export const API_URL = process.env.NODE_ENV === "production" ? 'https://pointsystem.rushools.ru/api' : 'http://localhost:8080/api';
+export const API_URL = process.env.NODE_ENV === "production" ? 'https://pointsystem.rushools.ru/api' : 'http://localhost:3500/api';
 
 const $api = axios.create({
     withCredentials: true,
