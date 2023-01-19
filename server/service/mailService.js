@@ -178,7 +178,7 @@ class MailService {
                         <!-- start copy -->
                         <tr>
                             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                            <p style="margin: 0;">Нажмите на кнопку ниже, чтобы активировать ваш аккаунт. Если вы не создавали аккаунт на сайте <a href="https://localhost:8080">Schedule-app</a>, вы можете удалить письмо.</p>
+                            <p style="margin: 0;">Нажмите на кнопку ниже, чтобы активировать ваш аккаунт. Если вы не создавали аккаунт на сайте <a href="https://pointsystem.rushools.ru">Schedule-app</a>, вы можете удалить письмо.</p>
                             </td>
                         </tr>
                         <!-- end copy -->
