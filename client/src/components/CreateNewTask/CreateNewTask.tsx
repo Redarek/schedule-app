@@ -61,18 +61,56 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
     }
 
     useEffect(() => {
+        if (categories.length > 0) {
+            switch (categories[0]) {
+                case Categories.CATEGORY_A:
+                    setFirstReward(5)
+                    setSecondReward(3)
+                    setPenalty(3)
+                    if (!taskDeadline) {
+                        console.log(1)
+                        setSecondReward(5)
+                        setPenalty(0)
+                    }
+                    break;
+                case Categories.CATEGORY_B:
+                    setFirstReward(10)
+                    setSecondReward(8)
+                    setPenalty(5)
+                    if (!taskDeadline) {
+                        setSecondReward(10)
+                        setPenalty(0)
+                    }
+                    break;
+                case Categories.CATEGORY_C:
+                    setFirstReward(15)
+                    setSecondReward(10)
+                    setPenalty(7)
+                    if (!taskDeadline) {
+                        setSecondReward(15)
+                        setPenalty(0)
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            setFirstReward(0)
+            setSecondReward(0)
+            setPenalty(0)
+        }
         if (!taskDeadline) {
             setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
             setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
-            setSecondReward(0)
-            setPenalty(0)
+            // setSecondReward(0)
+            // setPenalty(0)
         } else {
             setStart(getInputDate(startDate))
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
             setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
         }
-    }, [taskDeadline])
+    }, [categories, taskDeadline])
 
     const inputNames = [
         InputNames.TASK_TITLE,
@@ -188,6 +226,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                     {categoriesList.map((category) =>
                         <div className={cl.category} key={category}>
                             <CheckBox
+                                type={"radio"}
                                 value={category}
                                 list={categories}
                                 setList={setCategories}
@@ -200,11 +239,12 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
                               type={"employees"} position={"bottom"}/>
             </div>
-            {user.roles.includes(Roles.TASK_MANAGER) && taskRewards
+            {!user.roles.includes(Roles.TASK_MANAGER) && taskRewards
                 ? <div className={cl.rewards}>
                     <div className={cl.rewardsInputWrap}>
                         <label htmlFor="firstReward">{!taskDeadline ? 'Награда:' : 'Первая награда:'} </label>
                         <Input id="firstReward"
+                               readonly={categories.length !== 0}
                                formValidator={formValidator}
                                setValue={setFirstReward}
                                indexInValidator={4}
@@ -219,6 +259,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                         ? <div className={cl.rewardsInputWrap}>
                             <label htmlFor="secondReward">Вторая награда: </label>
                             <Input id="secondReward"
+                                   readonly={categories.length !== 0}
                                    formValidator={formValidator}
                                    name={InputNames.TASK_REWARD}
                                    setValue={setSecondReward}
@@ -235,6 +276,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                         ? <div className={cl.rewardsInputWrap}>
                             <label htmlFor="penalty">Штраф: </label>
                             <Input id="penalty"
+                                   readonly={categories.length !== 0}
                                    formValidator={formValidator}
                                    name={InputNames.TASK_REWARD}
                                    setValue={setPenalty}
@@ -279,7 +321,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                         setTaskDescription(!taskDescription)
                     }}>Добавить описание
                 </div>
-                {user.roles.includes(Roles.TASK_MANAGER)
+                {!user.roles.includes(Roles.TASK_MANAGER)
                     ? <div
                         className={[cl.settingBtn, taskRewards ? cl.settingBtnActive : ''].join(' ')}
                         onClick={(e: React.MouseEvent<HTMLDivElement>) => {

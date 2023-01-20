@@ -158,6 +158,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                             {categoriesList.map((category) =>
                                 <div className={cl.category} key={category}>
                                     <CheckBox
+                                        type={"radio"}
                                         value={category}
                                         list={categories}
                                         setList={setCategories}
