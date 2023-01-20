@@ -123,7 +123,8 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
                             )}
                         </div>
                         {day.tasks.length > 3
-                            ? <div className={cl.tasksCount} onClick={() => {
+                            ? <div className={cl.tasksCount} onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+                                event.stopPropagation()
                                 setTasksListData({date: day.date, tasks: day.tasks});
                                 setTasksListIsVisible(true)
                             }
