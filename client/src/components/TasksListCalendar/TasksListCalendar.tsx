@@ -47,10 +47,15 @@ const TasksListCalendar: FC<TasksListCalendarProps> = ({tasks, date}) => {
             <span className={cl.date}>{date.getDate()} {getMonthName()}</span>
             <div className={cl.tasks}>
                 {tasks.map(task =>
-                    <div className={cl.task} key={task._id} onClick={() => {
-                        setTask(task);
-                        setIsVisibleTaskCard(true);
-                    }}>
+                    <div
+                        className={cl.task}
+                        key={task._id}
+                        onClick={() => {
+                            setTask(task);
+                            setIsVisibleTaskCard(true);
+                        }}
+                        style={{textDecoration: task.complete ? 'line-through' : ''}}
+                    >
                         {task.title}
                     </div>
                 )}
