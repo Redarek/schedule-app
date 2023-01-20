@@ -21,7 +21,7 @@ const RegistrationForm: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     // const [spec, setSpec] = useState<Categories[]>([])
-    const [categories, setCategories] = useState<Categories[]>([])
+    // const [categories, setCategories] = useState<Categories[]>([])
 
 
 
@@ -33,7 +33,7 @@ const RegistrationForm: FC = () => {
 
     const handleRegistration = () => {
         if (formValidator.getFormStatus()) {
-            dispatch(registration({email: email, password: password, name: name, categories: categories}))
+            dispatch(registration({email: email, password: password, name: name}))
             if (registrationError === '') navigate("/login");
         }
     }
@@ -80,18 +80,18 @@ const RegistrationForm: FC = () => {
                     value={name}
                     setValue={setName}
                 />
-                <label className={cl.auth__label}>Категория:</label>
-                <div className={cl.categories}>
-                    {categoriesList.map((category) =>
-                        <div className={cl.category} key={category}>
-                            <CheckBox
-                                value={category}
-                                list={categories}
-                                setList={setCategories}
-                            />
-                        </div>
-                    )}
-                </div>
+                {/*<label className={cl.auth__label}>Категория:</label>*/}
+                {/*<div className={cl.categories}>*/}
+                {/*    {categoriesList.map((category) =>*/}
+                {/*        <div className={cl.category} key={category}>*/}
+                {/*            <CheckBox*/}
+                {/*                value={category}*/}
+                {/*                list={categories}*/}
+                {/*                setList={setCategories}*/}
+                {/*            />*/}
+                {/*        </div>*/}
+                {/*    )}*/}
+                {/*</div>*/}
                 <button
                     className={cx(cl.auth__button, cl.auth__button_registration)}
                     onClick={(e) => {

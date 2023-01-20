@@ -9,7 +9,7 @@ export interface IUser {
     isActivated: boolean;
     roles: Roles[];
     name: string;
-    categories: Categories[];
+    // categories: Categories[];
     balance: number;
     icon: string;
     latinName: string;

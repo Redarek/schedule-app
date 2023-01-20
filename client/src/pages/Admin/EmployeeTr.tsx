@@ -115,9 +115,9 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
             <td className={cl.nameTd} onClick={() => navigate(`/employee-page/${employee.latinName}`)}>
                 {employee.name}
             </td>
-            <td className={cl.specTd}>
-                {employee.categories}
-            </td>
+            {/*<td className={cl.specTd}>*/}
+            {/*    {employee.categories}*/}
+            {/*</td>*/}
             <td className={cl.emailTd}>
                 {employee.email.length >= 24
                     ? employee.email.substring(0, 24) + '...'

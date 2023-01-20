@@ -19,9 +19,6 @@ const RolesPage = () => {
                                 <th className={cl.nameTh}>
                                     Имя:
                                 </th>
-                                <th className={cl.specTh}>
-                                    Специализация:
-                                </th>
                                 <th className={cl.emailTh}>
                                     Email:
                                 </th>

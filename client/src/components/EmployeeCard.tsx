@@ -152,7 +152,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                              onClick={() => navigator.clipboard.writeText(`${employee.email}`)}>Email: <span>{employee.email}</span>
                         </div>
                         <div className={cl.infoText}>Имя: <span>{employee.name}</span></div>
-                        <div className={cl.infoText}>Категории: <span>{employee.categories}</span></div>
+                        {/*<div className={cl.infoText}>Категории: <span>{employee.categories}</span></div>*/}
                         <div className={cl.infoText}>
                             Все бонусы:<span>{isLoading ? 'loading' : employeeAllBonuses}</span>
                         </div>

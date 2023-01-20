@@ -19,7 +19,7 @@ interface RegObject {
     email: string;
     password: string;
     name: string;
-    categories: Categories[];
+    // categories: Categories[];
 }
 
 export const login = createAsyncThunk(
@@ -40,7 +40,7 @@ export const registration = createAsyncThunk(
     'user/registration',
     async (regObject: RegObject, thunkAPI) => {
         try {
-            const response = await AuthService.registration(regObject.email, regObject.password, regObject.name, regObject.categories);
+            const response = await AuthService.registration(regObject.email, regObject.password, regObject.name);
             localStorage.setItem('token', response.data.accessToken);
             return response.data;
         } catch (e: any) {
