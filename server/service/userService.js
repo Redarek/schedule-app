@@ -6,7 +6,7 @@ const tokenService = require('./tokenService');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/ApiError');
 const roleModel = require('../models/roleModel');
-const API_URL = process.env.NODE_ENV === "production" ? 'https://schedule-app-58y8.onrender.com/api' : 'http://localhost:8080/api';
+const API_URL = process.env.NODE_ENV === "production" ? 'https://pointsystem.rushools.ru/api' : 'http://localhost:8080/api';
 class UserService {
     async registration(email, password, name, spec) {
         const candidateEmail = await userModel.findOne({email});
