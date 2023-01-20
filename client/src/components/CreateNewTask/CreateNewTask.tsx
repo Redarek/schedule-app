@@ -1,4 +1,4 @@
-import React, {FC, Fragment, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import Button from "../UI/Button/Button";
@@ -20,11 +20,12 @@ interface CreateNewTaskProps {
 const categoriesList = Object.values(Categories)
 
 const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => {
+    const {user} = useAppSelector(state => state.authSlice.user)
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
-    const [categories, setCategories] = useState<Categories[]>([])
-    const [employeeName, setEmployeeName] = useState<string>('Сотрудник')
+    const [categories, setCategories] = useState<Categories[]>([Categories.CATEGORY_C])
+    const [employeeName, setEmployeeName] = useState<string>(user.name)
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)

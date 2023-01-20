@@ -4,22 +4,21 @@ import cl from "./CheckBox.module.css";
 interface CheckBoxProps {
     value: string,
     list: any[],
-    setList: (str:any[]) => void
+    setList: (str: any[]) => void
 }
 
 const CheckBox: FC<CheckBoxProps> = ({value, list, setList}) => {
-    const [checked, setChecked] = useState<boolean>(false)
+    const [checked, setChecked] = useState<boolean>(list.includes(value))
 
-    useEffect(() => {
+    function handleChecked() {
         let newList = list
-        if (!checked) {
+        if (list.includes(value)) {
             newList = newList.filter(val => val !== value)
         } else {
             newList.push(value)
         }
         setList([...newList])
-    }, [checked])
-
+    }
 
     return (
         <label htmlFor={value} className={cl.label}>
@@ -28,7 +27,10 @@ const CheckBox: FC<CheckBoxProps> = ({value, list, setList}) => {
                 className={cl.input}
                 type="checkbox"
                 id={value}
-                onChange={() => setChecked(!checked)}
+                onChange={() => {
+                    setChecked(!checked)
+                    handleChecked()
+                }}
             />
             {value}
         </label>
