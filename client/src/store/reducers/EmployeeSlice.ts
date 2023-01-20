@@ -42,7 +42,7 @@ const employeeSlice = createSlice({
             for (let i = 0; i < users.length; i++) {
                 state.employees[i] = {
                     ...users[i],
-                    latinName: translit(users[i].name)
+                    // latinName: translit(users[i].name)
                 }
             }
             state.error = '';
@@ -61,7 +61,7 @@ const employeeSlice = createSlice({
             state.error = '';
             state.employee = {
                 ...action.payload,
-                latinName: translit(action.payload.name),
+                // latinName: translit(action.payload.name),
             }
             state.isLoading = false;
         },

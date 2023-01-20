@@ -49,8 +49,13 @@ const TaskComponent: FC<TaskComponentProps> = ({
 
     let minStrLength = 12;
     const [taskTitle, setTaskTitle] = useState(task.title)
+
     useEffect(() => {
-        if (window.screen.width < 768) minStrLength = 6
+        if (window.innerWidth < 700) minStrLength = 10
+        if (window.innerWidth < 600) minStrLength = 8
+        if (window.innerWidth < 540) minStrLength = 6
+        if (window.innerWidth < 460) minStrLength = 4
+        if (window.innerWidth < 320) minStrLength = 3
         if (((width + 10) / 100) * minStrLength < taskTitle.length) {
             setTaskTitle(taskTitle.substring(0, ((width + 10) / 100) * minStrLength) + '...')
         }
@@ -58,10 +63,11 @@ const TaskComponent: FC<TaskComponentProps> = ({
 
     return (
         <div className={cl.task} style={{width: `${width}%`}}>
-            <div className={cl.taskInfo} onClick={() => {
+            <div className={cl.taskInfo} onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+                event.stopPropagation()
                 setTaskInfoIsVisible(true);
                 setSelectTask(task)
-            }} style={{textDecoration: taskCompleteStyle}}>{task.title}</div>
+            }} style={{textDecoration: taskCompleteStyle}}>{taskTitle}</div>
         </div>
     );
 };

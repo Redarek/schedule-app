@@ -15,14 +15,14 @@ interface CalendarComponentProps {
 }
 
 const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
-    if (!localStorage.getItem('CalendarMode')) localStorage.setItem('CalendarMode', 'Месяц')
+    if (!localStorage.getItem('CalendarMode')) localStorage.setItem('CalendarMode', 'Неделя')
 
     const [createTaskWindowIsVisible, setCreateTaskWindowIsVisible] = useState(false)
 
     const [firstDayFull, setFirstDayFull] = useState<WeekDaysFull.MONDAY | WeekDaysFull.SUNDAY>(WeekDaysFull.MONDAY);
     const [firstDay, setFirstDay] = useState<WeekDays.MON | WeekDays.SU>(WeekDays.MON);
 
-    const [calendarMode, setCalendarMode] = useState(CalendarModes.MONTH)
+    const [calendarMode, setCalendarMode] = useState(CalendarModes.WEEK)
 
     const modes = ["Месяц", "Неделя"]
     const firstDays = ['Понедельник', 'Воскресенье']
@@ -35,14 +35,13 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
     }
 
     useEffect(() => {
-        // if (tasks.length !== 0)
         setCalendar(new Calendar(calendarMode, firstDay, tasks))
 
-        if (localStorage.getItem('CalendarMode')
-            && calendarMode !== localStorage.getItem('CalendarMode')) {
-            //@ts-ignore
-            setCalendarMode(localStorage.getItem('CalendarMode'))
-        }
+        // if (localStorage.getItem('CalendarMode')
+        //     && calendarMode !== localStorage.getItem('CalendarMode')) {
+        //     //@ts-ignore
+        //     setCalendarMode(localStorage.getItem('CalendarMode'))
+        // }
     }, [tasks.length, calendarMode])
 
     const calendarModes = [
@@ -76,7 +75,9 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                 {createTaskWindowIsVisible
                     ? <ModalFullScreen visible={createTaskWindowIsVisible} exitBtn={true}
                                        setVisible={setCreateTaskWindowIsVisible} exitBackground={false}>
-                        <CreateNewTask setModalVisible={setCreateTaskWindowIsVisible}/>
+                        <CreateNewTask
+                            startDate={new Date()}
+                            setModalVisible={setCreateTaskWindowIsVisible}/>
                     </ModalFullScreen>
                     : ''
                 }

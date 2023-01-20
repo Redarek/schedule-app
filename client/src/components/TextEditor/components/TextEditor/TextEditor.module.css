@@ -1,0 +1,7 @@
+.wrapper {
+    /*height: calc(100vh - 40px);*/
+    height: 620px;
+    width: 1024px;
+    /*overflow: auto;*/
+    overflow: hidden;
+}

@@ -18,6 +18,7 @@ interface InputProps {
     classes?: any;
     pattern?: string;
     min?: number;
+    readonly?: boolean
 }
 
 
@@ -33,7 +34,8 @@ const Input: FC<InputProps> = ({
                                    showBtn,
                                    classes,
                                    pattern,
-                                   min
+                                   min,
+                                   readonly
                                }) => {
 
     //SHOW INPUT VALUE start
@@ -100,6 +102,7 @@ const Input: FC<InputProps> = ({
         <div className={clStyles.join(' ')}>
             {error && <div className={cl.errorFlag}></div>}
             <input
+                readOnly={readonly}
                 pattern={pattern}
                 className={cl.input}
                 placeholder={placeholder}

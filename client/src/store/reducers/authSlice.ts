@@ -39,7 +39,7 @@ const authSlice = createSlice({
             if (action.payload != undefined) {
                 state.user = action.payload
                 state.isAuth = true;
-                state.user.user.latinName = translit(state.user.user.name)
+                // state.user.user.latinName = translit(state.user.user.name)
                 state.user.user.balance = 0;
             }
             state.error = '';
@@ -70,7 +70,7 @@ const authSlice = createSlice({
             if (action.payload != undefined) {
                 state.isAuth = true;
                 state.user = action.payload;
-                state.user.user.latinName = translit(state.user.user.name)
+                // state.user.user.latinName = translit(state.user.user.name)
             }
             state.isLoading = false;
         },

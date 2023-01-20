@@ -5,11 +5,14 @@ import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import Input from "./UI/Input/Input";
 import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
-import {Specialities} from "../types/Specialities";
+import {Categories} from "../types/Categories";
 import {registration} from "../store/reducers/ActionCreators";
 import {FormValidator} from "./UI/Input/models/FormValidator";
 import {InputNames} from "./UI/Input/models/InputValidator";
+import CheckBox from "./UI/CheckBox/CheckBox";
 
+
+const categoriesList = Object.values(Categories)
 
 const RegistrationForm: FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -17,7 +20,6 @@ const RegistrationForm: FC = () => {
     const [name, setName] = useState<string>('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [spec, setSpec] = useState<string>('Категория')
 
 
     const {registrationError} = useAppSelector(state => state.authSlice)
@@ -27,8 +29,8 @@ const RegistrationForm: FC = () => {
 
 
     const handleRegistration = () => {
-        if (formValidator.getFormStatus() && spec !== 'Категория') {
-            dispatch(registration({email: email, password: password, name: name, spec: spec}))
+        if (formValidator.getFormStatus()) {
+            dispatch(registration({email: email, password: password, name: name}))
             if (registrationError === '') navigate("/login");
         }
     }
@@ -75,13 +77,18 @@ const RegistrationForm: FC = () => {
                     value={name}
                     setValue={setName}
                 />
-                <DropDownMenu
-                    type={"string"}
-                    position={"bottom"}
-                    selectItem={spec}
-                    setSelectItem={setSpec}
-                    items={Object.values(Specialities)}
-                />
+                {/*<label className={cl.auth__label}>Категория:</label>*/}
+                {/*<div className={cl.categories}>*/}
+                {/*    {categoriesList.map((category) =>*/}
+                {/*        <div className={cl.category} key={category}>*/}
+                {/*            <CheckBox*/}
+                {/*                value={category}*/}
+                {/*                list={categories}*/}
+                {/*                setList={setCategories}*/}
+                {/*            />*/}
+                {/*        </div>*/}
+                {/*    )}*/}
+                {/*</div>*/}
                 <button
                     className={cx(cl.auth__button, cl.auth__button_registration)}
                     onClick={(e) => {

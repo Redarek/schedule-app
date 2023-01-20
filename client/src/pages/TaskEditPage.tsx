@@ -8,13 +8,17 @@ import Button from "../components/UI/Button/Button";
 import {FormValidator} from "../components/UI/Input/models/FormValidator";
 import {InputNames} from "../components/UI/Input/models/InputValidator";
 import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
-import {Specialities} from "../types/Specialities";
+import {Categories} from "../types/Categories";
 import {getInputDate} from "../components/UI/Input/inputDateFormat";
+import CheckBox from "../components/UI/CheckBox/CheckBox";
+import {Roles} from "../types/Roles";
 
 interface TaskEditPageProps {
 
 }
 
+
+const categoriesList = Object.values(Categories)
 
 const TaskEditPage: FC<TaskEditPageProps> = () => {
     const navigate = useNavigate()
@@ -29,7 +33,8 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
 
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
-    const [spec, setSpec] = useState<string>('')
+    // const [spec, setSpec] = useState<string>('')
+    const [categories, setCategories] = useState<Categories[]>([])
     const [empl, setEmpl] = useState<string>('')
     const [firstReward, setFirstReward] = useState<number>(Number(''))
     const [secondReward, setSecondReward] = useState<number>(Number(''))
@@ -59,7 +64,8 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
         if (task._id) {
             setTitle(task.title)
             setText(task.text)
-            setSpec(task.spec)
+            setCategories(task.categories)
+            // setSpec(task.spec)
             setEmpl(task.employee)
             setFirstReward(Number(task.firstReward))
             setSecondReward(Number(task.secondReward))
@@ -88,7 +94,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     _id: taskId,
                     title: title,
                     text: text,
-                    spec: spec,
+                    categories: categories,
                     employee: empl,
                     firstReward: firstReward,
                     secondReward: secondReward,
@@ -146,59 +152,75 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 </div>
                 <div className={cl.specEdit}>
                     <div className={cl.inputWrap}>
-                        <label className={cl.label} htmlFor="spec">Специализация:</label>
-                        <DropDownMenu
-                            type={"string"}
-                            position={'bottom'}
-                            selectItem={spec}
-                            setSelectItem={setSpec}
-                            items={Object.values(Specialities)}/>
+                        {/*<label className={cl.label} htmlFor="spec">Специализация:</label>*/}
+                        <label className={cl.label}>Категория:</label>
+                        <div className={cl.categories}>
+                            {categoriesList.map((category) =>
+                                <div className={cl.category} key={category}>
+                                    <CheckBox
+                                        type={"radio"}
+                                        value={category}
+                                        list={categories}
+                                        setList={setCategories}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        {/*<DropDownMenu*/}
+                        {/*    type={"string"}*/}
+                        {/*    position={'bottom'}*/}
+                        {/*    selectItem={spec}*/}
+                        {/*    setSelectItem={setSpec}*/}
+                        {/*    items={Object.values(Categories)}/>*/}
                     </div>
                 </div>
-                <div className={cl.pointsEdit}>
-                    <div className={cl.inputWrap}>
-                        <label htmlFor="first-reward" className={cl.label}>Первая награда:</label>
-                        <Input
-                            formValidator={formValidator}
-                            id={'first-reward'}
-                            placeholder={'0'}
-                            type='number'
-                            min={0}
-                            name={InputNames.TASK_REWARD}
-                            setValue={setFirstReward}
-                            indexInValidator={1}
-                            value={firstReward}
-                        />
+                {user?.roles?.includes(Roles.TASK_MANAGER)
+                    ? <div className={cl.pointsEdit}>
+                        <div className={cl.inputWrap}>
+                            <label htmlFor="first-reward" className={cl.label}>Первая награда:</label>
+                            <Input
+                                formValidator={formValidator}
+                                id={'first-reward'}
+                                placeholder={'0'}
+                                type='number'
+                                min={0}
+                                name={InputNames.TASK_REWARD}
+                                setValue={setFirstReward}
+                                indexInValidator={1}
+                                value={firstReward}
+                            />
+                        </div>
+                        <div className={cl.inputWrap}>
+                            <label htmlFor="second-reward" className={cl.label}>Вторая награда:</label>
+                            <Input
+                                id={'second-reward'}
+                                placeholder={'0'}
+                                formValidator={formValidator}
+                                indexInValidator={2}
+                                type={'number'}
+                                min={0}
+                                name={InputNames.TASK_REWARD}
+                                value={secondReward}
+                                setValue={setSecondReward}
+                            />
+                        </div>
+                        <div className={cl.inputWrap}>
+                            <label htmlFor="penalty" className={cl.label}>Штраф:</label>
+                            <Input
+                                name={InputNames.TASK_REWARD}
+                                formValidator={formValidator}
+                                indexInValidator={3}
+                                setValue={setPenalty}
+                                id={'penalty'}
+                                placeholder={'0'}
+                                type={'number'}
+                                value={penalty}
+                                min={0}
+                            />
+                        </div>
                     </div>
-                    <div className={cl.inputWrap}>
-                        <label htmlFor="second-reward" className={cl.label}>Вторая награда:</label>
-                        <Input
-                            id={'second-reward'}
-                            placeholder={'0'}
-                            formValidator={formValidator}
-                            indexInValidator={2}
-                            type={'number'}
-                            min={0}
-                            name={InputNames.TASK_REWARD}
-                            value={secondReward}
-                            setValue={setSecondReward}
-                        />
-                    </div>
-                    <div className={cl.inputWrap}>
-                        <label htmlFor="penalty" className={cl.label}>Штраф:</label>
-                        <Input
-                            name={InputNames.TASK_REWARD}
-                            formValidator={formValidator}
-                            indexInValidator={3}
-                            setValue={setPenalty}
-                            id={'penalty'}
-                            placeholder={'0'}
-                            type={'number'}
-                            value={penalty}
-                            min={0}
-                        />
-                    </div>
-                </div>
+                    : ''
+                }
                 <div className={cl.dateWrap}>
                     <div className={cl.inputWrap}>
                         <label htmlFor={'start'} className={cl.label}>Начало:</label>

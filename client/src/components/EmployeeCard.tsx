@@ -9,7 +9,7 @@ import {editUser} from "../store/reducers/authSlice";
 import {useNavigate} from "react-router-dom";
 import {translit} from "../utils/transliter";
 import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
-import {Specialities} from "../types/Specialities";
+import {Categories} from "../types/Categories";
 import {FormValidator} from "./UI/Input/models/FormValidator";
 import {InputNames} from "./UI/Input/models/InputValidator";
 
@@ -28,7 +28,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     useEffect(() => {
         setEmail(employee.email);
         setName(employee.name);
-        setSpec(employee.spec)
+        // setSpec(employee.spec)
     }, [employee])
 
 
@@ -36,7 +36,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
 
     const [email, setEmail] = useState<string>(employee.email);
     const [name, setName] = useState<string>(employee.name);
-    const [spec, setSpec] = useState<string>(employee.spec)
+    // const [spec, setSpec] = useState<string>(employee.spec)
 
     const [viewMode, setViewMode] = useState<"right" | "bottom">('right')
 
@@ -55,10 +55,10 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
         // setEditMenuIsShow(!editMenuIsShow)
         const changedUser: IUser = {
             ...employee,
-            spec: spec,
+            // spec: spec,
             email: email,
             name: name,
-            latinName: translit(name),
+            // latinName: translit(name),
         }
         setChangedUser(changedUser)
         if (!formValidator.getFormStatus()) {
@@ -140,19 +140,19 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
                                 />
                             </div>
                         </div>
-                        <div className={cl.infoText}>
-                            <div className={cl.input}>
-                                <DropDownMenu type={"string"} position={viewMode} selectItem={spec}
-                                              setSelectItem={setSpec} items={Object.values(Specialities)}/>
-                            </div>
-                        </div>
+                        {/*<div className={cl.infoText}>*/}
+                        {/*    <div className={cl.input}>*/}
+                        {/*        <DropDownMenu type={"string"} position={viewMode} selectItem={spec}*/}
+                        {/*                      setSelectItem={setSpec} items={Object.values(Categories)}/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                     : <div className={cl.infoContainer}>
                         <div className={cl.infoText}
                              onClick={() => navigator.clipboard.writeText(`${employee.email}`)}>Email: <span>{employee.email}</span>
                         </div>
                         <div className={cl.infoText}>Имя: <span>{employee.name}</span></div>
-                        <div className={cl.infoText}>Специализация: <span>{employee.spec}</span></div>
+                        {/*<div className={cl.infoText}>Категории: <span>{employee.categories}</span></div>*/}
                         <div className={cl.infoText}>
                             Все бонусы:<span>{isLoading ? 'loading' : employeeAllBonuses}</span>
                         </div>

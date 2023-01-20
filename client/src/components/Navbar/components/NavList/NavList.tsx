@@ -2,8 +2,8 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from './NavList.module.css'
 import ListItem from "../ListItem/ListItem";
 import {IList} from "../../types/INavbar";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {setNavbarOpenListsTitle} from "../../store/reducers/navbarSlice";
+import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
+import {setNavbarOpenListsTitle} from "../../../../store/reducers/navbarSlice";
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 
 interface NavListProps {

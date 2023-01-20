@@ -1,0 +1,45 @@
+.context {
+    max-height: 500px;
+    border-radius: 5px;
+    overflow-y: auto;
+    padding: 10px 0;
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    /*justify-content: flex-end;*/
+    gap: 5px;
+
+}
+
+.options {
+    width: 200px;
+    border: 1px solid #6c6c6c;
+    z-index: 200;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fdfdfd;
+    /*height: 30px;*/
+
+}
+
+.additionalOptions {
+    padding: 5px;
+    border-radius: 5px;
+    width: 200px;
+    border: 1px solid #6c6c6c;
+}
+
+.option {
+    border-radius: 5px;
+    line-height: 30px;
+    padding-left: 5px;
+    cursor: pointer;
+    width: 100%;
+    height: 30px;
+    transition: all 200ms linear;
+}
+
+.option:hover {
+    background-color: #dedede;
+}
+

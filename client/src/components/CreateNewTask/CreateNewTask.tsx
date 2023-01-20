@@ -1,34 +1,47 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
-import {Specialities} from "../../types/Specialities";
+import {Categories} from "../../types/Categories";
 import {FormValidator} from "../UI/Input/models/FormValidator";
 import {InputNames} from "../UI/Input/models/InputValidator";
 import Input from "../UI/Input/Input";
 import {getInputDate} from "../UI/Input/inputDateFormat";
+import CheckBox from "../UI/CheckBox/CheckBox";
+import {Roles} from "../../types/Roles";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
+    startDate: Date
 }
 
-const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
+const categoriesList = Object.values(Categories)
+
+function Fragment() {
+    return null;
+}
+
+const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => {
+    const {user} = useAppSelector(state => state.authSlice.user)
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
-    const [spec, setSpec] = useState<string>('Категория')
-    const [employeeName, setEmployeeName] = useState<string>('Сотрудник')
+    const [categories, setCategories] = useState<Categories[]>([Categories.CATEGORY_C])
+    const [employeeName, setEmployeeName] = useState<string>(user.name)
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)
 
-    const [start, setStart] = useState<string>(getInputDate(new Date()))
-    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 1800000)))
-    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 3600000)))
+    const [start, setStart] = useState<string>(getInputDate(startDate))
+    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
 
+    const [taskDeadline, setTaskDeadline] = useState(false)
+    const [taskDescription, setTaskDescription] = useState(false)
+    const [taskRewards, setTaskRewards] = useState(false)
 
     const setStartDate = (data: string) => {
         const date = new Date(`${data}`)
@@ -47,7 +60,58 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
         setSecondEnd(getInputDate(date))
     }
 
-    const inputNames = [
+    useEffect(() => {
+        if (categories.length > 0) {
+            switch (categories[0]) {
+                case Categories.CATEGORY_A:
+                    setFirstReward(5)
+                    setSecondReward(3)
+                    setPenalty(3)
+                    if (!taskDeadline) {
+                        setSecondReward(5)
+                        setPenalty(0)
+                    }
+                    break;
+                case Categories.CATEGORY_B:
+                    setFirstReward(10)
+                    setSecondReward(8)
+                    setPenalty(5)
+                    if (!taskDeadline) {
+                        setSecondReward(10)
+                        setPenalty(0)
+                    }
+                    break;
+                case Categories.CATEGORY_C:
+                    setFirstReward(15)
+                    setSecondReward(10)
+                    setPenalty(7)
+                    if (!taskDeadline) {
+                        setSecondReward(15)
+                        setPenalty(0)
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            setFirstReward(0)
+            setSecondReward(0)
+            setPenalty(0)
+        }
+        if (!taskDeadline) {
+            setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
+            setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+            setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+            // setSecondReward(0)
+            // setPenalty(0)
+        } else {
+            setStart(getInputDate(startDate))
+            setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+            setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+        }
+    }, [categories, taskDeadline])
+
+    let inputNames = [
         InputNames.TASK_TITLE,
         InputNames.DATE_START,
         InputNames.DATE_FIRST_END,
@@ -57,21 +121,18 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
         InputNames.TASK_REWARD,
     ]
     const formValidator = new FormValidator(inputNames)
-
     const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
 
     const handleCreate = (e: any) => {
         e.preventDefault()
         if (
             employeeName !== "Сотрудник"
-            && spec !== 'Категория'
-            && text !== ''
-            && formValidator.getFormStatus()
+            // && formValidator.getFormStatus()
         ) {
             const task: ITask = {
                 _id: '',
                 employee: employeeName,
-                spec: spec,
+                categories: categories,
                 title: title,
                 text: text,
                 firstReward: firstReward,
@@ -81,12 +142,13 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                 firstEnd: Number(new Date(firstEnd).getTime()),
                 secondEnd: Number(new Date(secondEnd).getTime())
             }
+            // console.log(task)
             dispatch(createTask(task))
             setTimeout(() => {
                 dispatch(fetchEmployeeTasks(employee._id))
             }, 700)
-            setEmployeeName('Сотрудник')
-            setSpec('Специальность')
+            setEmployeeName(user.name)
+            setCategories([])
             setTitle('')
             setText('')
             setFirstReward(0)
@@ -95,23 +157,27 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
             setModalVisible(false)
         }
     }
+
+
     return (
         <form className={cl.form}>
             <div className={cl.inputWrap}>
-                <label htmlFor="title">Заголовок: </label>
-                <Input id="title"
-                       name={InputNames.TASK_TITLE}
-                       formValidator={formValidator}
-                       setValue={setTitle}
-                       type="text"
-                       placeholder={"Title"}
-                       value={title}
-                       indexInValidator={0}
+                {/*<label htmlFor="title">Заголовок: </label>*/}
+                <Input
+                    id="title"
+                    name={InputNames.TASK_TITLE}
+                    formValidator={formValidator}
+                    setValue={setTitle}
+                    type="text"
+                    placeholder={'Название'}
+                    value={title}
+                    indexInValidator={0}
                 />
             </div>
             <div className={cl.inputWrap}>
                 <label htmlFor="start">Начало: </label>
                 <Input id="start"
+                       readonly={!taskDeadline}
                        placeholder={''}
                        type="datetime-local"
                        value={start}
@@ -125,6 +191,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
             <div className={cl.inputWrap}>
                 <label htmlFor="firstEnd">Конец: </label>
                 <Input id="firstEnd"
+                       readonly={!taskDeadline}
                        placeholder={''}
                        name={InputNames.DATE_FIRST_END}
                        type="datetime-local"
@@ -135,78 +202,133 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
                        pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                 />
             </div>
+            {taskDeadline
+                ? <div className={cl.inputWrap}>
+                    <label htmlFor="secondEnd">Доп. конец: </label>
+                    <Input id="secondEnd"
+                           placeholder={''}
+                           formValidator={formValidator}
+                           name={InputNames.DATE_SECOND_END}
+                           setValue={setSecondEndDate}
+                           type="datetime-local"
+                           value={secondEnd}
+                           indexInValidator={3}
+                           pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                    />
+                </div>
+                : ''
+            }
             <div className={cl.inputWrap}>
-                <label htmlFor="secondEnd">Доп. конец: </label>
-                <Input id="secondEnd"
-                       placeholder={''}
-                       formValidator={formValidator}
-                       name={InputNames.DATE_SECOND_END}
-                       setValue={setSecondEndDate}
-                       type="datetime-local"
-                       value={secondEnd}
-                       indexInValidator={3}
-                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                />
-            </div>
-            <div className={cl.inputWrap}>
-                <DropDownMenu selectItem={spec} setSelectItem={setSpec} items={Object.values(Specialities)}
-                              type={"string"}
-                              position={"bottom"}/>
+                <label>Категория:</label>
+                <div className={cl.categories}>
+                    {categoriesList.map((category) =>
+                        <div className={cl.category} key={category}>
+                            <CheckBox
+                                type={"radio"}
+                                value={category}
+                                list={categories}
+                                setList={setCategories}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
             <div className={cl.inputWrap}>
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
                               type={"employees"} position={"bottom"}/>
             </div>
-            <div className={cl.rewards}>
-                <div className={cl.rewardsInputWrap}>
-                    <label htmlFor="firstReward">Первая награда: </label>
-                    <Input id="firstReward"
-                           formValidator={formValidator}
-                           setValue={setFirstReward}
-                           indexInValidator={4}
-                           name={InputNames.TASK_REWARD}
-                           type="number"
-                           placeholder={"0"}
-                           value={firstReward}
-                           min={0}
-                    />
+            {!user.roles.includes(Roles.TASK_MANAGER) && taskRewards
+                ? <div className={cl.rewards}>
+                    <div className={cl.rewardsInputWrap}>
+                        <label htmlFor="firstReward">{!taskDeadline ? 'Награда:' : 'Первая награда:'} </label>
+                        <Input id="firstReward"
+                               readonly={categories.length !== 0}
+                               formValidator={formValidator}
+                               setValue={setFirstReward}
+                               indexInValidator={4}
+                               name={InputNames.TASK_REWARD}
+                               type="number"
+                               placeholder={"0"}
+                               value={firstReward}
+                               min={0}
+                        />
+                    </div>
+                    {taskDeadline
+                        ? <div className={cl.rewardsInputWrap}>
+                            <label htmlFor="secondReward">Вторая награда: </label>
+                            <Input id="secondReward"
+                                   readonly={categories.length !== 0}
+                                   formValidator={formValidator}
+                                   name={InputNames.TASK_REWARD}
+                                   setValue={setSecondReward}
+                                   type="number"
+                                   placeholder={"0"}
+                                   indexInValidator={5}
+                                   value={secondReward}
+                                   min={0}
+                            />
+                        </div>
+                        : ''
+                    }
+                    {taskDeadline
+                        ? <div className={cl.rewardsInputWrap}>
+                            <label htmlFor="penalty">Штраф: </label>
+                            <Input id="penalty"
+                                   readonly={categories.length !== 0}
+                                   formValidator={formValidator}
+                                   name={InputNames.TASK_REWARD}
+                                   setValue={setPenalty}
+                                   type="number"
+                                   placeholder={'0'}
+                                   indexInValidator={6}
+                                   value={penalty}
+                                   min={0}
+                            />
+                        </div>
+                        : ''
+                    }
                 </div>
-                <div className={cl.rewardsInputWrap}>
-                    <label htmlFor="secondReward">Вторая награда: </label>
-                    <Input id="secondReward"
-                           formValidator={formValidator}
-                           name={InputNames.TASK_REWARD}
-                           setValue={setSecondReward}
-                           type="number"
-                           placeholder={"0"}
-                           indexInValidator={5}
-                           value={secondReward}
-                           min={0}
-                    />
+                : ''
+            }
+            {taskDescription
+                ? <div className={cl.inputWrap}>
+                    {/*<label htmlFor="text">Описание: </label>*/}
+                    <textarea
+                        placeholder={'Описание'}
+                        id="text"
+                        className={cl.textarea}
+                        name="text"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    ></textarea>
                 </div>
-                <div className={cl.rewardsInputWrap}>
-                    <label htmlFor="penalty">Штраф: </label>
-                    <Input id="penalty"
-                           formValidator={formValidator}
-                           name={InputNames.TASK_REWARD}
-                           setValue={setPenalty}
-                           type="number"
-                           placeholder={'0'}
-                           indexInValidator={6}
-                           value={penalty}
-                           min={0}
-                    />
+                : ''
+            }
+
+            <div className={cl.settings}>
+                <div className={[cl.settingBtn, taskDeadline ? cl.settingBtnActive : ''].join(' ')}
+                     onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                         e.preventDefault()
+                         setTaskDeadline(!taskDeadline)
+                     }}>Дедлайн
                 </div>
-            </div>
-            <div className={cl.inputWrap}>
-                <label htmlFor="text">Описание: </label>
-                <textarea
-                    id="text"
-                    className={cl.textarea}
-                    name="text"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                ></textarea>
+                <div
+                    className={[cl.settingBtn, taskDescription ? cl.settingBtnActive : ''].join(' ')}
+                    onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                        e.preventDefault()
+                        setTaskDescription(!taskDescription)
+                    }}>Добавить описание
+                </div>
+                {!user.roles.includes(Roles.TASK_MANAGER)
+                    ? <div
+                        className={[cl.settingBtn, taskRewards ? cl.settingBtnActive : ''].join(' ')}
+                        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                            e.preventDefault()
+                            setTaskRewards(!taskRewards)
+                        }}>Очки
+                    </div>
+                    : ''
+                }
             </div>
 
             <div className={cl.inputWrap}>

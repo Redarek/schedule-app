@@ -1,0 +1,36 @@
+.kanban {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px;
+}
+
+.board {
+    height: 80vh;
+    padding: 20px;
+    min-width: 250px;
+    border: 1px solid black;
+    border-radius: 5px ;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.boardTitle {
+    line-height: 40px;
+    width: 100%;
+}
+
+.item {
+    cursor: pointer;
+    width: 100%;
+    border: 1px solid teal;
+    padding: 5px;
+    border-radius: 5px;
+}

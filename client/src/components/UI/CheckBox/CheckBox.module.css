@@ -1,16 +1,23 @@
 .input {
     margin-right: 10px;
     transform: scale(1.4);
+    cursor: pointer;
+    transition: all 100ms linear;
 }
 
-label {
+.label {
+    cursor: pointer;
     display: flex;
-    justify-content: left;
     align-items: center;
-    /*justify-content: center;*/
+    padding: 0 3px;
+    min-height: 30px;
+    justify-content: center;
     width: 100%;
 }
 
+label:hover input {
+    transform: scale(1.5);
+}
 .checkBox {
 
 }

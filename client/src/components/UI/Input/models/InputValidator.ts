@@ -12,11 +12,13 @@ export enum InputNames {
     EMAIL = 'email',
     PASSWORD = 'password',
     NAME = 'name',
-    TASK_TITLE = 'taskTitle',
-    DATE_START = 'dateStart',
-    DATE_FIRST_END = 'dateFirstEnd',
-    DATE_SECOND_END = 'dateSecondEnd',
-    TASK_REWARD = 'taskReward',
+    TASK_TITLE = 'task-title',
+    DATE_START = 'date-start',
+    DATE_FIRST_END = 'date-first-end',
+    DATE_SECOND_END = 'date-secondEnd',
+    TASK_REWARD = 'task-reward',
+
+    FILE_NAME = 'file-name',
 }
 
 interface ErrorsStatus {

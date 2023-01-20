@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IList} from "../../types/INavbar";
+import {IList} from "../../components/Navbar/types/INavbar";
 
 interface Navbar {
     openListsTitle: IList[];
