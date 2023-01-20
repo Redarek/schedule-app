@@ -58,7 +58,7 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
             // spec: spec,
             email: email,
             name: name,
-            latinName: translit(name),
+            // latinName: translit(name),
         }
         setChangedUser(changedUser)
         if (!formValidator.getFormStatus()) {
