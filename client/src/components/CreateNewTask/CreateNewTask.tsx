@@ -65,6 +65,8 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
             setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+            setSecondReward(0)
+            setPenalty(0)
         } else {
             setStart(getInputDate(startDate))
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
@@ -198,7 +200,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
                               type={"employees"} position={"bottom"}/>
             </div>
-            {!user.roles.includes(Roles.TASK_MANAGER) && taskRewards
+            {user.roles.includes(Roles.TASK_MANAGER) && taskRewards
                 ? <div className={cl.rewards}>
                     <div className={cl.rewardsInputWrap}>
                         <label htmlFor="firstReward">{!taskDeadline ? 'Награда:' : 'Первая награда:'} </label>
@@ -277,7 +279,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                         setTaskDescription(!taskDescription)
                     }}>Добавить описание
                 </div>
-                {!user.roles.includes(Roles.TASK_MANAGER)
+                {user.roles.includes(Roles.TASK_MANAGER)
                     ? <div
                         className={[cl.settingBtn, taskRewards ? cl.settingBtnActive : ''].join(' ')}
                         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
