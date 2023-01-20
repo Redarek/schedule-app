@@ -6,9 +6,9 @@ const bonusService = require('../service/bonusService');
 class TaskController {
     async createTask(req, res, next) {
         try {
-            const {employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
+            const {employee, category, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
             const employeeId = await userService.getUserIdByName(req.body.employee);
-            const taskData = new taskModel({user: req.user._id, employee, employeeId, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
+            const taskData = new taskModel({user: req.user._id, employee, employeeId, category, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
             const task = await taskService.createTask(taskData);
             return res.json(task);
             // return res.json({task: taskData, status: 'success'});
@@ -48,9 +48,9 @@ class TaskController {
 
     async updateTask(req, res, next) {
         try {
-            const {employee, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
+            const {employee, category, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
             const employeeId = await userService.getUserIdByName(req.body.employee);
-            const taskData = {user: req.user._id, employee, employeeId, spec, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd}
+            const taskData = {user: req.user._id, employee, employeeId, category, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd}
             const task = await taskService.updateTask(req.params.id, taskData)
             return res.json(task);
             // return res.json({task, status: 'success'});

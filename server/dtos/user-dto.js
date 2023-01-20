@@ -4,7 +4,7 @@ module.exports = class UserDto {
     isActivated;
     roles;
     name;
-    spec;
+    latinName;
     balance;
 
     constructor(model) {
@@ -13,7 +13,7 @@ module.exports = class UserDto {
         this.isActivated = model.isActivated;
         this.roles = model.roles;
         this.name = model.name;
-        this.spec = model.spec;
+        this.latinName = model.latinName;
         this.balance = model.balance;
     }
 }

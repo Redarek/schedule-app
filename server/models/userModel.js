@@ -24,16 +24,17 @@ const userSchema =  new Schema({
     name: {
         type: String,
         unique: true,
-        default: "noname"
-    },
-    spec: {
-        type: String,
-        default: "no spec"
+        default: "no name"
     },
     balance: {
         type: Number,
         default: 0
     },
+    latinName: {
+        type: String,
+        unique: true,
+        default: "no latin name"
+    }
 }, {timestamps: true});
 
 module.exports = model('User', userSchema);

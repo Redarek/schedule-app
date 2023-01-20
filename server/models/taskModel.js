@@ -13,8 +13,8 @@ const taskSchema =  new Schema({
         type: String,
         required: true
     },
-    spec: {
-        type: String,
+    category: {
+        type: Array,
         required: true
     },
     title: {
@@ -23,7 +23,6 @@ const taskSchema =  new Schema({
     },
     text: {
         type: String,
-        required: true
     },
     complete: {
         type: Boolean,
@@ -43,15 +42,12 @@ const taskSchema =  new Schema({
     },
     start: {
         type: Date,
-        required: true
     },
     firstEnd: {
         type: Date,
-        required: true
     },
     secondEnd: {
         type: Date,
-        required: true
     },
     deadlineStatus: {
         type: String,

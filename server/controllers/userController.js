@@ -1,6 +1,7 @@
 const userService = require('../service/userService');
 const {validationResult} = require('express-validator');
 const ApiError = require('../exceptions/ApiError')
+const transliter = require('../utils/transliter')
 
 const CLIENT_URL = process.env.NODE_ENV === "production" ? process.env.PROD_CLIENT_URL : process.env.DEV_CLIENT_URL
 
@@ -11,8 +12,9 @@ class UserController {
             if (!errors.isEmpty()) {
                 return next(ApiError.badRequest('Ошибка при валидации', errors.array()))
             }
-            const {email, password, name, spec} = req.body; //вытаскиваем из тела запроса почту и пароль
-            const userData = await userService.registration(email, password, name, spec);
+            const {email, password, name} = req.body; //вытаскиваем из тела запроса почту и пароль
+            const latinName = transliter(name);
+            const userData = await userService.registration(email, password, name, latinName);
             
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'none', secure: true})
             return res.json(userData);

@@ -8,7 +8,7 @@ const ApiError = require('../exceptions/ApiError');
 const roleModel = require('../models/roleModel');
 const API_URL = process.env.NODE_ENV === "production" ? 'https://pointsystem.rushools.ru/api' : 'http://localhost:8080/api';
 class UserService {
-    async registration(email, password, name, spec) {
+    async registration(email, password, name, latinName) {
         const candidateEmail = await userModel.findOne({email});
         // Проверяем, есть ли email в БД
         if (candidateEmail) {
@@ -16,15 +16,16 @@ class UserService {
         }
 
         const candidateName = await userModel.findOne({name});
+        const candidateLatinName = await userModel.findOne({latinName});
         // Проверяем, есть ли name в БД
-        if (candidateName) {
+        if (candidateName || candidateLatinName) {
             throw ApiError.badRequest(`Пользователь с именем ${name} уже существует`);
         }
 
         const hashPassword = await bcrypt.hash(password, 3); //хэшируем пароль
         const activationLink = uuid.v4(); // генерация ссылки активации для письма на email
 
-        const user = await userModel.create({email, password: hashPassword, activationLink, name, spec}); // сохраняем польз-ля в БД
+        const user = await userModel.create({email, password: hashPassword, activationLink, name, latinName}); // сохраняем польз-ля в БД
         await mailService.sendActivationMail(email, `${API_URL}/activate/${activationLink}`);
 
         const userDto = new UserDto(user); //передаём все данные о пользователе в DTO (Data Transfer Object) dto получаем на клиенте и dto нужен для отправки email письма
