@@ -20,9 +20,6 @@ const RegistrationForm: FC = () => {
     const [name, setName] = useState<string>('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    // const [spec, setSpec] = useState<Categories[]>([])
-    // const [categories, setCategories] = useState<Categories[]>([])
-
 
 
     const {registrationError} = useAppSelector(state => state.authSlice)
