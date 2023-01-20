@@ -111,7 +111,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         }
     }, [categories, taskDeadline])
 
-    const inputNames = [
+    let inputNames = [
         InputNames.TASK_TITLE,
         InputNames.DATE_START,
         InputNames.DATE_FIRST_END,
@@ -121,14 +121,13 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         InputNames.TASK_REWARD,
     ]
     const formValidator = new FormValidator(inputNames)
-
     const {employees, isLoading, error, employee} = useAppSelector(state => state.employeeSlice)
 
     const handleCreate = (e: any) => {
         e.preventDefault()
         if (
             employeeName !== "Сотрудник"
-            && formValidator.getFormStatus()
+            // && formValidator.getFormStatus()
         ) {
             const task: ITask = {
                 _id: '',
@@ -238,7 +237,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
                               type={"employees"} position={"bottom"}/>
             </div>
-            {user.roles.includes(Roles.TASK_MANAGER) && taskRewards
+            {!user.roles.includes(Roles.TASK_MANAGER) && taskRewards
                 ? <div className={cl.rewards}>
                     <div className={cl.rewardsInputWrap}>
                         <label htmlFor="firstReward">{!taskDeadline ? 'Награда:' : 'Первая награда:'} </label>
@@ -320,7 +319,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                         setTaskDescription(!taskDescription)
                     }}>Добавить описание
                 </div>
-                {user.roles.includes(Roles.TASK_MANAGER)
+                {!user.roles.includes(Roles.TASK_MANAGER)
                     ? <div
                         className={[cl.settingBtn, taskRewards ? cl.settingBtnActive : ''].join(' ')}
                         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
