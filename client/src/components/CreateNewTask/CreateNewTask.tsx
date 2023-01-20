@@ -147,7 +147,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             setTimeout(() => {
                 dispatch(fetchEmployeeTasks(employee._id))
             }, 700)
-            setEmployeeName('Сотрудник')
+            setEmployeeName(user.name)
             setCategories([])
             setTitle('')
             setText('')
