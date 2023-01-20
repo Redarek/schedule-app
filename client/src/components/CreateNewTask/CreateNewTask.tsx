@@ -13,9 +13,10 @@ import {getInputDate} from "../UI/Input/inputDateFormat";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
+    startDate: Date
 }
 
-const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
+const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible,   startDate}) => {
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
@@ -25,10 +26,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)
 
-    const today = new Date()
-    const [start, setStart] = useState<string>(getInputDate(today))
-    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() + 85800000)))
-    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() + 85800000)))
+    const [start, setStart] = useState<string>(getInputDate(startDate))
+    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
 
 
     const setStartDate = (data: string) => {

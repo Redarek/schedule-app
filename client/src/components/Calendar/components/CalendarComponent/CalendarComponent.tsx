@@ -76,7 +76,9 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                 {createTaskWindowIsVisible
                     ? <ModalFullScreen visible={createTaskWindowIsVisible} exitBtn={true}
                                        setVisible={setCreateTaskWindowIsVisible} exitBackground={false}>
-                        <CreateNewTask setModalVisible={setCreateTaskWindowIsVisible}/>
+                        <CreateNewTask
+                            startDate={new Date()}
+                            setModalVisible={setCreateTaskWindowIsVisible}/>
                     </ModalFullScreen>
                     : ''
                 }

@@ -58,7 +58,8 @@ const TaskComponent: FC<TaskComponentProps> = ({
 
     return (
         <div className={cl.task} style={{width: `${width}%`}}>
-            <div className={cl.taskInfo} onClick={() => {
+            <div className={cl.taskInfo} onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+                event.stopPropagation()
                 setTaskInfoIsVisible(true);
                 setSelectTask(task)
             }} style={{textDecoration: taskCompleteStyle}}>{task.title}</div>
