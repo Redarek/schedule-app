@@ -6,7 +6,7 @@ const AdminPage: FC = () => {
     const {user} = useAppSelector(state => state.authSlice.user)
     return (
         <div>
-            {user.name === 'Vladislav' || user.name === 'Радмир Ибрагимов'
+            {process.env.NODE_ENV === 'development'
                 ? <FileBrowserComponent/>
                 : 'Страница Администратора'
             }

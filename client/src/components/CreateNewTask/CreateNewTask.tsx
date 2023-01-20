@@ -25,9 +25,10 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible}) => {
     const [secondReward, setSecondReward] = useState<number>(0)
     const [penalty, setPenalty] = useState<number>(0)
 
-    const [start, setStart] = useState<string>(getInputDate(new Date()))
-    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 1800000)))
-    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date().getTime() + 3600000)))
+    const today = new Date()
+    const [start, setStart] = useState<string>(getInputDate(today))
+    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() + 85800000)))
+    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() + 85800000)))
 
 
     const setStartDate = (data: string) => {
