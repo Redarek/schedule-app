@@ -8,7 +8,7 @@ interface CheckBoxProps {
 }
 
 const CheckBox: FC<CheckBoxProps> = ({value, list, setList}) => {
-    const [checked, setChecked] = useState<boolean>(list.includes(value))
+    const [checked, setChecked] = useState<boolean>(list?.includes(value))
 
     function handleChecked() {
         let newList = list

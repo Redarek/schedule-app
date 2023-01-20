@@ -11,6 +11,7 @@ import {InputNames} from "../UI/Input/models/InputValidator";
 import Input from "../UI/Input/Input";
 import {getInputDate} from "../UI/Input/inputDateFormat";
 import CheckBox from "../UI/CheckBox/CheckBox";
+import {Roles} from "../../types/Roles";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
@@ -174,47 +175,51 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
                               type={"employees"} position={"bottom"}/>
             </div>
-            <div className={cl.rewards}>
-                <div className={cl.rewardsInputWrap}>
-                    <label htmlFor="firstReward">Первая награда: </label>
-                    <Input id="firstReward"
-                           formValidator={formValidator}
-                           setValue={setFirstReward}
-                           indexInValidator={4}
-                           name={InputNames.TASK_REWARD}
-                           type="number"
-                           placeholder={"0"}
-                           value={firstReward}
-                           min={0}
-                    />
+            {user.roles.includes(Roles.TASK_MANAGER)
+                ? <div className={cl.rewards}>
+                    <div className={cl.rewardsInputWrap}>
+                        <label htmlFor="firstReward">Первая награда: </label>
+                        <Input id="firstReward"
+                               formValidator={formValidator}
+                               setValue={setFirstReward}
+                               indexInValidator={4}
+                               name={InputNames.TASK_REWARD}
+                               type="number"
+                               placeholder={"0"}
+                               value={firstReward}
+                               min={0}
+                        />
+                    </div>
+                    <div className={cl.rewardsInputWrap}>
+                        <label htmlFor="secondReward">Вторая награда: </label>
+                        <Input id="secondReward"
+                               formValidator={formValidator}
+                               name={InputNames.TASK_REWARD}
+                               setValue={setSecondReward}
+                               type="number"
+                               placeholder={"0"}
+                               indexInValidator={5}
+                               value={secondReward}
+                               min={0}
+                        />
+                    </div>
+                    <div className={cl.rewardsInputWrap}>
+                        <label htmlFor="penalty">Штраф: </label>
+                        <Input id="penalty"
+                               formValidator={formValidator}
+                               name={InputNames.TASK_REWARD}
+                               setValue={setPenalty}
+                               type="number"
+                               placeholder={'0'}
+                               indexInValidator={6}
+                               value={penalty}
+                               min={0}
+                        />
+                    </div>
                 </div>
-                <div className={cl.rewardsInputWrap}>
-                    <label htmlFor="secondReward">Вторая награда: </label>
-                    <Input id="secondReward"
-                           formValidator={formValidator}
-                           name={InputNames.TASK_REWARD}
-                           setValue={setSecondReward}
-                           type="number"
-                           placeholder={"0"}
-                           indexInValidator={5}
-                           value={secondReward}
-                           min={0}
-                    />
-                </div>
-                <div className={cl.rewardsInputWrap}>
-                    <label htmlFor="penalty">Штраф: </label>
-                    <Input id="penalty"
-                           formValidator={formValidator}
-                           name={InputNames.TASK_REWARD}
-                           setValue={setPenalty}
-                           type="number"
-                           placeholder={'0'}
-                           indexInValidator={6}
-                           value={penalty}
-                           min={0}
-                    />
-                </div>
-            </div>
+                : ''
+            }
+
             <div className={cl.inputWrap}>
                 {/*<label htmlFor="text">Описание: </label>*/}
                 <textarea

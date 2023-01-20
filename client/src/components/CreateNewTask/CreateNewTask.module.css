@@ -6,7 +6,7 @@
     gap: 5px;
     margin-top: 15px;
     max-width: 440px;
-    width: 100%;
+    min-width: 440px;
 }
 
 .inputWrap {
