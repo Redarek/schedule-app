@@ -1,26 +1,29 @@
-import React, {FC, useState} from 'react';
+import React, {FC, Fragment, useEffect, useState} from 'react';
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {createTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
-import {Specialities} from "../../types/Specialities";
+import {Categories} from "../../types/Categories";
 import {FormValidator} from "../UI/Input/models/FormValidator";
 import {InputNames} from "../UI/Input/models/InputValidator";
 import Input from "../UI/Input/Input";
 import {getInputDate} from "../UI/Input/inputDateFormat";
+import CheckBox from "../UI/CheckBox/CheckBox";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
     startDate: Date
 }
 
-const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible,   startDate}) => {
+const categoriesList = Object.values(Categories)
+
+const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => {
     const dispatch = useAppDispatch()
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
-    const [spec, setSpec] = useState<string>('Специальность')
+    const [categories, setCategories] = useState<Categories[]>([])
     const [employeeName, setEmployeeName] = useState<string>('Сотрудник')
     const [firstReward, setFirstReward] = useState<number>(0)
     const [secondReward, setSecondReward] = useState<number>(0)
@@ -65,14 +68,13 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible,   startDate}) =
         e.preventDefault()
         if (
             employeeName !== "Сотрудник"
-            && spec !== 'Специальность'
             && text !== ''
             && formValidator.getFormStatus()
         ) {
             const task: ITask = {
                 _id: '',
                 employee: employeeName,
-                spec: spec,
+                categories: categories,
                 title: title,
                 text: text,
                 firstReward: firstReward,
@@ -82,12 +84,13 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible,   startDate}) =
                 firstEnd: Number(new Date(firstEnd).getTime()),
                 secondEnd: Number(new Date(secondEnd).getTime())
             }
+            // console.log(task)
             dispatch(createTask(task))
             setTimeout(() => {
                 dispatch(fetchEmployeeTasks(employee._id))
             }, 700)
             setEmployeeName('Сотрудник')
-            setSpec('Специальность')
+            setCategories([])
             setTitle('')
             setText('')
             setFirstReward(0)
@@ -96,18 +99,21 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible,   startDate}) =
             setModalVisible(false)
         }
     }
+
+
     return (
         <form className={cl.form}>
             <div className={cl.inputWrap}>
-                <label htmlFor="title">Заголовок: </label>
-                <Input id="title"
-                       name={InputNames.TASK_TITLE}
-                       formValidator={formValidator}
-                       setValue={setTitle}
-                       type="text"
-                       placeholder={"Title"}
-                       value={title}
-                       indexInValidator={0}
+                {/*<label htmlFor="title">Заголовок: </label>*/}
+                <Input
+                    id="title"
+                    name={InputNames.TASK_TITLE}
+                    formValidator={formValidator}
+                    setValue={setTitle}
+                    type="text"
+                    placeholder={'Название'}
+                    value={title}
+                    indexInValidator={0}
                 />
             </div>
             <div className={cl.inputWrap}>
@@ -150,9 +156,18 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible,   startDate}) =
                 />
             </div>
             <div className={cl.inputWrap}>
-                <DropDownMenu selectItem={spec} setSelectItem={setSpec} items={Object.values(Specialities)}
-                              type={"string"}
-                              position={"bottom"}/>
+                <label>Категория:</label>
+                <div className={cl.categories}>
+                    {categoriesList.map((category) =>
+                        <div className={cl.category} key={category}>
+                            <CheckBox
+                                value={category}
+                                list={categories}
+                                setList={setCategories}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
             <div className={cl.inputWrap}>
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
@@ -200,8 +215,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible,   startDate}) =
                 </div>
             </div>
             <div className={cl.inputWrap}>
-                <label htmlFor="text">Описание: </label>
+                {/*<label htmlFor="text">Описание: </label>*/}
                 <textarea
+                    placeholder={'Описание'}
                     id="text"
                     className={cl.textarea}
                     name="text"

@@ -1,7 +1,9 @@
+import {Categories} from "./Categories";
+
 export interface ITask {
     _id: string;
     employee: string;
-    spec: string;
+    categories: Categories[];
     title: string;
     text: string;
     firstReward: number;
@@ -17,7 +19,7 @@ export interface ITasks {
     _id: string
     user: string;
     employee: string;
-    spec: string;
+    categories: Categories[];
     timestamp: string;
     title: string;
     text: string;

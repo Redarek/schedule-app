@@ -8,6 +8,7 @@ import TasksService from "../../services/TaskService";
 import UserService from "../../services/UserService";
 import {ITask} from "../../types/ITasks";
 import BonusService from "../../services/BonusService";
+import {Categories} from "../../types/Categories";
 
 interface LoginObject {
     email: string;
@@ -18,7 +19,7 @@ interface RegObject {
     email: string;
     password: string;
     name: string;
-    spec: string;
+    categories: Categories[];
 }
 
 export const login = createAsyncThunk(
@@ -39,7 +40,7 @@ export const registration = createAsyncThunk(
     'user/registration',
     async (regObject: RegObject, thunkAPI) => {
         try {
-            const response = await AuthService.registration(regObject.email, regObject.password, regObject.name, regObject.spec);
+            const response = await AuthService.registration(regObject.email, regObject.password, regObject.name, regObject.categories);
             localStorage.setItem('token', response.data.accessToken);
             return response.data;
         } catch (e: any) {

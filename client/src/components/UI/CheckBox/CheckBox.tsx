@@ -1,30 +1,36 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import cl from "./CheckBox.module.css";
 
 interface CheckBoxProps {
-    label: string
-    action: (st: string) => void;
-    value: string
+    value: string,
+    list: any[],
+    setList: (str:any[]) => void
 }
 
-const CheckBox: FC<CheckBoxProps> = ({value, label, action}) => {
+const CheckBox: FC<CheckBoxProps> = ({value, list, setList}) => {
     const [checked, setChecked] = useState<boolean>(false)
 
-    if (value === label && !checked) setChecked(true)
+    useEffect(() => {
+        let newList = list
+        if (!checked) {
+            newList = newList.filter(val => val !== value)
+        } else {
+            newList.push(value)
+        }
+        setList([...newList])
+    }, [checked])
 
-    const handleChecked = () => {
-        action(label)
-        setChecked(!checked)
-    }
 
     return (
-        <label className={cl.checkBox}>
-            <input className={cl.input}
-                   type="checkbox"
-                   checked={checked}
-                   onChange={() => handleChecked()}
+        <label htmlFor={value} className={cl.label}>
+            <input
+                checked={checked}
+                className={cl.input}
+                type="checkbox"
+                id={value}
+                onChange={() => setChecked(!checked)}
             />
-            {label}
+            {value}
         </label>
     );
 };

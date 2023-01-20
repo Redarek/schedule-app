@@ -116,7 +116,7 @@ const EmployeeTr: FC<EmployeeTrProps> = ({
                 {employee.name}
             </td>
             <td className={cl.specTd}>
-                {employee.spec}
+                {employee.categories}
             </td>
             <td className={cl.emailTd}>
                 {employee.email.length >= 24

@@ -8,13 +8,16 @@ import Button from "../components/UI/Button/Button";
 import {FormValidator} from "../components/UI/Input/models/FormValidator";
 import {InputNames} from "../components/UI/Input/models/InputValidator";
 import DropDownMenu from "../components/UI/DropDownMenu/DropDownMenu";
-import {Specialities} from "../types/Specialities";
+import {Categories} from "../types/Categories";
 import {getInputDate} from "../components/UI/Input/inputDateFormat";
+import CheckBox from "../components/UI/CheckBox/CheckBox";
 
 interface TaskEditPageProps {
 
 }
 
+
+const categoriesList = Object.values(Categories)
 
 const TaskEditPage: FC<TaskEditPageProps> = () => {
     const navigate = useNavigate()
@@ -29,7 +32,8 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
 
     const [title, setTitle] = useState<string>('')
     const [text, setText] = useState<string>('')
-    const [spec, setSpec] = useState<string>('')
+    // const [spec, setSpec] = useState<string>('')
+    const [categories, setCategories] = useState<Categories[]>([])
     const [empl, setEmpl] = useState<string>('')
     const [firstReward, setFirstReward] = useState<number>(Number(''))
     const [secondReward, setSecondReward] = useState<number>(Number(''))
@@ -59,7 +63,8 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
         if (task._id) {
             setTitle(task.title)
             setText(task.text)
-            setSpec(task.spec)
+            setCategories(task.categories)
+            // setSpec(task.spec)
             setEmpl(task.employee)
             setFirstReward(Number(task.firstReward))
             setSecondReward(Number(task.secondReward))
@@ -88,7 +93,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     _id: taskId,
                     title: title,
                     text: text,
-                    spec: spec,
+                    categories: categories,
                     employee: empl,
                     firstReward: firstReward,
                     secondReward: secondReward,
@@ -146,13 +151,25 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                 </div>
                 <div className={cl.specEdit}>
                     <div className={cl.inputWrap}>
-                        <label className={cl.label} htmlFor="spec">Специализация:</label>
-                        <DropDownMenu
-                            type={"string"}
-                            position={'bottom'}
-                            selectItem={spec}
-                            setSelectItem={setSpec}
-                            items={Object.values(Specialities)}/>
+                        {/*<label className={cl.label} htmlFor="spec">Специализация:</label>*/}
+                        <label className={cl.label}>Категория:</label>
+                        <div className={cl.categories}>
+                            {categoriesList.map((category) =>
+                                <div className={cl.category} key={category}>
+                                    <CheckBox
+                                        value={category}
+                                        list={categories}
+                                        setList={setCategories}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        {/*<DropDownMenu*/}
+                        {/*    type={"string"}*/}
+                        {/*    position={'bottom'}*/}
+                        {/*    selectItem={spec}*/}
+                        {/*    setSelectItem={setSpec}*/}
+                        {/*    items={Object.values(Categories)}/>*/}
                     </div>
                 </div>
                 <div className={cl.pointsEdit}>
