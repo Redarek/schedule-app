@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import cl from "./ListItem.module.css";
 import {useNavigate} from "react-router-dom";
-import {useAppDispatch} from "../../hooks/redux";
-import {setNavbarVisible} from "../../store/reducers/navbarSlice";
+import {useAppDispatch} from "../../../../hooks/redux";
+import {setNavbarVisible} from "../../../../store/reducers/navbarSlice";
 
 interface ListItemProps {
     title: string;

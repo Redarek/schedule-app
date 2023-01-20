@@ -8,6 +8,7 @@ import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
 import TasksListCalendar from "../../../TasksListCalendar/TasksListCalendar";
 import {ITasks} from "../../../../types/ITasks";
 import TaskCard from "../../../TaskCard/TaskCard";
+import CreateNewTask from "../../../CreateNewTask/CreateNewTask";
 
 interface MonthComponentProps {
     firstDay: WeekDays.SU | WeekDays.MON,
@@ -55,9 +56,21 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
     const [taskInfoIsVisible, setTaskInfoIsVisible] = useState(false)
     const [selectTask, setSelectTask] = useState({} as ITasks)
 
+    const [createTaskWindowIsVisible, setCreateTaskWindowIsVisible] = useState(false)
+    const [createNewTaskDate, setCreateNewTaskDate] = useState<Date>(new Date())
 
     return (
         <div className={cl.month}>
+            {createTaskWindowIsVisible
+                ? <ModalFullScreen visible={createTaskWindowIsVisible} exitBtn={true}
+                                   setVisible={setCreateTaskWindowIsVisible} exitBackground={false}>
+                    <CreateNewTask
+                        setModalVisible={setCreateTaskWindowIsVisible}
+                        startDate={createNewTaskDate}
+                    />
+                </ModalFullScreen>
+                : ''
+            }
             <div className={cl.monthMenu}>
                 <div className={cl.btn}>
                     <Button onClick={() => handleChangeMonth('prev')}>Предыдущий</Button>
@@ -77,11 +90,21 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
             </div>
             <div className={cl.monthDays}>
                 {monthDays.map((day: any) =>
-                    <div key={day.date.getTime()} className={cl.day}
-                         style={day.date.getDate() === new Date().getDate() &&
-                         day.date.getMonth() === new Date().getMonth() &&
-                         day.date.getFullYear() === new Date().getFullYear()
-                             ? {backgroundColor: 'rgba(164,220,252,.6)'} : {}}>
+                    <div
+                        key={day.date.getTime()}
+                        className={cl.day}
+                        style={
+                            day.date.getDate() === new Date().getDate()
+                            && day.date.getMonth() === new Date().getMonth()
+                            && day.date.getFullYear() === new Date().getFullYear()
+                                ? {backgroundColor: 'rgba(164,220,252,.6)'}
+                                : {}
+                        }
+                        onClick={() => {
+                            setCreateNewTaskDate(day.date)
+                            setCreateTaskWindowIsVisible(true)
+                        }}
+                    >
                         {day.date.getDate()}
                         <div className={cl.dayTasks}>
                             {day.tasks.map((task: any, index: number) =>
@@ -100,7 +123,8 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
                             )}
                         </div>
                         {day.tasks.length > 3
-                            ? <div className={cl.tasksCount} onClick={() => {
+                            ? <div className={cl.tasksCount} onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+                                event.stopPropagation()
                                 setTasksListData({date: day.date, tasks: day.tasks});
                                 setTasksListIsVisible(true)
                             }

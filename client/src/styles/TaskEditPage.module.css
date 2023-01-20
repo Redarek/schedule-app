@@ -59,6 +59,21 @@
     width: 100%;
 }
 
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
+}
+
+.category {
+    max-width: 80px;
+    width: 100%;
+}
+
 .employeeEdit {
     /*width: 400px;*/
     max-width: 400px;

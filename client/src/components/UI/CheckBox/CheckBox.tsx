@@ -1,30 +1,56 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import cl from "./CheckBox.module.css";
 
 interface CheckBoxProps {
-    label: string
-    action: (st: string) => void;
-    value: string
+    value: string,
+    type: 'radio' | 'checkbox'
+    list: any[],
+    setList: (str: any[]) => void
 }
 
-const CheckBox: FC<CheckBoxProps> = ({value, label, action}) => {
-    const [checked, setChecked] = useState<boolean>(false)
+const CheckBox: FC<CheckBoxProps> = ({value, list, setList, type}) => {
+    const [checked, setChecked] = useState<boolean>(list?.includes(value))
 
-    if (value === label && !checked) setChecked(true)
+    useEffect(() => {
+        setChecked(list?.includes(value))
+    }, [list])
 
-    const handleChecked = () => {
-        action(label)
-        setChecked(!checked)
+    function handleChecked() {
+        let newList = list
+        switch (type) {
+            case "radio":
+                if (list.includes(value)) {
+                    setList([])
+                } else {
+                    setList([value])
+                }
+                break;
+            case "checkbox":
+                if (list.includes(value)) {
+                    newList = newList.filter(val => val !== value)
+                } else {
+                    newList.push(value)
+                }
+                setList([...newList])
+                break;
+            default:
+                break;
+        }
     }
 
     return (
-        <label className={cl.checkBox}>
-            <input className={cl.input}
-                   type="checkbox"
-                   checked={checked}
-                   onChange={() => handleChecked()}
+        <label htmlFor={value} className={cl.label}>
+            <input
+                checked={checked}
+                className={cl.input}
+                type="checkbox"
+                id={value}
+                onChange={() => {
+                    setChecked(!checked)
+                    handleChecked()
+                }}
             />
-            {label}
+            {value}
         </label>
     );
 };

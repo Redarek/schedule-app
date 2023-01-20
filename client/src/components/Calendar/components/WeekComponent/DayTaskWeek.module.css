@@ -1,13 +1,17 @@
 .task {
     background-color: rgb(121, 134, 203);
-    width: 100%;
-    margin: 0 3%;
+    width: calc(100% - 4px);
     border-radius: 5px;
     cursor: pointer;
     z-index: 1;
     min-height: 50px;
+    position: absolute;
+    border: 1px solid white;
+    padding: 2px;
+    overflow: hidden;
 }
 
 .task:hover {
     opacity: .9;
+    border: 1px solid black;
 }

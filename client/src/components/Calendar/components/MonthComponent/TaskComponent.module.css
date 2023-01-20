@@ -17,8 +17,13 @@
     padding-left: 5px;
     line-height: 18px;
     margin-left: 5px;
+    white-space: nowrap;
 }
-
+@media (max-width: 1100px) {
+    .taskInfo {
+        font-size: 14px;
+    }
+}
 @media (max-width: 768px) {
     .taskInfo {
         font-size: 12px;

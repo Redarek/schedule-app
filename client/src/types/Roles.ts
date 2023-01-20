@@ -5,4 +5,5 @@ export enum Roles {
     GUEST = 'guest', //Только страница гостя
     USER = 'user', //Только своя странца
     CALENDAR = "calendar", //Доступ к календарю на странице
+    TASK_MANAGER = "task_manager" //Может назначать и менять нагрды за задачи
 }
