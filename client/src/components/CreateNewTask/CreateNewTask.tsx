@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {ITask} from "../../types/ITasks";
 import cl from './CreateNewTask.module.css'
 import Button from "../UI/Button/Button";
@@ -20,6 +20,10 @@ interface CreateNewTaskProps {
 
 const categoriesList = Object.values(Categories)
 
+function Fragment() {
+    return null;
+}
+
 const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => {
     const {user} = useAppSelector(state => state.authSlice.user)
     const dispatch = useAppDispatch()
@@ -35,6 +39,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
     const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
     const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
 
+    const [taskDeadline, setTaskDeadline] = useState(false)
+    const [taskDescription, setTaskDescription] = useState(false)
+    const [taskRewards, setTaskRewards] = useState(false)
 
     const setStartDate = (data: string) => {
         const date = new Date(`${data}`)
@@ -53,6 +60,18 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         setSecondEnd(getInputDate(date))
     }
 
+    useEffect(() => {
+        if (!taskDeadline) {
+            setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
+            setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+            setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+        } else {
+            setStart(getInputDate(startDate))
+            setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+            setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+        }
+    }, [taskDeadline])
+
     const inputNames = [
         InputNames.TASK_TITLE,
         InputNames.DATE_START,
@@ -70,7 +89,6 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         e.preventDefault()
         if (
             employeeName !== "Сотрудник"
-            && text !== ''
             && formValidator.getFormStatus()
         ) {
             const task: ITask = {
@@ -121,6 +139,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             <div className={cl.inputWrap}>
                 <label htmlFor="start">Начало: </label>
                 <Input id="start"
+                       readonly={!taskDeadline}
                        placeholder={''}
                        type="datetime-local"
                        value={start}
@@ -134,6 +153,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             <div className={cl.inputWrap}>
                 <label htmlFor="firstEnd">Конец: </label>
                 <Input id="firstEnd"
+                       readonly={!taskDeadline}
                        placeholder={''}
                        name={InputNames.DATE_FIRST_END}
                        type="datetime-local"
@@ -144,19 +164,22 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                        pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                 />
             </div>
-            <div className={cl.inputWrap}>
-                <label htmlFor="secondEnd">Доп. конец: </label>
-                <Input id="secondEnd"
-                       placeholder={''}
-                       formValidator={formValidator}
-                       name={InputNames.DATE_SECOND_END}
-                       setValue={setSecondEndDate}
-                       type="datetime-local"
-                       value={secondEnd}
-                       indexInValidator={3}
-                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                />
-            </div>
+            {taskDeadline
+                ? <div className={cl.inputWrap}>
+                    <label htmlFor="secondEnd">Доп. конец: </label>
+                    <Input id="secondEnd"
+                           placeholder={''}
+                           formValidator={formValidator}
+                           name={InputNames.DATE_SECOND_END}
+                           setValue={setSecondEndDate}
+                           type="datetime-local"
+                           value={secondEnd}
+                           indexInValidator={3}
+                           pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                    />
+                </div>
+                : ''
+            }
             <div className={cl.inputWrap}>
                 <label>Категория:</label>
                 <div className={cl.categories}>
@@ -175,10 +198,10 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
                               type={"employees"} position={"bottom"}/>
             </div>
-            {user.roles.includes(Roles.TASK_MANAGER)
+            {!user.roles.includes(Roles.TASK_MANAGER) && taskRewards
                 ? <div className={cl.rewards}>
                     <div className={cl.rewardsInputWrap}>
-                        <label htmlFor="firstReward">Первая награда: </label>
+                        <label htmlFor="firstReward">{!taskDeadline ? 'Награда:' : 'Первая награда:'} </label>
                         <Input id="firstReward"
                                formValidator={formValidator}
                                setValue={setFirstReward}
@@ -190,46 +213,80 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                                min={0}
                         />
                     </div>
-                    <div className={cl.rewardsInputWrap}>
-                        <label htmlFor="secondReward">Вторая награда: </label>
-                        <Input id="secondReward"
-                               formValidator={formValidator}
-                               name={InputNames.TASK_REWARD}
-                               setValue={setSecondReward}
-                               type="number"
-                               placeholder={"0"}
-                               indexInValidator={5}
-                               value={secondReward}
-                               min={0}
-                        />
-                    </div>
-                    <div className={cl.rewardsInputWrap}>
-                        <label htmlFor="penalty">Штраф: </label>
-                        <Input id="penalty"
-                               formValidator={formValidator}
-                               name={InputNames.TASK_REWARD}
-                               setValue={setPenalty}
-                               type="number"
-                               placeholder={'0'}
-                               indexInValidator={6}
-                               value={penalty}
-                               min={0}
-                        />
-                    </div>
+                    {taskDeadline
+                        ? <div className={cl.rewardsInputWrap}>
+                            <label htmlFor="secondReward">Вторая награда: </label>
+                            <Input id="secondReward"
+                                   formValidator={formValidator}
+                                   name={InputNames.TASK_REWARD}
+                                   setValue={setSecondReward}
+                                   type="number"
+                                   placeholder={"0"}
+                                   indexInValidator={5}
+                                   value={secondReward}
+                                   min={0}
+                            />
+                        </div>
+                        : ''
+                    }
+                    {taskDeadline
+                        ? <div className={cl.rewardsInputWrap}>
+                            <label htmlFor="penalty">Штраф: </label>
+                            <Input id="penalty"
+                                   formValidator={formValidator}
+                                   name={InputNames.TASK_REWARD}
+                                   setValue={setPenalty}
+                                   type="number"
+                                   placeholder={'0'}
+                                   indexInValidator={6}
+                                   value={penalty}
+                                   min={0}
+                            />
+                        </div>
+                        : ''
+                    }
+                </div>
+                : ''
+            }
+            {taskDescription
+                ? <div className={cl.inputWrap}>
+                    {/*<label htmlFor="text">Описание: </label>*/}
+                    <textarea
+                        placeholder={'Описание'}
+                        id="text"
+                        className={cl.textarea}
+                        name="text"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    ></textarea>
                 </div>
                 : ''
             }
 
-            <div className={cl.inputWrap}>
-                {/*<label htmlFor="text">Описание: </label>*/}
-                <textarea
-                    placeholder={'Описание'}
-                    id="text"
-                    className={cl.textarea}
-                    name="text"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                ></textarea>
+            <div className={cl.settings}>
+                <div className={[cl.settingBtn, taskDeadline ? cl.settingBtnActive : ''].join(' ')}
+                     onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                         e.preventDefault()
+                         setTaskDeadline(!taskDeadline)
+                     }}>Дедлайн
+                </div>
+                <div
+                    className={[cl.settingBtn, taskDescription ? cl.settingBtnActive : ''].join(' ')}
+                    onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                        e.preventDefault()
+                        setTaskDescription(!taskDescription)
+                    }}>Добавить описание
+                </div>
+                {!user.roles.includes(Roles.TASK_MANAGER)
+                    ? <div
+                        className={[cl.settingBtn, taskRewards ? cl.settingBtnActive : ''].join(' ')}
+                        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                            e.preventDefault()
+                            setTaskRewards(!taskRewards)
+                        }}>Очки
+                    </div>
+                    : ''
+                }
             </div>
 
             <div className={cl.inputWrap}>

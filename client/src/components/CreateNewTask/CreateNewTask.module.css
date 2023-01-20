@@ -53,6 +53,34 @@
     border: 1px solid #0078D4;
 }
 
+.settings {
+    user-select: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    /*justify-content: center;*/
+    width: 100%;
+}
+
+.settingBtn {
+    cursor: pointer;
+    opacity: .8;
+    color: white;
+    padding: 5px;
+    border-left: 1px solid white;
+    background-color: #0078D4;
+}
+.settingBtn:first-child {
+    border-left: none;
+}
+
+.settingBtn:hover {
+    opacity: 1;
+}
+.settingBtnActive {
+    opacity: 1;
+}
 .submit {
     height: 32px;
 }
