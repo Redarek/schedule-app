@@ -65,7 +65,6 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
             setTitle(task.title)
             setText(task.text)
             setCategories(task.categories)
-            // setSpec(task.spec)
             setEmpl(task.employee)
             setFirstReward(Number(task.firstReward))
             setSecondReward(Number(task.secondReward))
@@ -104,16 +103,13 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     secondEnd: Number(new Date(secondEnd).getTime())
                 }
             }
-            dispatch(editTask(updateTask))
-
-            setTimeout(() => {
+            const promise = new Promise((resolve, reject)=> {
+                resolve(dispatch(editTask(updateTask)))
+            })
+            promise.then(()=> {
                 dispatch(fetchEmployeeTasks(user._id))
-            }, 500)
-            setTimeout(() => {
-                // dispatch(fetchEmployeeTasks(user._id))
                 navigate('/')
-            }, 1000)
-
+            })
         }
     }
 
@@ -129,6 +125,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     ]
     const formValidator = new FormValidator(inputNames)
 
+    console.log(task)
     return (
         <div className={cl.wrapper}>
             <div className={cl.wrap}>

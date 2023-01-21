@@ -142,11 +142,13 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 firstEnd: Number(new Date(firstEnd).getTime()),
                 secondEnd: Number(new Date(secondEnd).getTime())
             }
-            // console.log(task)
-            dispatch(createTask(task))
-            setTimeout(() => {
+
+            const promise = new Promise((resolve, reject) => {
+                resolve(dispatch(createTask(task)))
+            })
+            promise.then(() => {
                 dispatch(fetchEmployeeTasks(employee._id))
-            }, 700)
+            })
             setEmployeeName(user.name)
             setCategories([])
             setTitle('')

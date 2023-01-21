@@ -13,7 +13,7 @@ const taskSchema =  new Schema({
         type: String,
         required: true
     },
-    category: {
+    categories: {
         type: Array,
         required: true
     },
