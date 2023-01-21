@@ -42,7 +42,7 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
         //     //@ts-ignore
         //     setCalendarMode(localStorage.getItem('CalendarMode'))
         // }
-    }, [tasks.length, calendarMode])
+    }, [tasks, calendarMode])
 
     const calendarModes = [
         <MonthComponent firstDay={calendar.getFirstDay()} weekDays={calendar.getWeekDays()}

@@ -6,9 +6,9 @@ const bonusService = require('../service/bonusService');
 class TaskController {
     async createTask(req, res, next) {
         try {
-            const {employee, category, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
+            const {employee, categories, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd} = req.body;
             const employeeId = await userService.getUserIdByName(req.body.employee);
-            const taskData = new taskModel({user: req.user._id, employee, employeeId, category, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
+            const taskData = new taskModel({user: req.user._id, employee, employeeId, categories, title, text, firstReward, secondReward, penalty, start, firstEnd, secondEnd});
             const task = await taskService.createTask(taskData);
             return res.json(task);
             // return res.json({task: taskData, status: 'success'});

@@ -3,7 +3,7 @@ import cl from './TasckCard.module.css'
 import {ITasks} from "../../types/ITasks";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {completeTask, deleteTask} from "../../store/reducers/ActionCreators";
+import {completeTask, deleteTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
 
 interface TaskCardProps {
     task: ITasks;
@@ -22,8 +22,17 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
     }
 
     const handleCompleteTask = () => {
-        dispatch(completeTask(task._id))
-        if (error === '') setIsModalVisible(false)
+        const promise = new Promise((resolve, reject) => {
+            console.log(1)
+            resolve(dispatch(completeTask(task._id)))
+
+        })
+        promise.then(() => {
+            console.log('2')
+            dispatch(fetchEmployeeTasks(employee._id))
+        })
+        // dispatch(completeTask(task._id))
+        // if (error === '') setIsModalVisible(false)
     }
     const date = new Date()
     return (
