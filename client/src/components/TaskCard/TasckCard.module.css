@@ -20,7 +20,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .btn img {
@@ -43,49 +42,25 @@
 
 
 .completeBtn {
-    width: 24px;
-    height: 24px;
-    border-radius: 50px;
-    border: 1px solid #c9c8c8;
-    background-color: #0078D4;
-    position: relative;
-}
-
-.completeBtn span {
-    position: absolute;
-    border-radius: 2px;
-    height: 12px;
-    width: 1px;
-    background-color: #000000;
-}
-
-.completeBtn:hover {
-    background-color: #4dfc57;
-}
-
-
-.completeBtn span:first-child {
-    top: 6px;
-    left: 12px;
-    transform: rotate(30deg);
-}
-
-.completeBtn span:last-child {
-    top: 6px;
-    left: 7px;
-    transform: rotate(-30deg);
+    margin-right: auto;
+    height: 20px;
+    max-width: 85px;
+    width: 100%;
 }
 
 
 .taskInfo {
     padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .taskTitle {
+
 }
 
 .taskRewards {
-    margin-top: 5px;
     display: flex;
     width: 100%;
     flex-wrap: nowrap;
@@ -97,11 +72,28 @@
     margin: 0 10%;
 }
 
-.taskTerms {
-    margin-top: 5px;
-}
 
 .taskTerm {
     text-transform: capitalize;
 }
 
+.descriptionBtn {
+    margin: 0 auto;
+    cursor: pointer;
+    opacity: .8;
+    color: #6c6c6c;
+    transition: all 300ms linear;
+}
+
+.descriptionBtn:hover {
+    color: black;
+    opacity: 1;
+}
+@media (max-width: 768px) {
+    .cardBtns {
+        top: -14px;
+    }
+    .taskInfo {
+        padding-top: 20px;
+    }
+}
