@@ -41,7 +41,12 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
                 {task.complete && task.firstEnd < date
                     ? <div style={{marginLeft: 'auto'}}></div>
                     : <div className={cl.completeBtn} onClick={() => handleCompleteTask()}>
-                        <Button onClick={() => handleCompleteTask()}>Выполнено</Button>
+                        <Button onClick={() => handleCompleteTask()}>
+                            {task.complete
+                                ? 'Не выполнено'
+                                : 'Выполнено'
+                            }
+                        </Button>
                     </div>
 
                 }
