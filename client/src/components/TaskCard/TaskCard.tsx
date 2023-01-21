@@ -23,16 +23,13 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
 
     const handleCompleteTask = () => {
         const promise = new Promise((resolve, reject) => {
-            console.log(1)
             resolve(dispatch(completeTask(task._id)))
 
         })
         promise.then(() => {
-            console.log('2')
             dispatch(fetchEmployeeTasks(employee._id))
+            setIsModalVisible(false)
         })
-        // dispatch(completeTask(task._id))
-        // if (error === '') setIsModalVisible(false)
     }
     const date = new Date()
     return (
