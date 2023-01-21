@@ -125,7 +125,6 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
     ]
     const formValidator = new FormValidator(inputNames)
 
-    console.log(task)
     return (
         <div className={cl.wrapper}>
             <div className={cl.wrap}>

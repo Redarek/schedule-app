@@ -55,7 +55,7 @@ export class Month {
                 // }
 
                 if (this.tasks[i].firstEnd.getTime() - this.daysInMonth[j].date.getTime() > 0
-                    && this.daysInMonth[j].date.getTime() >= this.tasks[i].start.getTime() - 86400000) {
+                    && this.daysInMonth[j].date.getTime() > this.tasks[i].start.getTime() - 86400000) {
                     if (!this.daysInMonth[j].tasks.includes(this.tasks[i]))
                         this.daysInMonth[j].tasks.push(this.tasks[i])
                 }

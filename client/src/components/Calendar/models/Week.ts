@@ -42,7 +42,7 @@ export class Week {
         for (let i = 0; i < this.tasks.length; i++) {
             for (let j = 0; j < this.days.length; j++) {
                 if (this.tasks[i].firstEnd.getTime() - this.days[j].date.getTime() > 0
-                    && this.days[j].date.getTime() >= this.tasks[i].start.getTime() - 86400000) {
+                    && this.days[j].date.getTime() > this.tasks[i].start.getTime() - 86400000) {
                     if (!this.days[j].tasks.includes(this.tasks[i]))
                         this.days[j].tasks.push(this.tasks[i])
                 }
