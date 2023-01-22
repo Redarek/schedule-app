@@ -64,29 +64,29 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         if (categories.length > 0) {
             switch (categories[0]) {
                 case Categories.CATEGORY_A:
-                    setFirstReward(5)
-                    setSecondReward(3)
-                    setPenalty(3)
+                    setFirstReward(7)
+                    setSecondReward(0)
+                    setPenalty(0)
                     if (!taskDeadline) {
-                        setSecondReward(5)
+                        setSecondReward(7)
                         setPenalty(0)
                     }
                     break;
                 case Categories.CATEGORY_B:
-                    setFirstReward(10)
-                    setSecondReward(8)
-                    setPenalty(5)
+                    setFirstReward(4)
+                    setSecondReward(0)
+                    setPenalty(0)
                     if (!taskDeadline) {
-                        setSecondReward(10)
+                        setSecondReward(4)
                         setPenalty(0)
                     }
                     break;
                 case Categories.CATEGORY_C:
-                    setFirstReward(15)
-                    setSecondReward(10)
-                    setPenalty(7)
+                    setFirstReward(2)
+                    setSecondReward(0)
+                    setPenalty(0)
                     if (!taskDeadline) {
-                        setSecondReward(15)
+                        setSecondReward(2)
                         setPenalty(0)
                     }
                     break;
