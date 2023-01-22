@@ -57,7 +57,13 @@
 }
 
 .taskTitle {
+    width: 100%;
+    border-radius: 5px;
+    padding: 0 5px;
+}
 
+.taskTitle:hover {
+    opacity: .1;
 }
 
 .taskRewards {

@@ -1,11 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../../../../hooks/redux";
 import cl from './NavbarItem.module.css'
 
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 import {INavbarObject} from "../../types/INavbar";
 import {useNavigate, useParams} from "react-router-dom";
-import {setNavbarObjectIsActive, setNavbarVisible} from "../../../../store/reducers/navbarSlice";
+import {setNavbarObjectIsActive, setNavbarVisible} from "../../../../../store/reducers/navbarSlice";
 
 
 interface NavbarItemProps {

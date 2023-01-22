@@ -1,11 +1,12 @@
 import React, {FC, useState} from 'react';
 import cl from './TasckCard.module.css'
-import {ITasks} from "../../types/ITasks";
+import {ITasks} from "../../../../types/ITasks";
 import {useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {completeTask, deleteTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
-import Button from "../UI/Button/Button";
-import ModalFullScreen from "../UI/ModalFullScreen/ModalFullScreen";
+import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
+import {completeTask, deleteTask, fetchEmployeeTasks} from "../../../../store/reducers/ActionCreators";
+import Button from "../../../UI/Button/Button";
+import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
+import {taskColor} from "../../utils/taskColor";
 
 interface TaskCardProps {
     task: ITasks;
@@ -63,7 +64,11 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
                 }
             </div>
             <div className={cl.taskInfo}>
-                <div className={cl.taskTitle}>{task.title}</div>
+                <div
+                    className={cl.taskTitle}
+                    style={{backgroundColor: `${taskColor(task)}`}}
+                >{task.title}
+                </div>
                 <div className={cl.taskRewards}>
                     <div className={cl.taskReward}>Награда: {task.firstReward}</div>
                     <div className={cl.taskReward}>Штраф: {task.penalty}</div>

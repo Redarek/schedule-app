@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {fetchEmployees, fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
+import {fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
 import {setNavbarVisible} from "../../store/reducers/navbarSlice";
 import {IUser} from "../../types/IUser";
 import {userBonuses} from "../../store/reducers/authSlice";
@@ -16,7 +16,6 @@ const Header: FC<HeaderProps> = ({user}) => {
     const {userWeekBonuses, userAllBonuses, isLoading} = useAppSelector(state => state.bonusesSlice)
 
     useEffect(() => {
-        dispatch(fetchEmployees())
         // dispatch(fetchBonuses(user._id))
         dispatch(fetchWeekBonuses(user._id))
     }, [isAuth])

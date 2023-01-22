@@ -1,11 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {Roles} from "../../types/Roles";
+import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
+import {Roles} from "../../../types/Roles";
 import {INavbarObject} from "./types/INavbar";
 import NavbarItem from "./components/NavbarItem/NavbarItem";
 import cl from './Navbar.module.css'
 import {CSSTransition} from "react-transition-group";
-import {setNavbarVisible} from "../../store/reducers/navbarSlice";
+import {setNavbarVisible} from "../../../store/reducers/navbarSlice";
+import {fetchEmployees} from "../../../store/reducers/ActionCreators";
 
 
 interface NavbarProps {
@@ -76,6 +77,8 @@ const Navbar: FC<NavbarProps> = ({}) => {
                     }
                 ])
             }
+        } else if (employees.length === 0) {
+            dispatch(fetchEmployees())
         }
     }, [employees])
 

@@ -7,7 +7,7 @@ import {CalendarModes, WeekDays, WeekDaysFull} from "../../models/CalendarTypes"
 import Button from "../../../UI/Button/Button";
 import {ITasks} from "../../../../types/ITasks";
 import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
-import CreateNewTask from "../../../CreateNewTask/CreateNewTask";
+import CreateNewTask from "../CreateNewTask/CreateNewTask";
 
 interface CalendarComponentProps {
     tasks: ITasks[]

@@ -5,7 +5,7 @@ import AppRouter from "./components/AppRouter";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
 import {checkAuth} from './store/reducers/ActionCreators';
 import Header from "./components/Header/Header";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/UI/Navbar/Navbar";
 import {changeUserId} from "./store/reducers/bonusesSlice";
 import {Roles} from "./types/Roles";
 

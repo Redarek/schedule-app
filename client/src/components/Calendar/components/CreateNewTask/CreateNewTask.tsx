@@ -1,17 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
-import {ITask} from "../../types/ITasks";
+import {ITask} from "../../../../types/ITasks";
 import cl from './CreateNewTask.module.css'
-import Button from "../UI/Button/Button";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {createTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
-import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
-import {Categories} from "../../types/Categories";
-import {FormValidator} from "../UI/Input/models/FormValidator";
-import {InputNames} from "../UI/Input/models/InputValidator";
-import Input from "../UI/Input/Input";
-import {getInputDate} from "../UI/Input/inputDateFormat";
-import CheckBox from "../UI/CheckBox/CheckBox";
-import {Roles} from "../../types/Roles";
+import Button from "../../../UI/Button/Button";
+import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
+import {createTask, fetchEmployeeTasks} from "../../../../store/reducers/ActionCreators";
+import DropDownMenu from "../../../UI/DropDownMenu/DropDownMenu";
+import {Categories} from "../../../../types/Categories";
+import {FormValidator} from "../../../UI/Input/models/FormValidator";
+import {InputNames} from "../../../UI/Input/models/InputValidator";
+import Input from "../../../UI/Input/Input";
+import {getInputDate} from "../../../UI/Input/inputDateFormat";
+import CheckBox from "../../../UI/CheckBox/CheckBox";
+import {Roles} from "../../../../types/Roles";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;

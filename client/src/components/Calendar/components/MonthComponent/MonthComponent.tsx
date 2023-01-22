@@ -5,10 +5,10 @@ import cl from './MonthComponent.module.css'
 import Button from "../../../UI/Button/Button";
 import TaskComponent from "./TaskComponent";
 import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
-import TasksListCalendar from "../../../TasksListCalendar/TasksListCalendar";
+import TasksListCalendar from "../TasksListCalendar/TasksListCalendar";
 import {ITasks} from "../../../../types/ITasks";
-import TaskCard from "../../../TaskCard/TaskCard";
-import CreateNewTask from "../../../CreateNewTask/CreateNewTask";
+import TaskCard from "../TaskCard/TaskCard";
+import CreateNewTask from "../CreateNewTask/CreateNewTask";
 
 interface MonthComponentProps {
     firstDay: WeekDays.SU | WeekDays.MON,

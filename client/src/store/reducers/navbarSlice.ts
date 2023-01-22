@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {INavbarObject} from "../../components/Navbar/types/INavbar";
+import {INavbarObject} from "../../components/UI/Navbar/types/INavbar";
 
 interface Navbar {
     navbarIsVisible: boolean;

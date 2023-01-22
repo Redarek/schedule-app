@@ -3,6 +3,7 @@ import cl from "./TaskComponent.module.css";
 import {ITasks} from "../../../../types/ITasks";
 import {IDay} from "../../models/CalendarTypes";
 import {Categories} from "../../../../types/Categories";
+import {taskColor} from "../../utils/taskColor";
 
 
 interface TaskComponentProps {
@@ -62,20 +63,7 @@ const TaskComponent: FC<TaskComponentProps> = ({
         }
     }, [])
 
-    const color = () => {
-        if (task.categories.length !== 0)
-            switch (task.categories[0]) {
-                case Categories.CATEGORY_A:
-                    return'#ff944d'
-                    break;
-                case Categories.CATEGORY_B:
-                    return '#ffd480'
-                    break;
-                case Categories.CATEGORY_C:
-                    return '#00e6ac'
-                    break;
-            }
-    }
+
 
 
     return (
@@ -84,7 +72,7 @@ const TaskComponent: FC<TaskComponentProps> = ({
                 event.stopPropagation()
                 setTaskInfoIsVisible(true);
                 setSelectTask(task)
-            }} style={{textDecoration: taskCompleteStyle, backgroundColor: `${color()}`}}>{taskTitle}</div>
+            }} style={{textDecoration: taskCompleteStyle, backgroundColor: `${taskColor(task)}`}}>{taskTitle}</div>
         </div>
     );
 };

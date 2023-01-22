@@ -24,9 +24,6 @@ const authSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        editUser: (state, action: PayloadAction<IUser>) => {
-            state.user.user = action.payload
-        },
         userBonuses: (state, action: PayloadAction<IBonuses>) => {
             state.user.user.allTimeBalance = action.payload.all
             state.user.user.weekBalance = action.payload.week
@@ -98,5 +95,5 @@ const authSlice = createSlice({
         },
     }
 })
-export const {editUser, userBonuses} = authSlice.actions;
+export const {userBonuses} = authSlice.actions;
 export default authSlice.reducer;

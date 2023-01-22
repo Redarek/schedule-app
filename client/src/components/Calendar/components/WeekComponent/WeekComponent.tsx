@@ -5,7 +5,7 @@ import {Week} from "../../models/Week";
 import Button from "../../../UI/Button/Button";
 import {ITasks} from "../../../../types/ITasks";
 import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
-import TaskCard from "../../../TaskCard/TaskCard";
+import TaskCard from "../TaskCard/TaskCard";
 import TaskComponent from "../MonthComponent/TaskComponent";
 import DayTaskWeek from "./DayTaskWeek";
 
