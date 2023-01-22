@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
 import cl from "./CalendarComponent.module.css";
-import DropDownMenu from "../../../UI/DropDownMenu/DropDownMenu";
 import MonthComponent from "../MonthComponent/MonthComponent";
 import WeekComponent from "../WeekComponent/WeekComponent";
 import {Calendar} from "../../models/Calendar";
@@ -14,18 +13,17 @@ interface CalendarComponentProps {
     tasks: ITasks[]
 }
 
+// const calendarModes = Object.values(CalendarModes)
+
 const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
     if (!localStorage.getItem('CalendarMode')) localStorage.setItem('CalendarMode', 'Неделя')
 
     const [createTaskWindowIsVisible, setCreateTaskWindowIsVisible] = useState(false)
 
-    const [firstDayFull, setFirstDayFull] = useState<WeekDaysFull.MONDAY | WeekDaysFull.SUNDAY>(WeekDaysFull.MONDAY);
     const [firstDay, setFirstDay] = useState<WeekDays.MON | WeekDays.SU>(WeekDays.MON);
 
     const [calendarMode, setCalendarMode] = useState(CalendarModes.WEEK)
 
-    const modes = ["Месяц", "Неделя"]
-    const firstDays = ['Понедельник', 'Воскресенье']
 
     const [calendar, setCalendar] = useState<Calendar>(new Calendar(calendarMode, firstDay, tasks))
 
@@ -42,7 +40,7 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
         //     //@ts-ignore
         //     setCalendarMode(localStorage.getItem('CalendarMode'))
         // }
-    }, [tasks, calendarMode])
+    }, [tasks, calendarMode, firstDay])
 
     const calendarModes = [
         <MonthComponent firstDay={calendar.getFirstDay()} weekDays={calendar.getWeekDays()}
@@ -51,26 +49,23 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                        week={calendar.getWeek()}/>
     ]
 
-    const changeFirstDay = (day: WeekDaysFull.MONDAY | WeekDaysFull.SUNDAY) => {
-        setFirstDayFull(day)
-        switch (day) {
-            case WeekDaysFull.SUNDAY:
-                setFirstDay(WeekDays.SU)
-                setCalendar(new Calendar(calendarMode, WeekDays.SU, tasks))
-                break;
-            case WeekDaysFull.MONDAY:
-                setFirstDay(WeekDays.MON)
-                setCalendar(new Calendar(calendarMode, WeekDays.MON, tasks))
-        }
-    }
-
     return (
         <div className={cl.wrapper}>
             <div className={cl.calendarMenu}>
                 <div className={cl.calendarModeBtn}>
-                    <DropDownMenu selectItem={calendarMode} setSelectItem={handleChangeMode}
-                                  items={modes} type={"string"}
-                                  position={"bottom"}/>
+                    <input
+                        type="radio"
+                        id={'month-mode'}
+                        // value={calendarModes[0]}
+                        checked={calendarMode === CalendarModes.MONTH}
+                        onChange={() => setCalendarMode(CalendarModes.MONTH)}
+                    /><label htmlFor={'month-mode'}>Месяц</label>
+                    <input
+                        type="radio"
+                        id={'week-mode'}
+                        checked={calendarMode === CalendarModes.WEEK}
+                        onChange={() => setCalendarMode(CalendarModes.WEEK)}
+                    /> <label htmlFor={'week-mode'}>Неделя</label>
                 </div>
                 {createTaskWindowIsVisible
                     ? <ModalFullScreen visible={createTaskWindowIsVisible} exitBtn={true}
@@ -81,16 +76,22 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                     </ModalFullScreen>
                     : ''
                 }
-
                 <div className={cl.createTaskBtn}>
-                    <Button onClick={() => setCreateTaskWindowIsVisible(true)}>Create new Task</Button>
+                    <Button onClick={() => setCreateTaskWindowIsVisible(true)}>Добавить задачу</Button>
                 </div>
-
-
                 <div className={cl.calendarSettingsBtn}>
-                    <DropDownMenu selectItem={firstDayFull} setSelectItem={changeFirstDay}
-                                  items={firstDays} type={"string"}
-                                  position={"bottom"}/>
+                    <input
+                        type="radio"
+                        id={'mon-first'}
+                        checked={firstDay === WeekDays.MON}
+                        onChange={() => setFirstDay(WeekDays.MON)}
+                    /><label htmlFor={'mon-first'}>Понедельник</label>
+                    <input
+                        type="radio"
+                        id={'sun-first'}
+                        checked={firstDay === WeekDays.SU}
+                        onChange={() => setFirstDay(WeekDays.SU)}
+                    /> <label htmlFor={'sun-first'}>Воскресенье</label>
                 </div>
             </div>
             {calendarModes[Object.values(CalendarModes).findIndex(value => value === calendarMode)]}
