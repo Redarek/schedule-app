@@ -98,6 +98,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             setSecondReward(0)
             setPenalty(0)
         }
+    }, [categories])
+
+    useEffect(() => {
         if (!taskDeadline) {
             setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
@@ -109,8 +112,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
             setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
         }
-    }, [categories, taskDeadline])
-
+    }, [taskDeadline])
     let inputNames = [
         InputNames.TASK_TITLE,
         InputNames.DATE_START,

@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from "./TaskComponent.module.css";
 import {ITasks} from "../../../../types/ITasks";
 import {IDay} from "../../models/CalendarTypes";
+import {Categories} from "../../../../types/Categories";
 
 
 interface TaskComponentProps {
@@ -61,13 +62,29 @@ const TaskComponent: FC<TaskComponentProps> = ({
         }
     }, [])
 
+    const color = () => {
+        if (task.categories.length !== 0)
+            switch (task.categories[0]) {
+                case Categories.CATEGORY_A:
+                    return'#ff944d'
+                    break;
+                case Categories.CATEGORY_B:
+                    return '#ffd480'
+                    break;
+                case Categories.CATEGORY_C:
+                    return '#00e6ac'
+                    break;
+            }
+    }
+
+
     return (
         <div className={cl.task} style={{width: `${width}%`}}>
             <div className={cl.taskInfo} onClick={(event: React.MouseEvent<HTMLDivElement>) => {
                 event.stopPropagation()
                 setTaskInfoIsVisible(true);
                 setSelectTask(task)
-            }} style={{textDecoration: taskCompleteStyle}}>{taskTitle}</div>
+            }} style={{textDecoration: taskCompleteStyle, backgroundColor: `${color()}`}}>{taskTitle}</div>
         </div>
     );
 };
