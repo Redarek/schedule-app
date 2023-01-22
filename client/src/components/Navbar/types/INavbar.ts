@@ -1,10 +1,7 @@
-export interface IItem {
-    link: string,
-    title: string
+export interface INavbarObject {
+    type: 'list' | 'item'
+    title: string;
+    items: INavbarObject[]
+    link: null | string
+    isActive: boolean;
 }
-
-export interface IList {
-    listTitle: string;
-    items: IItem[]
-}
-

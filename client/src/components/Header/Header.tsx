@@ -12,10 +12,8 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({user}) => {
     const dispatch = useAppDispatch()
-    const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
     const {isAuth} = useAppSelector(state => state.authSlice)
     const {userWeekBonuses, userAllBonuses, isLoading} = useAppSelector(state => state.bonusesSlice)
-    const {employee} = useAppSelector(state => state.employeeSlice)
 
     useEffect(() => {
         dispatch(fetchEmployees())
@@ -36,7 +34,7 @@ const Header: FC<HeaderProps> = ({user}) => {
     const showNavbar = () => {
         // if (navbarIsVisible && window.screen.width < 768 && wrapper) {
         // wrapper.scrollBy({left: -1000, behavior: "smooth"})
-        dispatch(setNavbarVisible(navbarIsVisible))
+        dispatch(setNavbarVisible())
         // } else dispatch(setNavbarVisible(navbarIsVisible))
     }
 
