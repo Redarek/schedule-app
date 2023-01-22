@@ -77,7 +77,7 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                     : ''
                 }
                 <div className={cl.createTaskBtn}>
-                    <Button onClick={() => setCreateTaskWindowIsVisible(true)}>Добавить задачу</Button>
+                    <Button onClick={() => setCreateTaskWindowIsVisible(true)}>Создать задачу</Button>
                 </div>
                 <div className={cl.calendarSettingsBtn}>
                     <input

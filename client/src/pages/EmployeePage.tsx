@@ -13,7 +13,7 @@ const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
     const {latinName} = useParams()
 
-    const [userCardIsShow, setUserCardIsShow] = useState<boolean>(true)
+    const [userCardIsShow, setUserCardIsShow] = useState<boolean>(false)
     const {employee, employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const {user} = useAppSelector(state => state.authSlice.user)
     const {tasks, isLoadingCreate, isLoadingDelete, isLoadingUpdate} = useAppSelector(state => state.taskSlice)
