@@ -39,7 +39,11 @@ const EmployeePage: FC = () => {
                 : !isLoading
                     ? <div className={cl.wrapper}>
                         <div className={cl.chooseMenu}>
-                            <div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>Скрыть
+                            <div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>
+                                {userCardIsShow
+                                    ? 'Скрыть профиль'
+                                    : 'Показать профиль'
+                                }
                             </div>
                         </div>
                         {!userCardIsShow

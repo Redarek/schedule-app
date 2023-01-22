@@ -22,7 +22,7 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
 
     const [firstDay, setFirstDay] = useState<WeekDays.MON | WeekDays.SU>(WeekDays.MON);
 
-    const [calendarMode, setCalendarMode] = useState(CalendarModes.WEEK)
+    const [calendarMode, setCalendarMode] = useState(CalendarModes.MONTH)
 
 
     const [calendar, setCalendar] = useState<Calendar>(new Calendar(calendarMode, firstDay, tasks))
