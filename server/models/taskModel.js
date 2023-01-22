@@ -42,12 +42,15 @@ const taskSchema =  new Schema({
     },
     start: {
         type: Date,
+        required: true
     },
     firstEnd: {
         type: Date,
+        required: true
     },
     secondEnd: {
         type: Date,
+        required: true
     },
     deadlineStatus: {
         type: String,
