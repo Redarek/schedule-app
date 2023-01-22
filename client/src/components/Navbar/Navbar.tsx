@@ -26,7 +26,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
                 setNavbarList([...navBarList, {
                     link: `/employee-page/${user.latinName}`,
                     title: `${user.name}`,
-                    type: "list",
+                    type: "item",
                     items: [],
                     isActive: false,
                 }])
@@ -83,7 +83,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
         <div
             className={cl.background}
             onClick={() => dispatch(setNavbarVisible())}
-            style={{width: navbarIsVisible? '100%': '0'}}
+            style={{width: navbarIsVisible && window.innerWidth < 768 ? '100%' : 'auto'}}
         >
             <CSSTransition
                 in={navbarIsVisible}

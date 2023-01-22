@@ -1,23 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import cl from "./admin-styles/RolesPage.module.css";
 import EmployeeTr from "./EmployeeTr";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {useAppSelector} from "../../hooks/redux";
 import {Roles} from "../../types/Roles";
-import {setNavbarObjectIsActiveLink} from "../../store/reducers/navbarSlice";
 
 const RolesPage = () => {
     const {employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const {user} = useAppSelector(state => state.authSlice.user)
-    const dispatch = useAppDispatch()
-    useEffect(()=> {
-        dispatch(setNavbarObjectIsActiveLink({
-            title: `Роли`,
-            type: 'item',
-            link: `/admin/${user.latinName}/roles`,
-            isActive: false,
-            items: []
-        }))
-    }, [])
     return (
         <div className={cl.wrapper}>
             {user.roles && (user.roles.includes(Roles.ADMIN_ROLES) || user.roles.includes(Roles.SUPER_ADMIN))

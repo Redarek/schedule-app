@@ -7,7 +7,6 @@ import {fetchBonuses, fetchEmployeeTasks, fetchWeekBonuses} from "../store/reduc
 import {useParams} from "react-router-dom";
 import {changeEmployee} from "../store/reducers/EmployeeSlice";
 import {Roles} from "../types/Roles";
-import {setNavbarObjectIsActive, setNavbarObjectIsActiveLink} from "../store/reducers/navbarSlice";
 
 const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
@@ -29,13 +28,6 @@ const EmployeePage: FC = () => {
         if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
         if (employee._id) dispatch(fetchBonuses(employee._id))
         if (employee._id) dispatch(fetchWeekBonuses(employee._id))
-        if (employee._id) dispatch(setNavbarObjectIsActiveLink({
-            title: employee.name,
-            type: 'item',
-            link: `employee-page/${employee.latinName}`,
-            isActive: false,
-            items: []
-        }))
     }, [employee, isLoadingCreate, isLoadingDelete, isLoadingUpdate])
 
 

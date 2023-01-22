@@ -4,7 +4,7 @@ import cl from './NavbarItem.module.css'
 
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 import {INavbarObject} from "../../types/INavbar";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {setNavbarObjectIsActive, setNavbarVisible} from "../../../../store/reducers/navbarSlice";
 
 
@@ -22,8 +22,17 @@ const NavbarItem: FC<NavbarItemProps> = ({item}) => {
     useEffect(() => {
             setListItemsIsVisible(-1 !== openItems.findIndex(searchItem => searchItem.title === item.title))
             setItemIsActive(-1 !== openItems.findIndex(searchItem => searchItem.title === item.title))
+
         }, [openItems]
     )
+
+    useEffect(() => {
+        const ind = openItems.findIndex(it => it.link === window.location.pathname)
+        if (ind === -1 && window.location.pathname === item.link) {
+            dispatch(setNavbarObjectIsActive(item))
+        }
+    }, [window.location.pathname])
+
     return (
         item.type === 'list'
             ? <div className={cl.list}>
@@ -64,8 +73,10 @@ const NavbarItem: FC<NavbarItemProps> = ({item}) => {
             : <div
                 className={cl.itemTitle}
                 onClick={() => {
-                    dispatch(setNavbarObjectIsActive(item))
-                    navigate(`${item.link}`)
+                    if (window.location.pathname !== item.link) {
+                        dispatch(setNavbarObjectIsActive(item))
+                        navigate(`${item.link}`)
+                    }
                     if (window.innerWidth < 768) {
                         dispatch(setNavbarVisible())
                     }

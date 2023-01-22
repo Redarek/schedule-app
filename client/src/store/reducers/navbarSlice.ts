@@ -35,15 +35,15 @@ const navbarSlice = createSlice({
                 state.openItems = [...state.openItems, action.payload]
             }
         },
-        setNavbarObjectIsActiveLink: (state, action: PayloadAction<INavbarObject>) => {
-            if (state.openItems) {
-                state.openItems = state.openItems.filter(item => item.link === null)
-                state.openItems = [...state.openItems, action.payload]
-            } else {
-                state.openItems = []
-                state.openItems = [...state.openItems, action.payload]
-            }
-        }
+        // setNavbarObjectIsActiveLink: (state, action: PayloadAction<INavbarObject>) => {
+        //     if (state.openItems) {
+        //         state.openItems = state.openItems.filter(item => item.link === null)
+        //         state.openItems = [...state.openItems, action.payload]
+        //     } else {
+        //         state.openItems = []
+        //         state.openItems = [...state.openItems, action.payload]
+        //     }
+        // }
     },
 
     extraReducers: {}
@@ -51,6 +51,5 @@ const navbarSlice = createSlice({
 export const {
     setNavbarVisible,
     setNavbarObjectIsActive,
-    setNavbarObjectIsActiveLink
 } = navbarSlice.actions;
 export default navbarSlice.reducer;
