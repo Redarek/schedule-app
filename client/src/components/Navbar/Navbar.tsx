@@ -83,6 +83,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
         <div
             className={cl.background}
             onClick={() => dispatch(setNavbarVisible())}
+            style={{width: navbarIsVisible? '100%': '0'}}
         >
             <CSSTransition
                 in={navbarIsVisible}

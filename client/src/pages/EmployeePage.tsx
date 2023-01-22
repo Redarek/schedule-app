@@ -38,6 +38,9 @@ const EmployeePage: FC = () => {
         }))
     }, [employee, isLoadingCreate, isLoadingDelete, isLoadingUpdate])
 
+
+    const [activeComponent, setActiveComponent] = useState<'profile' | 'calendar'>(user.roles.includes(Roles.CALENDAR) ? 'calendar' : 'profile')
+
     return (
         <div className={cl.wrapper}>
             {!user.roles.includes(Roles.ADMIN) && latinName !== user.latinName
@@ -45,19 +48,30 @@ const EmployeePage: FC = () => {
                 : !isLoading
                     ? <div className={cl.wrapper}>
                         <div className={cl.chooseMenu}>
-                            <div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>
-                                {userCardIsShow
-                                    ? 'Скрыть профиль'
-                                    : 'Показать профиль'
-                                }
+                            {/*<div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>*/}
+                            {/*    {userCardIsShow*/}
+                            {/*        ? 'Скрыть профиль'*/}
+                            {/*        : 'Показать профиль'*/}
+                            {/*    }*/}
+                            {/*</div>*/}
+                            <div
+                                className={[cl.menuBtn, activeComponent === 'profile' ? cl.menuBtnActive : ''].join(' ')}
+                                onClick={() => setActiveComponent('profile')}>Профиль
                             </div>
+                            {user.roles.includes(Roles.CALENDAR)
+                                ? <div
+                                    className={[cl.menuBtn, activeComponent === 'calendar' ? cl.menuBtnActive : ''].join(' ')}
+                                    onClick={() => setActiveComponent('calendar')}>Задачи
+                                </div>
+                                : ''
+                            }
                         </div>
-                        {!userCardIsShow
-                            ? ''
-                            : <EmployeeCard employee={employee}/>
+                        {activeComponent === 'profile'
+                            ? <EmployeeCard employee={employee}/>
+                            : ''
                         }
                         {user.roles && user.roles.includes(Roles.CALENDAR)
-                            ? <CalendarComponent tasks={tasks}/>
+                            ? activeComponent === 'calendar' ? <CalendarComponent tasks={tasks}/> : ''
                             : 'Для доступа к задачам обратитесь к администратору'
 
                         }

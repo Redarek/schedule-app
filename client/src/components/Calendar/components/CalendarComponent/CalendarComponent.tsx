@@ -51,6 +51,7 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
 
     return (
         <div className={cl.wrapper}>
+            {calendarModes[Object.values(CalendarModes).findIndex(value => value === calendarMode)]}
             <div className={cl.calendarMenu}>
                 <div className={cl.calendarModeBtn}>
                     <input
@@ -94,7 +95,6 @@ const CalendarComponent: FC<CalendarComponentProps> = ({tasks}) => {
                     /> <label htmlFor={'sun-first'}>Воскресенье</label>
                 </div>
             </div>
-            {calendarModes[Object.values(CalendarModes).findIndex(value => value === calendarMode)]}
         </div>
     );
 };

@@ -59,6 +59,14 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
     const [createTaskWindowIsVisible, setCreateTaskWindowIsVisible] = useState(false)
     const [createNewTaskDate, setCreateNewTaskDate] = useState<Date>(new Date())
 
+    const dayHeight = () => {
+        switch (month.getDaysInMonth().length) {
+            case 35:
+                return `calc(( 100vh - 75px - 6vh )/5)`;
+            case 42:
+                return `calc(( 100vh - 75px - 6vh )/6)`;
+        }
+    }
     return (
         <div className={cl.month}>
             {createTaskWindowIsVisible
@@ -71,18 +79,6 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
                 </ModalFullScreen>
                 : ''
             }
-            <div className={cl.monthMenu}>
-                <div className={cl.btn}>
-                    <Button onClick={() => handleChangeMonth('prev')}>Предыдущий</Button>
-                </div>
-                <div className={cl.btn}>
-                    <Button
-                        onClick={() => handleChangeMonth('today')}>{monthName}</Button>
-
-                </div>
-                <div className={cl.btn}><Button onClick={() => handleChangeMonth('next')}>Следующий</Button>
-                </div>
-            </div>
             <div className={cl.monthHeader}>
                 {weekDays.map(obj =>
                     <div className={cl.weekDay} key={obj}>{obj}</div>
@@ -97,8 +93,8 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
                             day.date.getDate() === new Date().getDate()
                             && day.date.getMonth() === new Date().getMonth()
                             && day.date.getFullYear() === new Date().getFullYear()
-                                ? {backgroundColor: 'rgba(164,220,252,.6)'}
-                                : {}
+                                ? {backgroundColor: 'rgba(164,220,252,.6)', minHeight: dayHeight()}
+                                : {minHeight: dayHeight()}
                         }
                         onClick={() => {
                             setCreateNewTaskDate(day.date)
@@ -155,6 +151,18 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
 
                 : ''
             }
+            <div className={cl.monthMenu}>
+                <div className={cl.btn}>
+                    <Button onClick={() => handleChangeMonth('prev')}>Предыдущий</Button>
+                </div>
+                <div className={cl.btn}>
+                    <Button
+                        onClick={() => handleChangeMonth('today')}>{monthName}</Button>
+
+                </div>
+                <div className={cl.btn}><Button onClick={() => handleChangeMonth('next')}>Следующий</Button>
+                </div>
+            </div>
         </div>
     );
 };
