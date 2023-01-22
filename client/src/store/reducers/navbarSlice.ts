@@ -1,39 +1,55 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IList} from "../../components/Navbar/types/INavbar";
+import {INavbarObject} from "../../components/UI/Navbar/types/INavbar";
 
 interface Navbar {
-    openListsTitle: IList[];
     navbarIsVisible: boolean;
-    navbarActiveItem: string;
+    openItems: INavbarObject[];
 }
 
 const initialState: Navbar = {
-    openListsTitle: [] as IList[],
     navbarIsVisible: false,
-    navbarActiveItem: '',
+    openItems: []
 }
 const navbarSlice = createSlice({
     name: 'navbar',
     initialState,
     reducers: {
-        setNavbarVisible: (state, action: PayloadAction<boolean>) => {
-            state.navbarIsVisible = !action.payload
+        setNavbarVisible: (state) => {
+            state.navbarIsVisible = !state.navbarIsVisible
         },
-        setNavbarActiveItem: (state, action: PayloadAction<string>) => {
-            state.navbarActiveItem = action.payload
-        },
-        setNavbarOpenListsTitle: (state, action: PayloadAction<IList>) => {
-            if (!state.openListsTitle) state.openListsTitle = initialState.openListsTitle;
-            const ind = state.openListsTitle.findIndex(obj => obj.listTitle === action.payload.listTitle)
-            if (ind === -1) {
-                state.openListsTitle = [...state.openListsTitle, action.payload]
+        setNavbarObjectIsActive: (state, action: PayloadAction<INavbarObject>) => {
+            if (state.openItems) {
+                if (-1 !== state.openItems.findIndex(searchItem => searchItem.title === action.payload.title)) {
+                    state.openItems = state.openItems.filter((item) => item.title !== action.payload.title)
+                } else {
+                    const ind = state.openItems.findIndex(searchItem => searchItem.type === action.payload.type)
+                    if (ind !== -1 && state.openItems[ind].type === 'item') {
+                        state.openItems.splice(ind, 1)
+                        state.openItems = [...state.openItems, action.payload]
+                    } else {
+                        state.openItems = [...state.openItems, action.payload]
+                    }
+                }
             } else {
-                state.openListsTitle.splice(ind, 1)
+                state.openItems = [];
+                state.openItems = [...state.openItems, action.payload]
             }
         },
+        // setNavbarObjectIsActiveLink: (state, action: PayloadAction<INavbarObject>) => {
+        //     if (state.openItems) {
+        //         state.openItems = state.openItems.filter(item => item.link === null)
+        //         state.openItems = [...state.openItems, action.payload]
+        //     } else {
+        //         state.openItems = []
+        //         state.openItems = [...state.openItems, action.payload]
+        //     }
+        // }
     },
 
     extraReducers: {}
 })
-export const {setNavbarVisible, setNavbarActiveItem, setNavbarOpenListsTitle} = navbarSlice.actions;
+export const {
+    setNavbarVisible,
+    setNavbarObjectIsActive,
+} = navbarSlice.actions;
 export default navbarSlice.reducer;

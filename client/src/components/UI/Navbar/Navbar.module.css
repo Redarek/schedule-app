@@ -1,0 +1,84 @@
+.navBar {
+    min-width: 230px;
+    max-width: 290px;
+    height: calc(100vh - 45px);
+    background-color: #E6E6E6;
+    width: 100%;
+}
+
+.background {
+    background-color: rgba(108, 108, 108, 0);
+    height: calc(100vh - 45px);
+    z-index: 100;
+    position: relative;
+}
+
+@media (max-width: 767px) {
+    .background {
+        width: 100%;
+        position: absolute;
+    }
+    .navBar {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        z-index: 100;
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 420px) {
+    .navBar {
+        max-width: 230px;
+    }
+}
+
+@media (max-width: 280px) {
+    .navBar {
+        max-width: 100%;
+    }
+}
+
+.navBarExitActive {
+    animation: navBarOut 1000ms forwards;
+}
+
+.navBarEnterActive {
+    animation: navBarIn 1000ms forwards;
+}
+
+@keyframes navBarIn {
+    0% {
+        opacity: 0;
+        min-width: 0;
+        max-width: 0;
+        z-index: 100;
+        transform: translateX(-290px);
+    }
+    100% {
+        transform: translateX(0);
+        min-width: 230px;
+        /*max-width: 290px;*/
+        opacity: 1;
+        z-index: 100;
+    }
+}
+
+@keyframes navBarOut {
+    0% {
+        opacity: 1;
+        min-width: 230px;
+        /*max-width: 290px;*/
+        z-index: 100;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        min-width: 0;
+        max-width: 0;
+        z-index: 100;
+        transform: translateX(-300px);
+    }
+}
+
+

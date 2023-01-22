@@ -155,10 +155,7 @@ const taskSlice = createSlice({
         },
         [completeTask.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
             const taskId = action.payload._id
-            console.log(taskId)
             const taskInd = state.tasks.findIndex(tas => tas._id === taskId)
-            console.log(taskInd)
-            console.log(action.payload.complete)
             state.tasks[taskInd] = {
                 ...state.tasks[taskInd],
                 complete: !action.payload.complete,

@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {fetchEmployees, fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
+import {fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
 import {setNavbarVisible} from "../../store/reducers/navbarSlice";
 import {IUser} from "../../types/IUser";
 import {userBonuses} from "../../store/reducers/authSlice";
@@ -12,13 +12,10 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({user}) => {
     const dispatch = useAppDispatch()
-    const {navbarIsVisible} = useAppSelector(state => state.navbarSlice)
     const {isAuth} = useAppSelector(state => state.authSlice)
     const {userWeekBonuses, userAllBonuses, isLoading} = useAppSelector(state => state.bonusesSlice)
-    const {employee} = useAppSelector(state => state.employeeSlice)
 
     useEffect(() => {
-        dispatch(fetchEmployees())
         // dispatch(fetchBonuses(user._id))
         dispatch(fetchWeekBonuses(user._id))
     }, [isAuth])
@@ -36,7 +33,7 @@ const Header: FC<HeaderProps> = ({user}) => {
     const showNavbar = () => {
         // if (navbarIsVisible && window.screen.width < 768 && wrapper) {
         // wrapper.scrollBy({left: -1000, behavior: "smooth"})
-        dispatch(setNavbarVisible(navbarIsVisible))
+        dispatch(setNavbarVisible())
         // } else dispatch(setNavbarVisible(navbarIsVisible))
     }
 

@@ -5,7 +5,6 @@ import CalendarComponent from "../components/Calendar/components/CalendarCompone
 import EmployeeCard from "../components/EmployeeCard";
 import {fetchBonuses, fetchEmployeeTasks, fetchWeekBonuses} from "../store/reducers/ActionCreators";
 import {useParams} from "react-router-dom";
-import {setNavbarActiveItem} from "../store/reducers/navbarSlice";
 import {changeEmployee} from "../store/reducers/EmployeeSlice";
 import {Roles} from "../types/Roles";
 
@@ -13,7 +12,7 @@ const EmployeePage: FC = () => {
     const dispatch = useAppDispatch()
     const {latinName} = useParams()
 
-    const [userCardIsShow, setUserCardIsShow] = useState<boolean>(true)
+    const [userCardIsShow, setUserCardIsShow] = useState<boolean>(false)
     const {employee, employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const {user} = useAppSelector(state => state.authSlice.user)
     const {tasks, isLoadingCreate, isLoadingDelete, isLoadingUpdate} = useAppSelector(state => state.taskSlice)
@@ -22,7 +21,6 @@ const EmployeePage: FC = () => {
     useEffect(() => {
         const index = employees.findIndex(emp => emp.latinName === latinName)
         if (index !== -1) dispatch(changeEmployee(employees[index]))
-        if (latinName) dispatch(setNavbarActiveItem(latinName))
     }, [latinName, employees])
 
 
@@ -32,6 +30,9 @@ const EmployeePage: FC = () => {
         if (employee._id) dispatch(fetchWeekBonuses(employee._id))
     }, [employee, isLoadingCreate, isLoadingDelete, isLoadingUpdate])
 
+
+    const [activeComponent, setActiveComponent] = useState<'profile' | 'calendar'>(user.roles.includes(Roles.CALENDAR) ? 'calendar' : 'profile')
+
     return (
         <div className={cl.wrapper}>
             {!user.roles.includes(Roles.ADMIN) && latinName !== user.latinName
@@ -39,15 +40,30 @@ const EmployeePage: FC = () => {
                 : !isLoading
                     ? <div className={cl.wrapper}>
                         <div className={cl.chooseMenu}>
-                            <div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>Скрыть
+                            {/*<div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>*/}
+                            {/*    {userCardIsShow*/}
+                            {/*        ? 'Скрыть профиль'*/}
+                            {/*        : 'Показать профиль'*/}
+                            {/*    }*/}
+                            {/*</div>*/}
+                            <div
+                                className={[cl.menuBtn, activeComponent === 'profile' ? cl.menuBtnActive : ''].join(' ')}
+                                onClick={() => setActiveComponent('profile')}>Профиль
                             </div>
+                            {user.roles.includes(Roles.CALENDAR)
+                                ? <div
+                                    className={[cl.menuBtn, activeComponent === 'calendar' ? cl.menuBtnActive : ''].join(' ')}
+                                    onClick={() => setActiveComponent('calendar')}>Задачи
+                                </div>
+                                : ''
+                            }
                         </div>
-                        {!userCardIsShow
-                            ? ''
-                            : <EmployeeCard employee={employee}/>
+                        {activeComponent === 'profile'
+                            ? <EmployeeCard employee={employee}/>
+                            : ''
                         }
                         {user.roles && user.roles.includes(Roles.CALENDAR)
-                            ? <CalendarComponent tasks={tasks}/>
+                            ? activeComponent === 'calendar' ? <CalendarComponent tasks={tasks}/> : ''
                             : 'Для доступа к задачам обратитесь к администратору'
 
                         }

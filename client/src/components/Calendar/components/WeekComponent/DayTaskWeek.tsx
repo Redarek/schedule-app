@@ -2,6 +2,8 @@ import React, {FC} from 'react';
 import {ITasks} from "../../../../types/ITasks";
 import cl from "./DayTaskWeek.module.css";
 import {IDay} from "../../models/CalendarTypes";
+import {Categories} from "../../../../types/Categories";
+import {taskColor} from "../../utils/taskColor";
 
 interface DayTaskOnWeekProps {
     task: ITasks,
@@ -37,12 +39,15 @@ const DayTaskWeek: FC<DayTaskOnWeekProps> = ({task, onClick, day}) => {
         let width = 100 / concurrentTasks.length;
 
 
+        let bgColor = taskColor(task)
+
         return {
             height: `${height}px`,
             marginTop: `${marginTop}px`,
             zIndex: `${index}`,
             marginLeft: `${marginLeft}%`,
-            width: `calc(${width}% - 4px)`
+            width: `calc(${width}% - 4px)`,
+            backgroundColor: bgColor,
         };
     }
 

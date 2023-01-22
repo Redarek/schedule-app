@@ -86,14 +86,15 @@
     display: flex;
     overflow: auto;
     width: 100%;
-    min-height: 50vh;
+    /*min-height: 45vh;*/
+    height: calc(100vh - 75px - 6vh - 80px);
 }
 
 .hours {
     width: 10%;
     display: flex;
     flex-direction: column;
-    height: 50vh;
+    /*min-height: 45vh;*/
 }
 
 .hourValue {
@@ -111,7 +112,7 @@
 .weekDates {
     display: flex;
     width: 90%;
-    height: 80vh;
+    /*height: 80vh;*/
     position: relative;
 }
 

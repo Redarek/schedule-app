@@ -9,10 +9,30 @@
 }
 
 .chooseMenu {
-    margin-top: 1vh;
-    width: 35%;
+    /*margin-top: 1vh;*/
+    width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    height: 30px;
+    background-color: rgba(108, 108, 108, 0.1);
+    padding: 0 10px;
+}
+
+.menuBtn {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 3px;
+    cursor: pointer;
+    transition: all 300ms linear;
+    /*width: 5px;*/
+}
+
+.menuBtn:hover {
+    background-color: #FFFFFF;
+}
+
+.menuBtnActive {
+    background-color: #FFFFFF;
 }
 
 .employeeCard {

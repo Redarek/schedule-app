@@ -2,6 +2,8 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from "./TaskComponent.module.css";
 import {ITasks} from "../../../../types/ITasks";
 import {IDay} from "../../models/CalendarTypes";
+import {Categories} from "../../../../types/Categories";
+import {taskColor} from "../../utils/taskColor";
 
 
 interface TaskComponentProps {
@@ -61,13 +63,16 @@ const TaskComponent: FC<TaskComponentProps> = ({
         }
     }, [])
 
+
+
+
     return (
         <div className={cl.task} style={{width: `${width}%`}}>
             <div className={cl.taskInfo} onClick={(event: React.MouseEvent<HTMLDivElement>) => {
                 event.stopPropagation()
                 setTaskInfoIsVisible(true);
                 setSelectTask(task)
-            }} style={{textDecoration: taskCompleteStyle}}>{taskTitle}</div>
+            }} style={{textDecoration: taskCompleteStyle, backgroundColor: `${taskColor(task)}`}}>{taskTitle}</div>
         </div>
     );
 };

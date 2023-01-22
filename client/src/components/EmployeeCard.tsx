@@ -3,13 +3,8 @@ import cl from "../styles/EmployeePage.module.css";
 import Input from "./UI/Input/Input";
 import {IUser} from "../types/IUser";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {changeEmployee} from "../store/reducers/EmployeeSlice";
-import {updateEmployee} from "../store/reducers/ActionCreators";
-import {editUser} from "../store/reducers/authSlice";
+import {fetchEmployeeById, fetchUser, updateEmployee} from "../store/reducers/ActionCreators";
 import {useNavigate} from "react-router-dom";
-import {translit} from "../utils/transliter";
-import DropDownMenu from "./UI/DropDownMenu/DropDownMenu";
-import {Categories} from "../types/Categories";
 import {FormValidator} from "./UI/Input/models/FormValidator";
 import {InputNames} from "./UI/Input/models/InputValidator";
 
@@ -28,7 +23,6 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
     useEffect(() => {
         setEmail(employee.email);
         setName(employee.name);
-        // setSpec(employee.spec)
     }, [employee])
 
 
@@ -36,7 +30,6 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
 
     const [email, setEmail] = useState<string>(employee.email);
     const [name, setName] = useState<string>(employee.name);
-    // const [spec, setSpec] = useState<string>(employee.spec)
 
     const [viewMode, setViewMode] = useState<"right" | "bottom">('right')
 
@@ -55,23 +48,27 @@ const EmployeeCard: FC<EmployeeCardProps> = ({employee}) => {
         // setEditMenuIsShow(!editMenuIsShow)
         const changedUser: IUser = {
             ...employee,
-            // spec: spec,
             email: email,
             name: name,
-            // latinName: translit(name),
         }
         setChangedUser(changedUser)
-        if (!formValidator.getFormStatus()) {
-            dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+        if (formValidator.getFormStatus()) {
+            const promise = new Promise((resolve, reject) => {
+                resolve(() => {
+                    dispatch(updateEmployee({user: changedUser, id: changedUser._id}))
+                })
+            })
+            promise
+                .then(() => {
+                    if (user._id === employee._id) {
+                        console.log('Запрос пользователя')
+                    }
+                    dispatch(fetchEmployeeById(employee._id))
+                })
+                .then(() => {
+                    navigate(`/employee-page/${employee.latinName}`)
+                })
         }
-        if (updateEmployeeError === '') {
-            if (user._id === changedUser._id) {
-                dispatch(editUser(changedUser))
-            }
-            dispatch(changeEmployee(changedUser))
-            navigate(`/employee-page/${changedUser.latinName}`)
-        }
-
     }
 
     return (

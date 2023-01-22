@@ -1,7 +1,8 @@
 import React, {FC, useState} from 'react';
 import cl from './TasksListCalendar.module.css'
-import {ITasks} from "../../types/ITasks";
+import {ITasks} from "../../../../types/ITasks";
 import TaskCard from "../TaskCard/TaskCard";
+import {taskColor} from "../../utils/taskColor";
 
 interface TasksListCalendarProps {
     tasks: ITasks[],
@@ -54,7 +55,10 @@ const TasksListCalendar: FC<TasksListCalendarProps> = ({tasks, date}) => {
                             setTask(task);
                             setIsVisibleTaskCard(true);
                         }}
-                        style={{textDecoration: task.complete ? 'line-through' : ''}}
+                        style={{
+                            textDecoration: task.complete ? 'line-through' : '',
+                            backgroundColor: `${taskColor(task)}`,
+                        }}
                     >
                         {task.title}
                     </div>

@@ -5,7 +5,7 @@ import {Week} from "../../models/Week";
 import Button from "../../../UI/Button/Button";
 import {ITasks} from "../../../../types/ITasks";
 import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
-import TaskCard from "../../../TaskCard/TaskCard";
+import TaskCard from "../TaskCard/TaskCard";
 import TaskComponent from "../MonthComponent/TaskComponent";
 import DayTaskWeek from "./DayTaskWeek";
 
@@ -91,18 +91,6 @@ const WeekComponent: FC<WeekComponentProps> = ({weekDayNames, firstDay, week}) =
 
     return (
         <div className={cl.week}>
-            {taskInfoIsVisible
-                ?
-                <ModalFullScreen visible={taskInfoIsVisible}
-                                 setVisible={setTaskInfoIsVisible}
-                                 exitBtn={true}
-                                 exitBackground={true}
-                >
-                    <TaskCard task={selectTask} setIsModalVisible={setTaskInfoIsVisible}/>
-                </ModalFullScreen>
-
-                : ''
-            }
             <div className={cl.weekMenu}>
                 <div className={cl.btn}>
                     <Button onClick={() => handleChangeWeek('prev')}>Предыдущая</Button>
@@ -115,6 +103,18 @@ const WeekComponent: FC<WeekComponentProps> = ({weekDayNames, firstDay, week}) =
                     <Button onClick={() => handleChangeWeek('next')}>Следующая</Button>
                 </div>
             </div>
+            {taskInfoIsVisible
+                ?
+                <ModalFullScreen visible={taskInfoIsVisible}
+                                 setVisible={setTaskInfoIsVisible}
+                                 exitBtn={true}
+                                 exitBackground={true}
+                >
+                    <TaskCard task={selectTask} setIsModalVisible={setTaskInfoIsVisible}/>
+                </ModalFullScreen>
+
+                : ''
+            }
             <div className={cl.weekHeader}>
                 {weekDayNames.map((day, index) =>
                     <div className={cl.weekDayName} key={day}>
@@ -134,7 +134,9 @@ const WeekComponent: FC<WeekComponentProps> = ({weekDayNames, firstDay, week}) =
                                                              setSelectTask={setSelectTask}
                                                              setTaskInfoIsVisible={setTaskInfoIsVisible}
                                             />
-                                            : <div className={cl.emptyDiv}></div>
+                                            : new Date(task.firstEnd.getFullYear(), task.firstEnd.getMonth(), task.firstEnd.getDate()).getTime() !== new Date(task.start.getFullYear(), task.start.getMonth(), task.start.getDate()).getTime()
+                                                ? <div className={cl.emptyDiv}></div>
+                                                : ''
                                         : ''
                                     }
                                 </Fragment>

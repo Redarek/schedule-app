@@ -1,17 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
-import {ITask} from "../../types/ITasks";
+import {ITask} from "../../../../types/ITasks";
 import cl from './CreateNewTask.module.css'
-import Button from "../UI/Button/Button";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {createTask, fetchEmployeeTasks} from "../../store/reducers/ActionCreators";
-import DropDownMenu from "../UI/DropDownMenu/DropDownMenu";
-import {Categories} from "../../types/Categories";
-import {FormValidator} from "../UI/Input/models/FormValidator";
-import {InputNames} from "../UI/Input/models/InputValidator";
-import Input from "../UI/Input/Input";
-import {getInputDate} from "../UI/Input/inputDateFormat";
-import CheckBox from "../UI/CheckBox/CheckBox";
-import {Roles} from "../../types/Roles";
+import Button from "../../../UI/Button/Button";
+import {useAppDispatch, useAppSelector} from "../../../../hooks/redux";
+import {createTask, fetchEmployeeTasks} from "../../../../store/reducers/ActionCreators";
+import DropDownMenu from "../../../UI/DropDownMenu/DropDownMenu";
+import {Categories} from "../../../../types/Categories";
+import {FormValidator} from "../../../UI/Input/models/FormValidator";
+import {InputNames} from "../../../UI/Input/models/InputValidator";
+import Input from "../../../UI/Input/Input";
+import {getInputDate} from "../../../UI/Input/inputDateFormat";
+import CheckBox from "../../../UI/CheckBox/CheckBox";
+import {Roles} from "../../../../types/Roles";
 
 interface CreateNewTaskProps {
     setModalVisible: (isShow: boolean) => void;
@@ -64,29 +64,29 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         if (categories.length > 0) {
             switch (categories[0]) {
                 case Categories.CATEGORY_A:
-                    setFirstReward(5)
-                    setSecondReward(3)
-                    setPenalty(3)
+                    setFirstReward(7)
+                    setSecondReward(0)
+                    setPenalty(0)
                     if (!taskDeadline) {
-                        setSecondReward(5)
+                        setSecondReward(7)
                         setPenalty(0)
                     }
                     break;
                 case Categories.CATEGORY_B:
-                    setFirstReward(10)
-                    setSecondReward(8)
-                    setPenalty(5)
+                    setFirstReward(4)
+                    setSecondReward(0)
+                    setPenalty(0)
                     if (!taskDeadline) {
-                        setSecondReward(10)
+                        setSecondReward(4)
                         setPenalty(0)
                     }
                     break;
                 case Categories.CATEGORY_C:
-                    setFirstReward(15)
-                    setSecondReward(10)
-                    setPenalty(7)
+                    setFirstReward(2)
+                    setSecondReward(0)
+                    setPenalty(0)
                     if (!taskDeadline) {
-                        setSecondReward(15)
+                        setSecondReward(2)
                         setPenalty(0)
                     }
                     break;
@@ -98,6 +98,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             setSecondReward(0)
             setPenalty(0)
         }
+    }, [categories])
+
+    useEffect(() => {
         if (!taskDeadline) {
             setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
@@ -109,8 +112,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
             setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
         }
-    }, [categories, taskDeadline])
-
+    }, [taskDeadline])
     let inputNames = [
         InputNames.TASK_TITLE,
         InputNames.DATE_START,
@@ -239,7 +241,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 <DropDownMenu selectItem={employeeName} setSelectItem={setEmployeeName} items={employees}
                               type={"employees"} position={"bottom"}/>
             </div>
-            {!user.roles.includes(Roles.TASK_MANAGER) && taskRewards
+            {user.roles.includes(Roles.TASK_MANAGER) && taskRewards || categories.length !== 0 && !taskRewards
                 ? <div className={cl.rewards}>
                     <div className={cl.rewardsInputWrap}>
                         <label htmlFor="firstReward">{!taskDeadline ? 'Награда:' : 'Первая награда:'} </label>
@@ -321,7 +323,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                         setTaskDescription(!taskDescription)
                     }}>Добавить описание
                 </div>
-                {!user.roles.includes(Roles.TASK_MANAGER)
+                {user.roles.includes(Roles.TASK_MANAGER)
                     ? <div
                         className={[cl.settingBtn, taskRewards ? cl.settingBtnActive : ''].join(' ')}
                         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
