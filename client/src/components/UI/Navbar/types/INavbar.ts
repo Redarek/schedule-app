@@ -1,7 +1,6 @@
 export interface INavbarObject {
-    type: 'list' | 'item'
+    type: 'list' | 'item' | 'list&item'
     title: string;
     items: INavbarObject[]
     link: null | string
-    isActive: boolean;
 }

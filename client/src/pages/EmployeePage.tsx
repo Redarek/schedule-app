@@ -15,20 +15,32 @@ const EmployeePage: FC = () => {
     const [userCardIsShow, setUserCardIsShow] = useState<boolean>(false)
     const {employee, employees, isLoading, error} = useAppSelector(state => state.employeeSlice)
     const {user} = useAppSelector(state => state.authSlice.user)
-    const {tasks, isLoadingCreate, isLoadingDelete, isLoadingUpdate} = useAppSelector(state => state.taskSlice)
+    const {
+        tasks,
+        isLoadingCreate,
+        isLoadingDelete,
+        isLoadingUpdate,
+        isLoadingTasks
+    } = useAppSelector(state => state.taskSlice)
 
 
     useEffect(() => {
         const index = employees.findIndex(emp => emp.latinName === latinName)
-        if (index !== -1) dispatch(changeEmployee(employees[index]))
+        if (index !== -1) {
+            dispatch(changeEmployee(employees[index]))
+            dispatch(fetchEmployeeTasks(employees[index]._id))
+            dispatch(fetchBonuses(employees[index]._id))
+            dispatch(fetchWeekBonuses(employees[index]._id))
+        }
+
     }, [latinName, employees])
 
 
-    useEffect(() => {
-        if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
-        if (employee._id) dispatch(fetchBonuses(employee._id))
-        if (employee._id) dispatch(fetchWeekBonuses(employee._id))
-    }, [employee, isLoadingCreate, isLoadingDelete, isLoadingUpdate])
+    // useEffect(() => {
+    //     if (employee._id) dispatch(fetchEmployeeTasks(employee._id))
+    //     if (employee._id) dispatch(fetchBonuses(employee._id))
+    //     if (employee._id) dispatch(fetchWeekBonuses(employee._id))
+    // }, [employee, isLoadingCreate, isLoadingDelete, isLoadingUpdate])
 
 
     const [activeComponent, setActiveComponent] = useState<'profile' | 'calendar'>(user.roles.includes(Roles.CALENDAR) ? 'calendar' : 'profile')
@@ -63,7 +75,11 @@ const EmployeePage: FC = () => {
                             : ''
                         }
                         {user.roles && user.roles.includes(Roles.CALENDAR)
-                            ? activeComponent === 'calendar' ? <CalendarComponent tasks={tasks}/> : ''
+                            ? activeComponent === 'calendar'
+                                ? isLoadingTasks
+                                    ? 'Загрузка'
+                                    : <CalendarComponent tasks={tasks}/>
+                                : ''
                             : 'Для доступа к задачам обратитесь к администратору'
 
                         }

@@ -14,7 +14,7 @@ interface TaskCardProps {
 }
 
 const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
-    const {error, isLoading} = useAppSelector(state => state.taskSlice)
+    const {error, isLoadingTasks} = useAppSelector(state => state.taskSlice)
     const {employee} = useAppSelector(state => state.employeeSlice)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
