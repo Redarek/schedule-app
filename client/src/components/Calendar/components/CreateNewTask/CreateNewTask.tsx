@@ -178,34 +178,42 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                     indexInValidator={0}
                 />
             </div>
-            <div className={cl.inputWrap}>
-                <label htmlFor="start">Начало: </label>
-                <Input id="start"
-                       readonly={!taskDeadline}
-                       placeholder={''}
-                       type="datetime-local"
-                       value={start}
-                       formValidator={formValidator}
-                       setValue={setStartDate}
-                       name={InputNames.DATE_START}
-                       indexInValidator={1}
-                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                />
-            </div>
-            <div className={cl.inputWrap}>
-                <label htmlFor="firstEnd">Конец: </label>
-                <Input id="firstEnd"
-                       readonly={!taskDeadline}
-                       placeholder={''}
-                       name={InputNames.DATE_FIRST_END}
-                       type="datetime-local"
-                       value={firstEnd}
-                       setValue={setFirstEndDate}
-                       formValidator={formValidator}
-                       indexInValidator={2}
-                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
-                />
-            </div>
+            {taskDeadline
+                ?
+                <div className={cl.inputWrap}>
+                    <label htmlFor="start">Начало: </label>
+                    <Input id="start"
+                           readonly={!taskDeadline}
+                           placeholder={''}
+                           type="datetime-local"
+                           value={start}
+                           formValidator={formValidator}
+                           setValue={setStartDate}
+                           name={InputNames.DATE_START}
+                           indexInValidator={1}
+                           pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                    />
+                </div>
+                : ''
+            }
+            {taskDeadline
+                ?
+                <div className={cl.inputWrap}>
+                    <label htmlFor="firstEnd">Конец: </label>
+                    <Input id="firstEnd"
+                           readonly={!taskDeadline}
+                           placeholder={''}
+                           name={InputNames.DATE_FIRST_END}
+                           type="datetime-local"
+                           value={firstEnd}
+                           setValue={setFirstEndDate}
+                           formValidator={formValidator}
+                           indexInValidator={2}
+                           pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                    />
+                </div>
+                : ''
+            }
             {taskDeadline
                 ? <div className={cl.inputWrap}>
                     <label htmlFor="secondEnd">Доп. конец: </label>
@@ -321,7 +329,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                     onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                         e.preventDefault()
                         setTaskDescription(!taskDescription)
-                    }}>Добавить описание
+                    }}>Описание
                 </div>
                 {user.roles.includes(Roles.TASK_MANAGER)
                     ? <div
