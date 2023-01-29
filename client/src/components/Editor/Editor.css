@@ -1,0 +1,102 @@
+.ql-snow .ql-picker.ql-header .ql-picker-label::before, .ql-snow .ql-picker.ql-header .ql-picker-item::before {
+    content: 'Заголовок';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
+    content: 'Заголовок 1';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
+    content: 'Заголовок 2';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
+    content: 'Заголовок 3';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
+    content: 'Заголовок 4';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
+    content: 'Заголовок 5';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="6"]::before {
+    content: 'Заголовок 6';
+}
+
+.ql-snow .ql-picker.ql-header .ql-picker-item::before {
+    content: 'Обычный';
+}
+
+
+.ql-picker.ql-font .ql-picker-label[data-value="Raleway"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="Raleway"]::before {
+    font-family: "Raleway", cursive;
+    content: "Raleway";
+}
+
+.ql-picker.ql-font .ql-picker-label[data-value="Arial"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="Arial"]::before {
+    font-family: "Arial", sans-serif;
+    content: "Arial";
+}
+
+.ql-picker.ql-font .ql-picker-label[data-value="times"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="times"]::before {
+    font-family: "Times New Roman", Times, serif;
+    content: "TNR";
+}
+
+/* Set content font-families */
+.ql-font-times {
+    font-family: "Times New Roman", Times, serif;
+}
+
+.ql-container.ql-font-Raleway {
+    font-family: "Raleway"
+}
+
+/* Set content font-families */
+.ql-font-Arial {
+    font-family: "Arial";
+}
+
+.ql-editor .ql-size-huge {
+    font-size: 24px;
+}
+
+.ql-editor .ql-size-normal {
+    font-size: 16px;
+}
+
+.ql-editor .ql-size-small {
+    font-size: 12px;
+}
+
+.ql-editor .ql-size-large {
+    font-size: 20px;
+}
+
+
+.ql-snow .ql-picker.ql-size .ql-picker-label::before, .ql-snow .ql-picker.ql-size .ql-picker-item::before {
+    content: '16 px';
+}
+
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before, .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {
+    content: '12px';
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before, .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {
+    content: '18px';
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before, .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {
+    content: '24px';
+}
+
+
+.hide-toolbar {
+    display: none;
+}

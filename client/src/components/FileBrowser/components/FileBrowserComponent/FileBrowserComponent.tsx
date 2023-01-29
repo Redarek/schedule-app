@@ -7,7 +7,7 @@ import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
 import {FormValidator} from "../../../UI/Input/models/FormValidator";
 import {InputNames} from "../../../UI/Input/models/InputValidator";
-import TextEditorComponent from "../../../TextEditor/TextEditorComponent";
+import {useNavigate} from "react-router-dom";
 
 
 const FileBrowserComponent = () => {
@@ -16,27 +16,32 @@ const FileBrowserComponent = () => {
 
     const directories: IObject[] = [
         {
+            id: 'fdfafaf',
             name: 'Первая папка',
             type: ObjectType.DIRECTORY,
             uri: '',
             content: [
                 {
+                    id: 'fsgdfsdf',
                     name: 'Папка в первой папке',
                     type: ObjectType.DIRECTORY,
                     uri: '',
                     content: [
                         {
+                            id: 'klsjfklsfjk',
                             name: 'test-doc.pdf',
                             type: ObjectType.FILE,
                             content: [],
                             uri: '/test-doc.pdf',
                         },
                         {
+                            id: 'kjlgslkgjsld;f',
                             name: 'Папка а в ней папка а в ней папка',
                             type: ObjectType.DIRECTORY,
                             uri: '',
                             content: [
                                 {
+                                    id: ',mvvnsvkdf',
                                     name: 'file в глубине.docx',
                                     type: ObjectType.FILE,
                                     content: [],
@@ -49,22 +54,26 @@ const FileBrowserComponent = () => {
             ]
         },
         {
+            id: 'sfgjajbkmflk',
             name: 'test.txt',
             type: ObjectType.FILE,
             content: [],
             uri: "/test.txt",
         },
         {
+            id: 'ldfjsdlgdf;g',
             name: 'Вторая папка',
             type: ObjectType.DIRECTORY,
             uri: '',
             content: [
                 {
+                    id: 'joadgaokja;ogj',
                     name: 'Папка во второй папке',
                     type: ObjectType.DIRECTORY,
                     uri: '',
                     content: [
                         {
+                            id: 'jklgka;lgijori',
                             name: 'file.txt',
                             type: ObjectType.FILE,
                             content: [],
@@ -73,6 +82,7 @@ const FileBrowserComponent = () => {
                     ]
                 },
                 {
+                    id: 'jakgjanfjru',
                     name: 'test2.txt',
                     type: ObjectType.FILE,
                     content: [],
@@ -143,6 +153,7 @@ const FileBrowserComponent = () => {
 
     //Навигация и поиск в каталогах end
 
+    const navigate = useNavigate()
 
     function handleClick(e: React.MouseEvent, object: IObject) {
         if (isMobile) {
@@ -150,6 +161,9 @@ const FileBrowserComponent = () => {
                 case ObjectType.DIRECTORY:
                     let newUrl = fileBrowser.getCurrentDirectoryAddress() + ',' + object.name
                     setFileBrowser(new FileBrowser(object.content, newUrl))
+                    break;
+                case ObjectType.FILE:
+                    navigate(`/document/${object.id}`)
                     break;
             }
         }
@@ -162,7 +176,7 @@ const FileBrowserComponent = () => {
                     break;
                 case ObjectType.FILE:
                     setCurrentContextObject(object)
-                    setEditMode(true)
+                    navigate(`/document/${object.id}`)
                     break;
             }
         }
@@ -201,89 +215,83 @@ const FileBrowserComponent = () => {
     const formValidator = new FormValidator(inputs)
 
 
-    const [editMode, setEditMode] = useState(false)
+    // const [editMode, setEditMode] = useState(false)
 
     return (
-            <div className={cl.browser}
-                 onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
-                 onClick={() => setIsShowContextMenu(false)}>
-                <div className={cl.browserNav}>
-                    {fileBrowser.getCurrentDirectoryAddress().map((directoryAdd) =>
-                        <Fragment key={directoryAdd}>
-                            <div
-                                onClick={() => handleNavigateToDirectory(directoryAdd)}
-                            >
-                                {directoryAdd}
+        <div className={cl.browser}
+             onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
+             onClick={() => setIsShowContextMenu(false)}>
+            <div className={cl.browserNav}>
+                {fileBrowser.getCurrentDirectoryAddress().map((directoryAdd) =>
+                    <Fragment key={directoryAdd}>
+                        <div
+                            onClick={() => handleNavigateToDirectory(directoryAdd)}
+                        >
+                            {directoryAdd}
+                        </div>
+                        /
+                    </Fragment>
+                )}
+            </div>
+            <div className={cl.browserWorkSpace} id={'work-space'}
+                 onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.DIRECTORY)}>
+                <div className={cl.browserContent}>
+                    {fileBrowser.getContent().map((obj, index) =>
+                        <div
+                            key={index}
+                            className={cl.browserObject}
+                            onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.FILE, obj)}
+                            onClick={(e: React.MouseEvent) => handleClick(e, obj)}
+                        >
+                            <div className={cl.objectImg}>
+                                {obj.type === ObjectType.DIRECTORY
+                                    ? <img src="/images/folder.png" alt="img"/>
+                                    : <span>.{obj.name.split('.')[1]}</span>
+                                }
                             </div>
-                            /
-                        </Fragment>
+                            <div className={cl.objectName}>
+                                {obj.name}
+                            </div>
+                        </div>
                     )}
                 </div>
-
-                {!editMode
-                    ?
-                    <div className={cl.browserWorkSpace} id={'work-space'}
-                         onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.DIRECTORY)}>
-                        <div className={cl.browserContent}>
-                            {fileBrowser.getContent().map((obj, index) =>
-                                <div
-                                    key={index}
-                                    className={cl.browserObject}
-                                    onContextMenu={(e: React.MouseEvent) => contextMenu(e, ObjectType.FILE, obj)}
-                                    onClick={(e: React.MouseEvent) => handleClick(e, obj)}
-                                >
-                                    <div className={cl.objectImg}>
-                                        {obj.type === ObjectType.DIRECTORY
-                                            ? <img src="/images/folder.png" alt="img"/>
-                                            : <span>.{obj.name.split('.')[1]}</span>
-                                        }
-                                    </div>
-                                    <div className={cl.objectName}>
-                                        {obj.name}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    : <TextEditorComponent/>
-                }
-                {isShowContextMenu
-                    ? <ContextMenu
-                        event={event}
-                        type={contextType}
-                        optionClick={handleClickOnOption}
-                        object={currentContextObject}
-                    />
-                    : ''
-                }
-                {isShowModal
-                    ?
-                    <ModalFullScreen visible={isShowModal} setVisible={setIsShowModal} exitBtn={true}
-                                     exitBackground={true}>
-                        <form className={cl.createForm}>
-                            <Input
-                                id={'file-name'}
-                                type={'text'}
-                                name={InputNames.FILE_NAME}
-                                formValidator={formValidator}
-                                indexInValidator={0}
-                                value={nameOfObject}
-                                setValue={setNameOfObject}
-                                placeholder={'Название'}
-                            />
-                            <Button
-                                onClick={handleChangeContent}>
-                                {typeOfOption === FileBrowserVoids.RENAME
-                                    ? 'Переименовать'
-                                    : 'Создать'
-                                }
-                            </Button>
-                        </form>
-                    </ModalFullScreen>
-                    : ''
-                }
             </div>
+            {isShowContextMenu
+                ? <ContextMenu
+                    event={event}
+                    type={contextType}
+                    optionClick={handleClickOnOption}
+                    object={currentContextObject}
+                />
+                : ''
+            }
+            {isShowModal
+                ?
+                <ModalFullScreen visible={isShowModal} setVisible={setIsShowModal} exitBtn={true}
+                                 exitBackground={true}>
+                    <form className={cl.createForm}>
+                        <Input
+                            id={'file-name'}
+                            type={'text'}
+                            name={InputNames.FILE_NAME}
+                            formValidator={formValidator}
+                            indexInValidator={0}
+                            value={nameOfObject}
+                            setValue={setNameOfObject}
+                            placeholder={'Название'}
+                        />
+                        <Button
+                            onClick={handleChangeContent}>
+                            {typeOfOption === FileBrowserVoids.RENAME
+                                ? 'Переименовать'
+                                : 'Создать'
+                            }
+                        </Button>
+                    </form>
+                </ModalFullScreen>
+                : ''
+            }
+        </div>
     );
 };
 

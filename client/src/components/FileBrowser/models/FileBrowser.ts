@@ -12,6 +12,7 @@ export enum FileBrowserVoids {
 }
 
 export interface IObject {
+    id: string,
     type: ObjectType
     name: string;
     uri: string;
@@ -56,6 +57,7 @@ export class FileBrowser {
                 this.error = 'Имя папки не может содержать `.`'
             } else {
                 this.content.push({
+                    id: `${new Date().getTime()}`,
                     type: ObjectType.DIRECTORY,
                     name: name,
                     uri: '',
@@ -72,6 +74,7 @@ export class FileBrowser {
             this.error = 'Имя файла должно содержать `.`'
         } else if (-1 === this.content.findIndex(obj => obj.name === name)) {
             this.content.push({
+                id: `${new Date().getTime()}`,
                 type: ObjectType.FILE,
                 name: name,
                 uri: '',

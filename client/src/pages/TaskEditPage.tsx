@@ -22,7 +22,7 @@ const categoriesList = Object.values(Categories)
 
 const TaskEditPage: FC<TaskEditPageProps> = () => {
     const navigate = useNavigate()
-    const {task, error, isLoading} = useAppSelector(state => state.taskSlice)
+    const {task, error, isLoadingTasks} = useAppSelector(state => state.taskSlice)
     const {user} = useAppSelector(state => state.authSlice.user)
     const {employees, employee} = useAppSelector(state => state.employeeSlice)
     const {taskId} = useParams()
@@ -73,7 +73,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
             setFirstEnd(getInputDate(task.firstEnd))
             setSecondEnd(getInputDate(task.secondEnd))
         }
-    }, [isLoading])
+    }, [isLoadingTasks])
 
     const [textAreaHeight, setTextAreaHeight] = useState(162)
 

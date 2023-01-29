@@ -1,0 +1,30 @@
+.wrapper {
+    width: 100%;
+    overflow: hidden;
+    height: calc(100vh - 45px);
+}
+
+.modes {
+    height: 30px;
+    width: 100%;
+    display: flex;
+    background-color: rgba(108, 108, 108, 0.1);
+    padding: 0 10px;
+}
+
+.modeActive {
+    background-color: #FFFFFF;
+}
+
+.mode {
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 5px;
+    transition: all 300ms linear;
+}
+
+
+.mode:hover {
+    background-color: #FFFFFF;
+}

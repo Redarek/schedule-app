@@ -29,7 +29,6 @@ const Navbar: FC<NavbarProps> = ({}) => {
                     title: `${user.name}`,
                     type: "item",
                     items: [],
-                    isActive: false,
                 }])
             }
 
@@ -42,7 +41,6 @@ const Navbar: FC<NavbarProps> = ({}) => {
                             title: `${employees[i].name}`,
                             type: "item",
                             items: [],
-                            isActive: false,
                         })
                 }
                 setNavbarList([...navBarList,
@@ -51,27 +49,23 @@ const Navbar: FC<NavbarProps> = ({}) => {
                         title: `Сотрудники`,
                         type: "list",
                         items: [...employeesList],
-                        isActive: false,
                     },
                     {
                         link: null,
                         title: `Администратор`,
                         type: "list",
-                        isActive: false,
                         items: [
                             {
                                 link: `/admin/${user.latinName}`,
                                 title: `Страница администратора`,
                                 type: "item",
                                 items: [],
-                                isActive: false,
                             },
                             {
                                 link: `/admin/${user.latinName}/roles`,
                                 title: `Роли`,
                                 type: "item",
                                 items: [],
-                                isActive: false,
                             }
                         ]
                     }
@@ -83,20 +77,20 @@ const Navbar: FC<NavbarProps> = ({}) => {
     }, [employees])
 
     return (
-        <div
-            className={cl.background}
-            onClick={() => dispatch(setNavbarVisible())}
-            style={{width: navbarIsVisible && window.innerWidth < 768 ? '100%' : 'auto'}}
+        <CSSTransition
+            in={navbarIsVisible}
+            classNames={{
+                enterActive: cl.navBarEnterActive,
+                exitActive: cl.navBarExitActive
+            }}
+            timeout={1000}
+            mountOnEnter
+            unmountOnExit
         >
-            <CSSTransition
-                in={navbarIsVisible}
-                classNames={{
-                    enterActive: cl.navBarEnterActive,
-                    exitActive: cl.navBarExitActive
-                }}
-                timeout={1000}
-                mountOnEnter
-                unmountOnExit
+            <div
+                className={cl.background}
+                onClick={() => dispatch(setNavbarVisible())}
+                // style={{width: navbarIsVisible ? '100%' : 'auto'}}
             >
 
                 <nav className={cl.navBar} onClick={(e) => e.stopPropagation()}>
@@ -108,8 +102,8 @@ const Navbar: FC<NavbarProps> = ({}) => {
 
                     }
                 </nav>
-            </CSSTransition>
-        </div>
+            </div>
+        </CSSTransition>
     );
 };
 
