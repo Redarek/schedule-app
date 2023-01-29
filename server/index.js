@@ -13,6 +13,8 @@ const router = require('./router/index.js');
 
 const CLIENT_URL = process.env.NODE_ENV === "production" ? process.env.PROD_CLIENT_URL : process.env.DEV_CLIENT_URL
 
+const DB_URL = process.env.NODE_ENV === "production" ? process.env.PROD_DB_URL : process.env.DEV_DB_URL
+
 const app = express();
 app.use(
     session({
@@ -36,7 +38,7 @@ app.use(errorMiddleware); // middleware ошибок всегда последн
 
 const start = async () => {
     try {
-        await mongoose.connect(process.env.DB_URL, {
+        await mongoose.connect(DB_URL, {
             useUnifiedTopology: true,
             useNewUrlParser: true
         });
