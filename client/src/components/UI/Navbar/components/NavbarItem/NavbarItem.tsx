@@ -4,8 +4,12 @@ import cl from './NavbarItem.module.css'
 
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 import {INavbarObject} from "../../types/INavbar";
-import {useNavigate, useParams} from "react-router-dom";
-import {setNavbarObjectIsActive, setNavbarVisible} from "../../../../../store/reducers/navbarSlice";
+import {useNavigate} from "react-router-dom";
+import {
+    disableNavbarObject,
+    setNavbarObjectIsActive,
+    setNavbarVisible
+} from "../../../../../store/reducers/navbarSlice";
 
 
 interface NavbarItemProps {
@@ -30,6 +34,11 @@ const NavbarItem: FC<NavbarItemProps> = ({item}) => {
         const ind = openItems.findIndex(it => it.link === window.location.pathname)
         if (ind === -1 && window.location.pathname === item.link) {
             dispatch(setNavbarObjectIsActive(item))
+        } else {
+            const index = openItems.findIndex(it => it.type === 'item')
+            if (ind === -1 && index !== -1) {
+                dispatch(disableNavbarObject(openItems[index]))
+            }
         }
     }, [window.location.pathname])
 

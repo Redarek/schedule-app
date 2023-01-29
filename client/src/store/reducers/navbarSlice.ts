@@ -17,6 +17,12 @@ const navbarSlice = createSlice({
         setNavbarVisible: (state) => {
             state.navbarIsVisible = !state.navbarIsVisible
         },
+        disableNavbarObject: (state, action: PayloadAction<INavbarObject>) => {
+            if (-1 !== state.openItems.findIndex(searchItem => searchItem.title === action.payload.title)) {
+                state.openItems = state.openItems.filter((item) => item.title !== action.payload.title)
+            }
+        },
+
         setNavbarObjectIsActive: (state, action: PayloadAction<INavbarObject>) => {
             if (state.openItems) {
                 if (-1 !== state.openItems.findIndex(searchItem => searchItem.title === action.payload.title)) {
@@ -51,5 +57,6 @@ const navbarSlice = createSlice({
 export const {
     setNavbarVisible,
     setNavbarObjectIsActive,
+    disableNavbarObject
 } = navbarSlice.actions;
 export default navbarSlice.reducer;

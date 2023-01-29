@@ -5,6 +5,7 @@ import AdminPage from "../pages/Admin/AdminPage";
 import TaskEditPage from "../pages/TaskEditPage";
 import GuestPage from "../pages/GuestPage";
 import RolesPage from "../pages/Admin/RolesPage";
+import DocumentPage from "../pages/DocumentPage";
 
 export const publicRoutes = [
     {path: '/login', element: <LoginForm/>},
@@ -17,10 +18,9 @@ export const privateRoutes = [
 ];
 export const authRoutes = [
     {path: '/employee-page/:latinName', element: <EmployeePage/>, exact: true},
-
+    {path: '/document/:documentId', element: <DocumentPage/>, exact: true},
     // {path: '/contacts', element: <ContactsPage/>, exact: true},
     {path: '/task-edit/:taskId', element: <TaskEditPage/>, exact: true},
-    {path: '/test', element: <AdminPage/>, exact: true},
 ];
 
 export const guestRoutes = [
