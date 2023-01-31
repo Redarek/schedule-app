@@ -47,7 +47,7 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
         setMonthDays(month.getDaysInMonth())
     };
 
-
+    // console.log(window.innerHeight * 0.01)
     const indexOfFirstDay = month.getIndexOfFirstDay()
 
     const [tasksListIsVisible, setTasksListIsVisible] = useState(false);
@@ -59,12 +59,13 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
     const [createTaskWindowIsVisible, setCreateTaskWindowIsVisible] = useState(false)
     const [createNewTaskDate, setCreateNewTaskDate] = useState<Date>(new Date())
 
+
     const dayHeight = () => {
         switch (month.getDaysInMonth().length) {
             case 35:
-                return `calc(( 100vh - 75px - 6vh )/5)`;
+                return `calc((${window.innerHeight * 0.01 * 100}px - 75px - 5vh )/5)`;
             case 42:
-                return `calc(( 100vh - 75px - 6vh )/6)`;
+                return `calc((${window.innerHeight * 0.01 * 100}px - 75px - 5vh )/6)`;
         }
     }
     return (

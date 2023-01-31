@@ -1,19 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import {useAppDispatch, useAppSelector} from './hooks/redux';
 import {checkAuth} from './store/reducers/ActionCreators';
 import Header from "./components/Header/Header";
 import Navbar from "./components/UI/Navbar/Navbar";
 import {changeUserId} from "./store/reducers/bonusesSlice";
-import {Roles} from "./types/Roles";
 
 function App() {
     const {isAuth, isLoading, user} = useAppSelector(state => state.authSlice)
     const dispatch = useAppDispatch()
-    // Проверка наличия токена доступа при первом запуске приложения
     const token = localStorage.getItem('token')
+
     useEffect(() => {
         if (token) {
             dispatch(checkAuth());
@@ -21,38 +19,53 @@ function App() {
     }, [])
 
     useEffect(() => {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
         if (user.user && token && user.user._id !== '')
             // if () {
             dispatch(changeUserId(user.user._id))
         // }
     }, [isAuth])
+
+    const [reload, setReload] = useState<boolean>(false)
+    useEffect(() => {
+        // window.location.reload()
+    }, [])
+
+
+    const [scroll, setScroll] = useState(0);
+    //@ts-ignore
+    // function fn(e) {
+    //     setScroll(e.target.scrollTop)
+    //     if (e.target.scrollTop <= -150) {
+    //         setReload(true)
+    //         setTimeout(()=> {
+    //             setReload(false)
+    //
+    //         }, 100)
+    //     }
+    // }
+
     return (
         <div className="App">
-            <BrowserRouter>
-                <div className="loader">
+            <Header user={user.user}/>
+            {isAuth ? <Navbar/> : ''}
+            {/*//@ts-ignore*/}
+            {/*{reload*/}
+            {/*    ? ''*/}
+            {/*    : */}
+                <div className={'wrap'}
+                     // onScroll={(e) => fn(e)}
+                >
+                    {scroll < -10
+                        ? '10'
+                        : ''
+                    }
                     {isLoading
-                        ? 'Loader will be soon...'
-                        : token
-                            ? isAuth
-                                ? user.user.roles.length === 0 || (user.user.roles.includes(Roles.GUEST) && user.user.roles.length === 1)
-                                    ? <div className="isAuth">
-                                        <Header user={user.user}/>
-                                        <AppRouter/>
-                                    </div>
-                                    : <div className="isAuth">
-                                        <Header user={user.user}/>
-                                        <div className="wrapper">
-                                            <Navbar/>
-                                            <div className="content">
-                                                <AppRouter/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                : ''
-                            : <AppRouter/>
+                        ? <div className="loader"> Loader will be soon...</div>
+                        : <AppRouter/>
                     }
                 </div>
-            </BrowserRouter>
+            {/*}*/}
         </div>
     );
 }

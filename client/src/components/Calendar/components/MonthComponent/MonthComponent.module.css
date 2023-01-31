@@ -36,7 +36,8 @@
 
 .weekDay {
     width: calc(100% / 7);
-    height: 6vh;
+    /*height: 45px;*/
+    height: 5vh;
     display: flex;
     justify-content: center;
     align-items: center;

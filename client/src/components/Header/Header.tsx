@@ -1,10 +1,11 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, Fragment, useEffect} from 'react';
 import cl from './Header.module.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {fetchWeekBonuses, logout} from "../../store/reducers/ActionCreators";
 import {setNavbarVisible} from "../../store/reducers/navbarSlice";
 import {IUser} from "../../types/IUser";
 import {userBonuses} from "../../store/reducers/authSlice";
+import Navbar from "../UI/Navbar/Navbar";
 
 interface HeaderProps {
     user: IUser
@@ -16,8 +17,10 @@ const Header: FC<HeaderProps> = ({user}) => {
     const {userWeekBonuses, userAllBonuses, isLoading} = useAppSelector(state => state.bonusesSlice)
 
     useEffect(() => {
+        if (user) {
+            dispatch(fetchWeekBonuses(user._id))
+        }
         // dispatch(fetchBonuses(user._id))
-        dispatch(fetchWeekBonuses(user._id))
     }, [isAuth])
 
     // useEffect(() => {
@@ -26,7 +29,9 @@ const Header: FC<HeaderProps> = ({user}) => {
     // }, [])
 
     useEffect(() => {
-        dispatch(userBonuses({week: userWeekBonuses, all: userAllBonuses}))
+        if (user) {
+            dispatch(userBonuses({week: userWeekBonuses, all: userAllBonuses}))
+        }
     }, [userWeekBonuses])
 
     const wrapper = document.querySelector('.wrapper')
@@ -39,30 +44,35 @@ const Header: FC<HeaderProps> = ({user}) => {
 
     return (
         <header className={cl.header}>
-            <div className={cl.menuBtn}
-                 onClick={() => showNavbar()}>
-                <span className={cl.burgerSpan}></span>
-                <span className={cl.burgerSpan}></span>
-                <span className={cl.burgerSpan}></span>
-            </div>
-            <div className={cl.userInfo}>
-                <div className={cl.userIcon}>
-                    {user.icon
-                        ? <img src={user.icon} alt="settings"/>
-                        : <img src="/images/userIcon.png" alt="userIcon"/>
-                    }
-                </div>
-                <div className={cl.userName}>
-                    {user.name
-                        ? user.name
-                        : 'Имя пользователя'
-                    }
-                    <span>Баланс: {userWeekBonuses}</span>
-                </div>
-                <div className={cl.settingsIcon} onClick={() => dispatch(logout())}>
-                    <img src='/images/exitIcon.svg' alt="exit"/>
-                </div>
-            </div>
+            {!user
+                ? <div className={cl.logo}>Schedule-App</div>
+                : <Fragment>
+                    <div className={cl.menuBtn}
+                         onClick={() => showNavbar()}>
+                        <span className={cl.burgerSpan}></span>
+                        <span className={cl.burgerSpan}></span>
+                        <span className={cl.burgerSpan}></span>
+                    </div>
+                    <div className={cl.userInfo}>
+                        <div className={cl.userIcon}>
+                            {user.icon
+                                ? <img src={user.icon} alt="settings"/>
+                                : <img src="/images/userIcon.png" alt="userIcon"/>
+                            }
+                        </div>
+                        <div className={cl.userName}>
+                            {user.name
+                                ? user.name
+                                : 'Имя пользователя'
+                            }
+                            <span>Баланс: {userWeekBonuses}</span>
+                        </div>
+                        <div className={cl.settingsIcon} onClick={() => dispatch(logout())}>
+                            <img src='/images/exitIcon.svg' alt="exit"/>
+                        </div>
+                    </div>
+                </Fragment>
+            }
         </header>
     );
 };

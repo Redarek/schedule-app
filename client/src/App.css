@@ -2,38 +2,43 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    /*font-size: 18px;*/
-    /*font-size: calc(18px + 2 * (100vw / 1440));*/
 }
 
-
-.content {
-    /*overflow-x: auto;*/
-    width: 100%;
+:root {
+    --vh: 1vh;
 }
 
 @media (max-width: 767px) {
     * {
         font-size: 12px;
     }
+
     span {
         font-size: unset;
     }
 }
 
-.wrapper {
-    display: flex;
-    /*justify-content: center;*/
-    flex-wrap: nowrap;
-    /*min-width: 1000px;*/
-    width: 100vw;
-    position: relative;
-    /*overflow: hidden;*/
-    overflow-x: auto;
+html {
+    overflow: hidden;
 }
 
 .App {
-
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: calc(var(--vh, 1vh) * 100);
 }
+
+
+.wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding-top: 45px;
+    height: inherit;
+}
+
 
 
