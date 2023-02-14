@@ -2,7 +2,6 @@ import React, {FC, useEffect, useState} from 'react';
 import cl from "./TaskComponent.module.css";
 import {ITasks} from "../../../../types/ITasks";
 import {IDay} from "../../models/CalendarTypes";
-import {Categories} from "../../../../types/Categories";
 import {taskColor} from "../../utils/taskColor";
 
 
@@ -24,22 +23,22 @@ const TaskComponent: FC<TaskComponentProps> = ({
 
     const index = indexOfFirstDay
     let width = 100
-    if (task.firstEnd.getTime() <= day.weekEnd.getTime()) {    //Если заканчивается на этой неделе
-        if (task.start.getTime() >= day.weekStart.getTime()) { // Если начинается на этой неделе
-            width = (task.firstEnd.getDay() - task.start.getDay() + 1) * 100
-        } else {    // Если начинается не на этой неделе
-            width = task.firstEnd.getDay() * 100
-            if (task.firstEnd.getDay() === 0 && index === 1) width = 700
-            if (index === 0) width += 100
-        }
-    } else {  //Если заканчивается не на этой неделе
-        if (task.start.getTime() >= day.weekStart.getTime()) {  // Если начинается на этой неделе
-            width = (7 - task.start.getDay() + index) * 100
-            if (day.date.getDay() === 0 && index === 1) width = 100
-        } else { // Если начинается не на этой неделе
-            width = 700
-        }
-    }
+    // if (task.firstEnd.getTime() <= day.weekEnd.getTime()) {    //Если заканчивается на этой неделе
+    //     if (task.start.getTime() >= day.weekStart.getTime()) { // Если начинается на этой неделе
+    //         width = (task.firstEnd.getDay() - task.start.getDay() + 1) * 100
+    //     } else {    // Если начинается не на этой неделе
+    //         width = task.firstEnd.getDay() * 100
+    //         if (task.firstEnd.getDay() === 0 && index === 1) width = 700
+    //         if (index === 0) width += 100
+    //     }
+    // } else {  //Если заканчивается не на этой неделе
+    //     if (task.start.getTime() >= day.weekStart.getTime()) {  // Если начинается на этой неделе
+    //         width = (7 - task.start.getDay() + index) * 100
+    //         if (day.date.getDay() === 0 && index === 1) width = 100
+    //     } else { // Если начинается не на этой неделе
+    //         width = 700
+    //     }
+    // }
 
     width -= 10
 

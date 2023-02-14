@@ -107,9 +107,10 @@ const MonthComponent: FC<MonthComponentProps> = ({firstDay, weekDays, month}) =>
                             {day.tasks.map((task: any, index: number) =>
                                 <Fragment key={index}>
                                     {index - 3 < 0
-                                        ? (task.start.getDate() !== day.date.getDate()) && (day.date.getDay() !== indexOfFirstDay)
-                                            ? <div className={cl.emptyDiv}></div>
-                                            : <TaskComponent day={day} task={task}
+                                        // ? (task.start.getDate() !== day.date.getDate()) && (day.date.getDay() !== indexOfFirstDay)
+                                        //     ? <div className={cl.emptyDiv}></div>
+                                        //     :
+                                       ? <TaskComponent day={day} task={task}
                                                              indexOfFirstDay={month.getIndexOfFirstDay()}
                                                              setSelectTask={setSelectTask}
                                                              setTaskInfoIsVisible={setTaskInfoIsVisible}

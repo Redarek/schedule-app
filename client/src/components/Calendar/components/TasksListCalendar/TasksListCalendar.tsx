@@ -3,6 +3,7 @@ import cl from './TasksListCalendar.module.css'
 import {ITasks} from "../../../../types/ITasks";
 import TaskCard from "../TaskCard/TaskCard";
 import {taskColor} from "../../utils/taskColor";
+import ModalFullScreen from "../../../UI/ModalFullScreen/ModalFullScreen";
 
 interface TasksListCalendarProps {
     tasks: ITasks[],
@@ -65,10 +66,21 @@ const TasksListCalendar: FC<TasksListCalendarProps> = ({tasks, date}) => {
                 )}
             </div>
             {isVisibleTaskCard
-                ? <div className={cl.taskCard}>
-                    <TaskCard task={task} setIsModalVisible={setIsVisibleTaskCard}/></div>
-                : ''
+                ?
+                <ModalFullScreen visible={isVisibleTaskCard} setVisible={setIsVisibleTaskCard} exitBtn={true} exitBackground={true}>
+                   {/*<div className={cl.taskCard}>*/}
+                        <TaskCard task={task} setIsModalVisible={setIsVisibleTaskCard}/>
+                     {/*</div>*/}
+                </ModalFullScreen>
+                :""
             }
+
+
+            {/* {isVisibleTaskCard*/}
+            {/*    ? <div className={cl.taskCard}>*/}
+            {/*        <TaskCard task={task} setIsModalVisible={setIsVisibleTaskCard}/></div>*/}
+            {/*    : ''*/}
+            {/*}*/}
         </div>
     );
 };
