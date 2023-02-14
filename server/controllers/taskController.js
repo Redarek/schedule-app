@@ -77,7 +77,7 @@ class TaskController {
             console.log(candidate.complete)
             if (!candidate.complete) {
                 const task = await taskService.updateTask(req.params.id, {complete: true}) // таск "выполнен"
-                const bonus = await bonusService.addBonus(req.user._id, req.params.id) //получение награды за таск. передаю user и task ID
+                const bonus = await bonusService.addBonus(task.employeeId, req.params.id) //получение награды за таск. передаю user ID и task ID
                 return res.json(task);
             } else {
                 const task = await taskService.updateTask(req.params.id, {complete: false}) // отмена "выполнено" у таска
