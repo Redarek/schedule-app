@@ -62,6 +62,7 @@ class TaskController {
     async deleteTask(req, res, next) {
         try {
             const task = await taskService.deleteTask(req.params.id)
+            const bonus = await bonusService.deleteBonus(req.params.id) // удаление бонуса за таск
             return res.json(task);
             // return res.json({task, status: 'success'});
         } catch (error) {
@@ -73,11 +74,9 @@ class TaskController {
         try {
             // let task;
             const candidate = await taskService.getTaskById(req.params.id)
-            console.log()
-            console.log(candidate.complete)
             if (!candidate.complete) {
                 const task = await taskService.updateTask(req.params.id, {complete: true}) // таск "выполнен"
-                const bonus = await bonusService.addBonus(task.employeeId, req.params.id) //получение награды за таск. передаю user ID и task ID
+                const bonus = await bonusService.addBonus(task.employeeId, req.params.id) //получение награды за таск. передаю user и task ID
                 return res.json(task);
             } else {
                 const task = await taskService.updateTask(req.params.id, {complete: false}) // отмена "выполнено" у таска
