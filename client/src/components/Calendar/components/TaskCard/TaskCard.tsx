@@ -94,14 +94,14 @@ const TaskCard: FC<TaskCardProps> = ({task, setIsModalVisible}) => {
                 }
             </div>
 
-            {/*<ModalFullScreen*/}
-            {/*    visible={taskDescriptionIsVisible}*/}
-            {/*    setVisible={setTaskDescriptionIsVisible}*/}
-            {/*    exitBtn={true}*/}
-            {/*    exitBackground={true}*/}
-            {/*>*/}
-            {/*    {task.text}*/}
-            {/*</ModalFullScreen>*/}
+            <ModalFullScreen
+                visible={taskDescriptionIsVisible}
+                setVisible={setTaskDescriptionIsVisible}
+                exitBtn={true}
+                exitBackground={true}
+            >
+                {task.text}
+            </ModalFullScreen>
 
         </div>
     );
