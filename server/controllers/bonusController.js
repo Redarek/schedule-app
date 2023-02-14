@@ -37,7 +37,11 @@ class BonusController {
     }
 
     async deleteBonus(req, res, next) {
-
+        try {
+            
+        } catch (error) {
+            next(error);
+        }
     }
 
 }

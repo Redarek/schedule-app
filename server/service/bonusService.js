@@ -31,15 +31,15 @@ class BonusService {
         const getLastMonday = (date) => {
 
             let n = null; // last Monday conversion
-        
+            [0, 1, 2, 3, 4, 5, 6]
             switch (date.getDay()) {
-                case 0: n = -5; break;
-                case 1: n = -6; break;
-                case 2: n = 0; break;
-                case 3: n = -1; break;
-                case 4: n = -2; break;
-                case 5: n = -3; break;
-                case 6: n = -4; break;
+                case 0: n = -6; break;
+                case 1: n = 0; break;
+                case 2: n = -1; break;
+                case 3: n = -2; break;
+                case 4: n = -3; break;
+                case 5: n = -4; break;
+                case 6: n = -5; break;
                 default: "This never happens";
             }
         

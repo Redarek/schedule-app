@@ -26,7 +26,7 @@ class UserService {
         const activationLink = uuid.v4(); // генерация ссылки активации для письма на email
 
         const user = await userModel.create({email, password: hashPassword, activationLink, name, latinName}); // сохраняем польз-ля в БД
-        await mailService.sendActivationMail(email, `${API_URL}/activate/${activationLink}`);
+        // await mailService.sendActivationMail(email, `${API_URL}/activate/${activationLink}`);
 
         const userDto = new UserDto(user); //передаём все данные о пользователе в DTO (Data Transfer Object) dto получаем на клиенте и dto нужен для отправки email письма
         const tokens = tokenService.generateTokens({...userDto}); // генерируем JWT токены
