@@ -1,16 +1,19 @@
 .navBar {
     /*min-width: 230px;*/
     /*max-width: 290px;*/
-    height: calc(100vh - 45px);
+    /*height: calc(100vh - 45px);*/
+    /*height: inherit;*/
+    min-height: inherit;
     background-color: #E6E6E6;
     width: 100%;
 }
 
 .background {
     background-color: rgba(108, 108, 108, 0);
-    height: calc(100vh - 45px);
+    min-height: calc(var(--vh, 1vh) * 100 - 45px);
     z-index: 100;
-    position: relative;
+    margin-top: auto;
+    position: static;
     min-width: 230px;
     max-width: 290px;
     width: 100%;
@@ -21,12 +24,12 @@
         width: 100%;
         max-width: 100%;
         position: absolute;
+        top: 45px
     }
+
     .navBar {
-        position: absolute;
         width: 100%;
         left: 0;
-        z-index: 100;
         max-width: 150px;
     }
 }

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, Fragment, useEffect, useState} from 'react';
 import cl from '../styles/EmployeePage.module.css'
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import CalendarComponent from "../components/Calendar/components/CalendarComponent/CalendarComponent";
@@ -17,9 +17,6 @@ const EmployeePage: FC = () => {
     const {user} = useAppSelector(state => state.authSlice.user)
     const {
         tasks,
-        isLoadingCreate,
-        isLoadingDelete,
-        isLoadingUpdate,
         isLoadingTasks
     } = useAppSelector(state => state.taskSlice)
 
@@ -46,18 +43,12 @@ const EmployeePage: FC = () => {
     const [activeComponent, setActiveComponent] = useState<'profile' | 'calendar'>(user.roles.includes(Roles.CALENDAR) ? 'calendar' : 'profile')
 
     return (
-        <div className={cl.wrapper}>
+        <Fragment>
             {!user.roles.includes(Roles.ADMIN) && latinName !== user.latinName
                 ? 'Вы не можете просмотреть этот профиль'
                 : !isLoading
                     ? <div className={cl.wrapper}>
                         <div className={cl.chooseMenu}>
-                            {/*<div className={cl.hideInfoBtn} onClick={() => setUserCardIsShow(!userCardIsShow)}>*/}
-                            {/*    {userCardIsShow*/}
-                            {/*        ? 'Скрыть профиль'*/}
-                            {/*        : 'Показать профиль'*/}
-                            {/*    }*/}
-                            {/*</div>*/}
                             <div
                                 className={[cl.menuBtn, activeComponent === 'profile' ? cl.menuBtnActive : ''].join(' ')}
                                 onClick={() => setActiveComponent('profile')}>Профиль
@@ -86,7 +77,7 @@ const EmployeePage: FC = () => {
                     </div>
                     : "Загрузка страницы сотрудника"
             }
-        </div>
+        </Fragment>
     );
 };
 
