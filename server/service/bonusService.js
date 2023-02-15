@@ -84,6 +84,11 @@ class BonusService {
         ] )
         return bonuses;
     }
+
+    async getBonusByTaskId(id) {
+        const bonus = await bonusModel.findById(id);
+        return bonus;
+    }
 }
 
 module.exports = new BonusService();
