@@ -99,18 +99,18 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
             setPenalty(0)
         }
     }, [categories])
-
     useEffect(() => {
+        const UtcShiftHours = new Date().getTimezoneOffset() / 60 // разница часового пояса местного и UTC , отрицательное значение в часах
         if (!taskDeadline) {
-            setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
-            setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
-            setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+            setStart(getInputDate(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0 + UtcShiftHours, 50)))) // Создание даты для таска в формате UTC
+            setFirstEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
+            setSecondEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
             // setSecondReward(0)
             // setPenalty(0)
         } else {
-            setStart(getInputDate(startDate))
-            setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
-            setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+            setStart(getInputDate(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0 + UtcShiftHours, 50)))) // Создание даты для таска в формате UTC
+            setFirstEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
+            setSecondEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
         }
     }, [taskDeadline])
     let inputNames = [
@@ -162,7 +162,7 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         }
     }
 
-
+    console.log(start, firstEnd, secondEnd)
     return (
         <form className={cl.form}>
             <div className={cl.inputWrap}>

@@ -149,6 +149,7 @@ export const fetchEmployeeTasks = createAsyncThunk(
     async (id: string, thunkAPI) => {
         try {
             const response = await TasksService.fetchEmployeeTasks(id)
+            // console.log(response.data)
             return response.data;
         } catch (e) {
             return thunkAPI.rejectWithValue("Не удалось загрузить задания")
