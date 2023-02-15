@@ -36,8 +36,8 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
     const [penalty, setPenalty] = useState<number>(0)
 
     const [start, setStart] = useState<string>(getInputDate(startDate))
-    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
-    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 85800000)))
+    const [firstEnd, setFirstEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+    const [secondEnd, setSecondEnd] = useState<string>(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
 
     const [taskDeadline, setTaskDeadline] = useState(false)
     const [taskDescription, setTaskDescription] = useState(false)
@@ -100,18 +100,15 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
         }
     }, [categories])
     useEffect(() => {
-        const UtcShiftHours = new Date().getTimezoneOffset() / 60 // разница часового пояса местного и UTC , отрицательное значение в часах
         if (!taskDeadline) {
-            setStart(getInputDate(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0 + UtcShiftHours, 50)))) // Создание даты для таска в формате UTC
-            setFirstEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
-            setSecondEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
+            setStart(getInputDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())))
             // setSecondReward(0)
             // setPenalty(0)
         } else {
-            setStart(getInputDate(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0 + UtcShiftHours, 50)))) // Создание даты для таска в формате UTC
-            setFirstEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
-            setSecondEnd(getInputDate(new Date(new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 23 + UtcShiftHours, 55)))))
+            setStart(getInputDate(startDate))
         }
+        setFirstEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
+        setSecondEnd(getInputDate(new Date(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime() + 86399000)))
     }, [taskDeadline])
     let inputNames = [
         InputNames.TASK_TITLE,
@@ -140,9 +137,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 firstReward: firstReward,
                 secondReward: secondReward,
                 penalty: penalty,
-                start: Number(new Date(start).getTime()),
-                firstEnd: Number(new Date(firstEnd).getTime()),
-                secondEnd: Number(new Date(secondEnd).getTime())
+                start: Number(new Date(start).getTime() + new Date().getTimezoneOffset() * 60 * 1000),
+                firstEnd: Number(new Date(firstEnd).getTime() + new Date().getTimezoneOffset() * 60 * 1000),
+                secondEnd: Number(new Date(secondEnd).getTime() + new Date().getTimezoneOffset() * 60 * 1000)
             }
 
             const promise = new Promise((resolve, reject) => {

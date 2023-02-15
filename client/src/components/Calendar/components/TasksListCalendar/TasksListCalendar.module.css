@@ -4,7 +4,7 @@
     flex-direction: column;
     min-width: 230px;
     position: relative;
-    max-height: 95vh;
+    max-height: 80vh;
     gap: 5px;
 }
 
