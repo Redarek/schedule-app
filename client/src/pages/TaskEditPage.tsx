@@ -73,7 +73,7 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
             setFirstEnd(getInputDate(task.firstEnd))
             setSecondEnd(getInputDate(task.secondEnd))
         }
-    }, [isLoadingTasks])
+    }, [task._id])
 
     const [textAreaHeight, setTextAreaHeight] = useState(162)
 
@@ -84,7 +84,6 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
             setTextAreaHeight(e.target.scrollHeight)
         setText(e.target.value)
     }
-
     const handleSave = () => {
         if (taskId) {
             const updateTask: EditedTask = {
@@ -98,9 +97,9 @@ const TaskEditPage: FC<TaskEditPageProps> = () => {
                     firstReward: firstReward,
                     secondReward: secondReward,
                     penalty: penalty,
-                    start: Number(new Date(start).getTime()),
-                    firstEnd: Number(new Date(firstEnd).getTime()),
-                    secondEnd: Number(new Date(secondEnd).getTime())
+                    start: Number(new Date(start).getTime() + new Date().getTimezoneOffset()*60*1000),
+                    firstEnd: Number(new Date(firstEnd).getTime() + new Date().getTimezoneOffset()*60*1000),
+                    secondEnd: Number(new Date(secondEnd).getTime() + new Date().getTimezoneOffset()*60*1000)
                 }
             }
             const promise = new Promise((resolve, reject)=> {
