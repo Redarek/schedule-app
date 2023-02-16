@@ -54,9 +54,9 @@ const taskSlice = createSlice({
         [fetchTaskById.fulfilled.type]: (state, action: PayloadAction<ITasks>) => {
             state.task = {
                 ...action.payload,
-                start: new Date(new Date(action.payload.start).getTime()),
-                firstEnd: new Date(new Date(action.payload.firstEnd).getTime()),
-                secondEnd: new Date(new Date(action.payload.firstEnd).getTime()),
+                start: new Date(new Date(action.payload.start).getTime() - new Date().getTimezoneOffset()*60*1000),
+                firstEnd: new Date(new Date(action.payload.firstEnd).getTime() - new Date().getTimezoneOffset()*60*1000),
+                secondEnd: new Date(new Date(action.payload.firstEnd).getTime() - new Date().getTimezoneOffset()*60*1000),
             }
             state.error = ''
             state.isLoadingTasks = false;
@@ -95,9 +95,10 @@ const taskSlice = createSlice({
             for (let i = 0; i < date.length; i++) {
                 state.tasks = [...state.tasks, {
                     ...date[i],
-                    start: new Date(new Date(date[i].start).getTime()),
-                    firstEnd: new Date(new Date(date[i].firstEnd).getTime()),
-                    secondEnd: new Date(new Date(date[i].firstEnd).getTime()),
+                    start: new Date(new Date(date[i].start).getTime() - new Date().getTimezoneOffset()*60*1000),
+                    firstEnd: new Date(new Date(date[i].firstEnd).getTime() - new Date().getTimezoneOffset()*60*1000),
+                    secondEnd: new Date(new Date(date[i].firstEnd).getTime() - new Date().getTimezoneOffset()*60*1000),
+                    // - new Date().getTimezoneOffset() * 60 * 1000
                 }]
             }
             state.error = ''
