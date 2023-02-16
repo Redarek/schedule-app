@@ -137,9 +137,9 @@ const CreateNewTask: FC<CreateNewTaskProps> = ({setModalVisible, startDate}) => 
                 firstReward: firstReward,
                 secondReward: secondReward,
                 penalty: penalty,
-                start: Number(new Date(start).getTime() + new Date().getTimezoneOffset()*60*1000),
-                firstEnd: Number(new Date(firstEnd).getTime() + new Date().getTimezoneOffset()*60*1000),
-                secondEnd: Number(new Date(secondEnd).getTime() + new Date().getTimezoneOffset()*60*1000)
+                start: Number(new Date(start).getTime()),
+                firstEnd: Number(new Date(firstEnd).getTime()),
+                secondEnd: Number(new Date(secondEnd).getTime())
             }
 
             const promise = new Promise((resolve, reject) => {

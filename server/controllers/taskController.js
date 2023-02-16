@@ -20,9 +20,6 @@ class TaskController {
     async getTaskById(req, res, next) {
         try {
             const task = await taskService.getTaskById(req.params.id)
-            // console.log(task.start)
-            // console.log(task.start)
-            // console.log(task.start)
             return res.json(task);
             // return res.json({task, status: 'success'});
         } catch (error) {
@@ -43,6 +40,23 @@ class TaskController {
     async getAllTasksByEmployeeId(req, res, next) {
         try {
             const tasks = await taskService.getAllTasksByEmployeeId({employeeId: req.params.employeeId});
+            // DEV
+            // ЦИКЛ ОБНОВЛЕНИЯ ДАТ В ЗАДАЧАХ 
+            // for (let i = 0; i < tasks.length; i++) {
+            //     let day = new Date(tasks[i].start).getDate()
+            //     let endDay = new Date(tasks[i].firstEnd).getDate()
+                // if (tasks[i].employee == 'Елизавета Исаенко') {
+                //     let strt = tasks[i].start.getTime() + 1000*60*60*3
+                //     let endd = tasks[i].firstEnd.getTime() + 1000*60*60*3
+                //     console.log(`Задача №${i} ${tasks[i].title} у ${tasks[i].employee} обновлена на \n {${new Date(strt)},\n ${new Date(endd)}}`)
+                //     await taskService.updateTask(tasks[i]._id, {
+                //         start: strt,
+                //         firstEnd: endd
+                //     })
+                // }
+            // }
+            // DEV
+
             return res.json(tasks);
         } catch (error) {
             next(error);
