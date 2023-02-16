@@ -20,6 +20,9 @@ class TaskController {
     async getTaskById(req, res, next) {
         try {
             const task = await taskService.getTaskById(req.params.id)
+            // console.log(task.start)
+            // console.log(task.start)
+            // console.log(task.start)
             return res.json(task);
             // return res.json({task, status: 'success'});
         } catch (error) {
