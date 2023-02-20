@@ -33,6 +33,7 @@ router.put('/complete-task/:id', authMiddleware, taskController.completeTask);
 // bonus
 router.get('/bonuses/:id', authMiddleware, bonusController.getAllBonusesByUserId)
 router.get('/bonuses-week/:id', authMiddleware, bonusController.getAllBonusesByUserIdForWeek);
+router.get('/bonus-by-task/:id', bonusController.getBonusByTaskId)
 // roles
 router.post('/role/create', authMiddleware, roleMiddleware(['admin']), roleController.createRole);
 router.delete('/role/delete/:role', authMiddleware, roleMiddleware(['admin']), roleController.deleteRole);

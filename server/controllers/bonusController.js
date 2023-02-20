@@ -44,6 +44,14 @@ class BonusController {
         }
     }
 
+    async getBonusByTaskId(req, res, next) {
+        try {
+            const bonus = await bonusService.getBonusByTaskId(req.params.id)
+        } catch (error) {
+            
+        }
+    }
+
 }
 
 module.exports = new BonusController();
