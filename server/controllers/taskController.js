@@ -94,12 +94,7 @@ class TaskController {
             const candidate = await taskService.getTaskById(req.params.id) //защита от повторного выполнения задачи
             if (!candidate.complete) {
                 const task = await taskService.updateTask(req.params.id, {complete: true}) // таск "выполнен"
-                const candidateBonus = await bonusService.getBonusByTaskId(task._id) // защита от дубликатов бонусов
-                if (!candidateBonus) {
-                    const bonus = await bonusService.addBonus(task.employeeId, req.params.id) //получение награды за таск. передаю user и task ID
-                } else {
-                    console.log(`Неудачная попытка дублирования бонуса для задачи: \n${task}`)
-                }
+                const bonus = await bonusService.addBonus(task.employeeId, req.params.id) //получение награды за таск. передаю user и task ID
                 return res.json(task);
             } else {
                 const task = await taskService.updateTask(req.params.id, {complete: false}) // отмена "выполнено" у таска

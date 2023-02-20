@@ -86,7 +86,7 @@ class BonusService {
     }
 
     async getBonusByTaskId(id) {
-        const bonus = await bonusModel.findById({task: id});
+        const bonus = await bonusModel.find({task: id});
         return bonus;
     }
 }
