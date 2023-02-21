@@ -2,6 +2,8 @@ const taskService = require('../service/taskService');
 const userService = require('../service/userService');
 const taskModel = require('../models/taskModel');
 const bonusService = require('../service/bonusService');
+const { getAllBonusesByUserIdForWeek } = require('../service/bonusService');
+const bonusModel = require('../models/bonusModel');
 
 class TaskController {
     async createTask(req, res, next) {
@@ -56,7 +58,22 @@ class TaskController {
             //         })
             //     }
             // }
+            // ЦИКЛ СДВИГА ДАТ ДЛЯ ЗАДАЧ 
             // DEV
+
+            // АГРЕГАЦИЯ ДЛЯ УДАЛЕНИЯ ДУБЛИКАТОВ ДОКУМЕНТОВ MONGO DB
+            // await bonusModel.aggregate([
+            //     { $group: {
+            //       _id: '$task',
+            //       doc: { $first: '$$ROOT' }
+            //     } },
+            //     { $replaceRoot: {
+            //       newRoot: '$doc'
+            //     } }
+            //     ,
+            //     { $out: 'bonus' }
+            //   ], { allowDiskUse: true })
+            // АГРЕГАЦИЯ ДЛЯ УДАЛЕНИЯ ДУБЛИКАТОВ ДОКУМЕНТОВ MONGO DB
 
             return res.json(tasks);
         } catch (error) {
